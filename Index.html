@@ -1,0 +1,2569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUCKKX — VFX & GFX</title>
+<link rel="icon" type="image/png" href="favicon.png?v=2">
+<link rel="shortcut icon" href="favicon.png?v=2">
+<link rel="apple-touch-icon" href="favicon.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* ════════════════════════════════════════════════════
+     TEMA CENTRALIZADO — mude aqui para trocar tudo
+     ════════════════════════════════════════════════════
+
+     PARA TROCAR A COR DE DESTAQUE (atualmente vermelho):
+     ┌─────────────────────────────────────────────────┐
+     │  --accent       → cor principal de destaque     │
+     │  --accent-dim   → versão escura do accent       │
+     │  --accent-glow  → versão com alpha p/ brilhos   │
+     │  --accent-bg    → fundo sutil de seções/cards   │
+     └─────────────────────────────────────────────────┘
+
+     EXEMPLOS PRONTOS:
+     Vermelho (atual) → --accent: #c41e1e;  --accent-dim: #8a1414;  --accent-glow: rgba(196,30,30,0.25);  --accent-bg: rgba(196,30,30,0.06);
+     Azul             → --accent: #1e6fc4;  --accent-dim: #144e8a;  --accent-glow: rgba(30,111,196,0.25);  --accent-bg: rgba(30,111,196,0.06);
+     Roxo             → --accent: #7c1ec4;  --accent-dim: #550f8a;  --accent-glow: rgba(124,30,196,0.25);  --accent-bg: rgba(124,30,196,0.06);
+     Verde neon       → --accent: #1ac41e;  --accent-dim: #0f8a12;  --accent-glow: rgba(26,196,30,0.25);   --accent-bg: rgba(26,196,30,0.06);
+     Dourado          → --accent: #c4931e;  --accent-dim: #8a6314;  --accent-glow: rgba(196,147,30,0.25);  --accent-bg: rgba(196,147,30,0.06);
+
+     PARA TROCAR OS FUNDOS (atualmente preto puro):
+     ┌─────────────────────────────────────────────────┐
+     │  --bg-base      → fundo principal               │
+     │  --bg-soft      → seções levemente mais claras  │
+     │  --bg-card      → cards e painéis               │
+     │  --bg-input     → fundos de formulário          │
+     └─────────────────────────────────────────────────┘
+
+     PARA TROCAR O TEXTO:
+     ┌─────────────────────────────────────────────────┐
+     │  --text-main    → corpo do texto                │
+     │  --text-head    → títulos e destaques           │
+     │  --text-muted   → texto secundário / labels     │
+     └─────────────────────────────────────────────────┘
+  ════════════════════════════════════════════════════ */
+
+  :root {
+
+    /* ── ACCENT (cor de destaque — troque aqui) ── */
+    --accent:      #c41e1e;
+    --accent-dim:  #8a1414;
+    --accent-glow: rgba(196, 30, 30, 0.25);
+    --accent-bg:   rgba(196, 30, 30, 0.06);
+
+    /* ── FUNDOS ── */
+    --bg-base:   #000000;
+    --bg-soft:   #080808;
+    --bg-card:   #111111;
+    --bg-input:  #0d0d0d;
+    --bg-graph:  #1a1a1a;
+
+    /* ── TEXTO ── */
+    --text-head:  #f5f5f5;
+    --text-main:  #e8e8e8;
+    --text-muted: #9a9a9a;
+
+    /* ── ESPECIAIS (raramente mudam) ── */
+    --neon:  #00ff41;
+    --mono:  'Space Mono', monospace;
+
+    /* ── ALIASES (mantidos para compatibilidade interna) ── */
+    --black:     var(--bg-base);
+    --near-black:var(--bg-soft);
+    --charcoal:  var(--bg-card);
+    --graphite:  var(--bg-graph);
+    --white:     var(--text-head);
+    --light:     var(--text-main);
+    --silver:    var(--text-muted);
+    --red:       var(--accent);
+    --red-dim:   var(--accent-dim);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--light);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    cursor: none;
+    overflow-x: hidden;
+  }
+
+  /* CURSOR */
+  .cursor {
+    position: fixed; width: 8px; height: 8px;
+    background: var(--red); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s;
+  }
+  .cursor-ring {
+    position: fixed; width: 32px; height: 32px;
+    border: 1px solid rgba(196,30,30,0.5); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, border-color 0.3s;
+  }
+
+  /* GRAIN */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.035; pointer-events: none; z-index: 9997;
+    animation: grainShift 0.5s steps(1) infinite;
+  }
+  @keyframes grainShift {
+    0%,100%{transform:translate(0,0)} 20%{transform:translate(-2px,1px)}
+    40%{transform:translate(1px,-2px)} 60%{transform:translate(2px,1px)} 80%{transform:translate(-1px,2px)}
+  }
+
+  /* LOADER */
+  #loader {
+    position: fixed; inset: 0; background: var(--black); z-index: 10000;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 24px;
+    transition: opacity 0.8s ease, visibility 0.8s;
+  }
+  #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+  .loader-text {
+    font-family: 'Anton', sans-serif; font-size: clamp(36px, 8vw, 80px);
+    letter-spacing: 0.2em; color: var(--white);
+    animation: loaderPulse 1.2s ease infinite alternate;
+  }
+  .loader-bar-wrap { width: 200px; height: 1px; background: var(--graphite); }
+  .loader-bar { height: 1px; background: var(--red); width: 0%; transition: width 0.05s linear; }
+  .loader-label { font-family: var(--mono); font-size: 11px; color: var(--silver); letter-spacing: 0.3em; }
+  @keyframes loaderPulse { from{opacity:0.5} to{opacity:1} }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+    padding: 20px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%);
+    transition: background 0.3s;
+  }
+  nav.scrolled { background: rgba(0,0,0,0.96); border-bottom: 1px solid #1a1a1a; }
+  .nav-logo {
+    font-family: 'Anton', sans-serif; font-size: 22px;
+    letter-spacing: 0.15em; color: var(--white); text-decoration: none;
+  }
+  .nav-logo span { color: var(--red); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+    color: var(--silver); text-decoration: none; text-transform: uppercase;
+    transition: color 0.2s; position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+    height: 1px; background: var(--red); transform: scaleX(0); transition: transform 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-cta {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+    color: var(--black); background: var(--white);
+    padding: 10px 20px; text-decoration: none; text-transform: uppercase;
+    transition: background 0.2s, color 0.2s;
+  }
+  .nav-cta:hover { background: var(--red); color: var(--white); }
+  .nav-hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: none; border: none; background: none; padding: 4px;
+  }
+  .nav-hamburger span { display: block; width: 24px; height: 1px; background: var(--white); transition: all 0.3s; }
+  .nav-mobile { display: none; }
+  .nav-mobile.open {
+    display: flex; flex-direction: column; position: fixed;
+    inset: 0; background: var(--black); z-index: 800;
+    align-items: center; justify-content: center; gap: 32px;
+  }
+  .nav-mobile a {
+    font-family: 'Anton', sans-serif; font-size: 36px; letter-spacing: 0.1em;
+    color: var(--white); text-decoration: none;
+  }
+
+  /* HERO */
+  #home {
+    min-height: 100vh; position: relative;
+    display: flex; align-items: center;
+    padding: 120px 48px 80px; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 60% 40%, #1a0505 0%, #000 70%);
+  }
+  .hero-lines { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+  .hero-lines::before {
+    content: ''; position: absolute; left: 58%; top: 0; bottom: 0; width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(196,30,30,0.15), transparent);
+  }
+  .hero-scanline {
+    position: absolute; left: 0; right: 0; height: 2px;
+    background: rgba(196,30,30,0.06);
+    animation: scanline 8s linear infinite;
+  }
+  @keyframes scanline { from{top:-2px} to{top:100%} }
+
+  .hero-content { position: relative; z-index: 2; max-width: 780px; }
+  .hero-eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.4em;
+    color: var(--red); text-transform: uppercase; margin-bottom: 24px;
+    display: flex; align-items: center; gap: 16px;
+    opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--red); }
+  .hero-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(52px, 9vw, 120px);
+    line-height: 0.9; letter-spacing: -0.01em;
+    color: var(--white); margin-bottom: 32px;
+    opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-title .line-red { color: var(--red); display: block; }
+  .hero-title .line-outline { -webkit-text-stroke: 1px var(--white); color: transparent; display: block; }
+  .hero-sub {
+    font-size: 16px; color: var(--silver); max-width: 480px;
+    line-height: 1.7; margin-bottom: 48px;
+    opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero-buttons {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+  }
+  .btn-primary {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em;
+    background: var(--red); color: var(--white);
+    padding: 16px 32px; text-decoration: none; text-transform: uppercase;
+    border: 1px solid var(--red); transition: background 0.2s, color 0.2s; display: inline-block;
+  }
+  .btn-primary:hover { background: transparent; color: var(--red); }
+  .btn-secondary {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em;
+    background: transparent; color: var(--white);
+    padding: 16px 32px; text-decoration: none; text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.2); transition: border-color 0.2s; display: inline-block;
+  }
+  .btn-secondary:hover { border-color: var(--white); }
+  .hero-scroll {
+    position: absolute; bottom: 40px; left: 48px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em;
+    color: var(--silver); text-transform: uppercase;
+    display: flex; align-items: center; gap: 12px;
+    opacity: 0; animation: fadeUp 0.8s 1.2s forwards;
+  }
+  .hero-scroll::after {
+    content: ''; display: block; width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--silver), transparent);
+    animation: scrollLine 2s ease infinite;
+  }
+  @keyframes scrollLine { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+  /* COMMON */
+  section { padding: 100px 48px; }
+  .section-eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.35em;
+    color: var(--red); text-transform: uppercase;
+    display: flex; align-items: center; gap: 16px; margin-bottom: 20px;
+  }
+  .section-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--red); }
+  .section-title {
+    font-family: 'Anton', sans-serif; font-size: clamp(36px,5vw,72px);
+    line-height: 1; color: var(--white); margin-bottom: 48px;
+  }
+  .section-rule { width: 100%; height: 1px; background: #1a1a1a; margin-bottom: 64px; }
+
+  /* SOBRE */
+  #sobre { background: var(--near-black); }
+  .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .sobre-left p { color: var(--silver); line-height: 1.8; margin-bottom: 20px; }
+  .sobre-left p strong { color: var(--white); font-weight: 500; }
+  .sobre-left .section-title { margin-bottom: 24px; }
+  .sobre-signature {
+    font-family: 'Anton', sans-serif; font-size: 52px;
+    color: var(--red); margin-top: 32px; letter-spacing: 0.05em; display: inline-block;
+  }
+  .sobre-box {
+    width: 100%; aspect-ratio: 4/5; max-width: 380px;
+    background: var(--graphite); border: 1px solid #222;
+    position: relative; overflow: hidden; display: flex; align-items: flex-end;
+  }
+  .sobre-box::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(196,30,30,0.08) 0%, transparent 50%);
+  }
+.sobre-box-inner{
+  position:relative;
+  z-index:2;
+
+  padding:32px;
+  width:100%;
+
+  background:linear-gradient(
+    to top,
+    rgba(0,0,0,.95) 0%,
+    rgba(0,0,0,.6) 35%,
+    transparent 100%
+  );
+}
+.sobre-img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.sobre-img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+
+  filter:
+    grayscale(100%)
+    contrast(1.15)
+    brightness(.8);
+}
+  .sobre-box-tag {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em;
+    color: var(--neon); text-transform: uppercase; margin-bottom: 8px;
+  }
+  .sobre-box h3 { font-family: 'Anton', sans-serif; font-size: 28px; color: var(--white); letter-spacing: 0.05em; }
+  .sobre-right { display: flex; align-items: center; justify-content: center; }
+
+  /* EXPERIÊNCIA */
+  #experiencia { background: #050505; }
+  .stats-row {
+    display: grid; grid-template-columns: repeat(4,1fr);
+    gap: 1px; background: #1a1a1a; border: 1px solid #1a1a1a; margin-bottom: 64px;
+  }
+  .stat-item { background: var(--black); padding: 48px 40px; transition: background 0.3s; }
+  .stat-item:hover { background: var(--near-black); }
+  .stat-num { font-family: 'Anton', sans-serif; font-size: clamp(48px,6vw,80px); color: var(--white); line-height: 1; margin-bottom: 8px; }
+  .stat-num span { color: var(--red); }
+  .stat-label { font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em; color: var(--silver); text-transform: uppercase; }
+  .specialties-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .specialty-card {
+    background: var(--charcoal); border: 1px solid #1e1e1e;
+    padding: 32px 28px; transition: border-color 0.3s, transform 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .specialty-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+  }
+  .specialty-card:hover { border-color: #333; transform: translateY(-4px); }
+  .specialty-card:hover::before { transform: scaleX(1); }
+  .specialty-num { font-family: var(--mono); font-size: 11px; color: var(--red); letter-spacing: 0.2em; margin-bottom: 16px; }
+  .specialty-name { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--white); letter-spacing: 0.05em; margin-bottom: 8px; }
+  .specialty-desc { font-size: 13px; color: var(--silver); line-height: 1.6; }
+
+  /* PROCESSO */
+  #processo { background: var(--near-black); }
+  .processo-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; position: relative; }
+  .processo-steps::before {
+    content: ''; position: absolute; top: 32px; left: 10%; right: 10%; height: 1px;
+    background: linear-gradient(to right, transparent, var(--red-dim), transparent);
+  }
+  .step { padding: 32px; border-right: 1px solid #1a1a1a; }
+  .step:last-child { border-right: none; }
+  .step-num { font-family: 'Anton', sans-serif; font-size: 64px; color: #1a1a1a; line-height: 1; margin-bottom: 40px; transition: color 0.3s; }
+  .step:hover .step-num { color: var(--red-dim); }
+  .step-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--charcoal); border: 1px solid var(--red); margin-bottom: 24px; position: relative; z-index: 2; transition: background 0.3s; }
+  .step:hover .step-dot { background: var(--red); }
+  .step-title { font-family: 'Anton', sans-serif; font-size: 24px; color: var(--white); letter-spacing: 0.05em; margin-bottom: 12px; }
+  .step-desc { font-size: 14px; color: var(--silver); line-height: 1.7; }
+
+  /* PORTFÓLIO */
+  #portfolio { background: var(--black); }
+  .portfolio-filters {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
+  }
+  .filter-btn {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 8px 18px; border: 1px solid #2a2a2a; background: transparent;
+    color: var(--silver); cursor: none; transition: all 0.2s;
+  }
+  .filter-btn:hover, .filter-btn.active { border-color: var(--red); color: var(--white); background: rgba(196,30,30,0.08); }
+  .portfolio-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    grid-template-rows: auto; gap: 12px; margin-bottom: 48px;
+  }
+  .portfolio-item {
+    position: relative; overflow: hidden; aspect-ratio: 16/10;
+    background: var(--graphite); cursor: none;
+  }
+  .portfolio-item.featured { grid-column: 1 / 3; aspect-ratio: 16/9; }
+  .portfolio-item-bg {
+    position: absolute; inset: 0; transition: transform 0.6s ease;
+  }
+  .portfolio-item:hover .portfolio-item-bg { transform: scale(1.05); }
+  .portfolio-item-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0) 50%);
+    opacity: 0; transition: opacity 0.3s;
+    display: flex; align-items: flex-end; padding: 24px;
+  }
+  .portfolio-item:hover .portfolio-item-overlay { opacity: 1; }
+  .portfolio-item-info { transform: translateY(8px); transition: transform 0.3s; }
+  .portfolio-item:hover .portfolio-item-info { transform: translateY(0); }
+  .pi-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--red); text-transform: uppercase; margin-bottom: 4px; }
+  .pi-name { font-family: 'Anton', sans-serif; font-size: 20px; color: var(--white); letter-spacing: 0.05em; }
+  .pi-sub { font-size: 12px; color: var(--silver); margin-top: 2px; }
+  .play-icon {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 52px; height: 52px; border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.3);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s;
+    background: rgba(0,0,0,0.5);
+  }
+  .play-icon svg { width: 18px; height: 18px; fill: var(--white); margin-left: 3px; }
+  .portfolio-item:hover .play-icon { opacity: 1; }
+  /* portfolio bg colors */
+  .portfolio-item:nth-child(1) .portfolio-item-bg { background: linear-gradient(135deg,#1a0505 0%,#2a0808 40%,#050505 100%); }
+  .portfolio-item:nth-child(2) .portfolio-item-bg { background: linear-gradient(135deg,#0a0a1a 0%,#0f0f2a 50%,#050505 100%); }
+  .portfolio-item:nth-child(3) .portfolio-item-bg { background: linear-gradient(135deg,#0a0505 0%,#1a0a0a 50%,#050505 100%); }
+  .portfolio-item:nth-child(4) .portfolio-item-bg { background: linear-gradient(135deg,#050a05 0%,#0a1a0a 50%,#050505 100%); }
+  .portfolio-item:nth-child(5) .portfolio-item-bg { background: linear-gradient(135deg,#0f0505 0%,#1e0808 50%,#050505 100%); }
+  .portfolio-placeholder-text {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-family: 'Anton', sans-serif; font-size: clamp(24px,3.5vw,50px);
+    letter-spacing: 0.15em; color: rgba(255,255,255,0.04); pointer-events: none;
+  }
+  .portfolio-add-notice {
+    background: var(--charcoal); border: 1px dashed #333;
+    padding: 20px 28px; margin-bottom: 32px;
+    display: flex; align-items: flex-start; gap: 16px;
+  }
+  .notice-icon { color: var(--red); font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+  .notice-text { font-family: var(--mono); font-size: 11px; color: var(--silver); line-height: 1.8; letter-spacing: 0.05em; }
+  .notice-text strong { color: var(--white); }
+  .portfolio-cta { text-align: center; }
+
+  /* VIDEO MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 8000;
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+    opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+  }
+  .modal-overlay.open { opacity: 1; visibility: visible; }
+  .modal-inner { position: relative; width: 100%; max-width: 900px; }
+  .modal-close {
+    position: absolute; top: -44px; right: 0;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+    color: var(--silver); background: none; border: none; cursor: none;
+    text-transform: uppercase; transition: color 0.2s;
+  }
+  .modal-close:hover { color: var(--red); }
+  .modal-video-wrap {
+    position: relative; width: 100%; aspect-ratio: 16/9;
+    background: var(--charcoal);
+  }
+  .modal-video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+  .modal-info { padding: 20px 0; display: flex; justify-content: space-between; align-items: flex-end; }
+  .modal-title { font-family: 'Anton', sans-serif; font-size: 28px; color: var(--white); letter-spacing: 0.05em; }
+  .modal-meta { font-family: var(--mono); font-size: 11px; color: var(--silver); letter-spacing: 0.15em; text-align: right; }
+  .modal-placeholder {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 16px;
+    background: var(--charcoal);
+  }
+  .modal-placeholder p { font-family: var(--mono); font-size: 12px; color: var(--silver); letter-spacing: 0.2em; text-align: center; }
+  .modal-placeholder a { color: var(--red); text-decoration: none; }
+
+  /* MODAL NAV ARROWS (shared video + image modals) */
+  .modal-nav-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.15);
+    color: var(--white); font-size: 20px; cursor: none;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, border-color 0.2s; z-index: 10;
+    line-height: 1;
+  }
+  .modal-nav-btn:hover { background: var(--red); border-color: var(--red); }
+  .modal-nav-prev { left: -60px; }
+  .modal-nav-next { right: -60px; }
+  @media (max-width: 900px) {
+    .modal-nav-prev { left: 8px; }
+    .modal-nav-next { right: 8px; }
+  }
+
+  /* IMAGE MODAL */
+  .img-modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.96); z-index: 8000;
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+    opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+  }
+  .img-modal-overlay.open { opacity: 1; visibility: visible; }
+  .img-modal-inner { position: relative; width: 100%; max-width: 900px; }
+  .img-modal-close {
+    position: absolute; top: -44px; right: 0;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+    color: var(--silver); background: none; border: none; cursor: none;
+    text-transform: uppercase; transition: color 0.2s;
+  }
+  .img-modal-close:hover { color: var(--red); }
+  .img-modal-wrap {
+    position: relative; width: 100%;
+    background: var(--charcoal);
+    display: flex; align-items: center; justify-content: center;
+    min-height: 200px; max-height: 80vh; overflow: hidden;
+  }
+  .img-modal-wrap img {
+    max-width: 100%; max-height: 80vh;
+    object-fit: contain; display: block;
+    transition: opacity 0.2s;
+  }
+  .img-modal-info { padding: 20px 0; display: flex; justify-content: space-between; align-items: flex-end; }
+  .img-modal-title { font-family: 'Anton', sans-serif; font-size: 28px; color: var(--white); letter-spacing: 0.05em; }
+  .img-modal-meta { font-family: var(--mono); font-size: 11px; color: var(--silver); letter-spacing: 0.15em; text-align: right; }
+  .img-modal-counter { font-family: var(--mono); font-size: 10px; color: var(--red); letter-spacing: 0.2em; }
+
+  /* DEPOIMENTOS */
+  #depoimentos { background: var(--near-black); }
+  .dep-quote { font-family: 'Anton', sans-serif; font-size: 64px; color: var(--red); line-height: 0.7; margin-bottom: 20px; opacity: 0.4; }
+  .dep-author { display: flex; align-items: center; gap: 16px; border-top: 1px solid #1e1e1e; padding-top: 20px; }
+  .dep-avatar {
+    width: 44px; height: 44px; border-radius: 50%; background: var(--graphite); border: 1px solid #333;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Anton', sans-serif; font-size: 14px; color: var(--silver); flex-shrink: 0;
+  }
+  .dep-name { font-weight: 600; font-size: 14px; color: var(--white); }
+  .dep-role { font-family: var(--mono); font-size: 10px; color: var(--silver); letter-spacing: 0.15em; }
+
+  /* CONTATO */
+  #contato { background: #050505; }
+  .contato-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+  .contato-left p { color: var(--silver); line-height: 1.8; margin-bottom: 40px; }
+  .contact-links { display: flex; flex-direction: column; gap: 4px; }
+  .contact-link {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 24px; border: 1px solid #1a1a1a; text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .contact-link:hover { border-color: var(--red-dim); background: var(--near-black); }
+  .cl-left { display: flex; align-items: center; gap: 16px; }
+  .cl-icon { width: 36px; height: 36px; background: var(--charcoal); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .cl-platform { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; color: var(--silver); text-transform: uppercase; }
+  .cl-handle { font-size: 14px; color: var(--white); margin-top: 2px; }
+  .cl-arrow { color: var(--silver); font-size: 18px; transition: color 0.2s, transform 0.2s; }
+  .contact-link:hover .cl-arrow { color: var(--red); transform: translateX(4px); }
+
+  /* FORM */
+  .contato-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.25em; color: var(--silver); text-transform: uppercase; }
+  input, select, textarea {
+    background: var(--charcoal); border: 1px solid #222; color: var(--white);
+    font-family: 'Inter', sans-serif; font-size: 14px;
+    padding: 14px 18px; outline: none; transition: border-color 0.2s;
+    -webkit-appearance: none; appearance: none; cursor: none;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--red); }
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239a9a9a' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px;
+  }
+  select option { background: var(--charcoal); }
+  textarea { resize: vertical; min-height: 120px; }
+  .btn-form {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.25em;
+    background: var(--red); color: var(--white);
+    border: 1px solid var(--red); padding: 18px 32px;
+    text-transform: uppercase; cursor: none; transition: background 0.2s, color 0.2s; align-self: flex-start;
+  }
+  .btn-form:hover { background: transparent; color: var(--red); }
+  .btn-form:disabled { opacity: 0.5; cursor: not-allowed; }
+  .form-notice {
+    font-family: var(--mono); font-size: 10px; color: var(--silver);
+    letter-spacing: 0.1em; line-height: 1.7;
+    border: 1px solid #1e1e1e; padding: 16px; margin-top: 4px;
+  }
+  .form-notice strong { color: var(--neon); }
+  .form-success {
+    display: none; background: rgba(0,255,65,0.05); border: 1px solid rgba(0,255,65,0.2);
+    padding: 24px; text-align: center;
+  }
+  .form-success.show { display: block; }
+  .form-success-title { font-family: 'Anton', sans-serif; font-size: 24px; color: var(--neon); margin-bottom: 8px; letter-spacing: 0.1em; }
+  .form-success-text { font-family: var(--mono); font-size: 11px; color: var(--silver); letter-spacing: 0.1em; }
+
+  /* CONTATO DISPONÍVEL */
+  .contato-disponivel {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+    color: var(--neon); text-transform: uppercase;
+    margin-bottom: 24px;
+    padding: 14px 18px;
+    border: 1px solid rgba(0,255,65,0.15);
+    background: rgba(0,255,65,0.04);
+  }
+  .contato-disponivel .status-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--neon); flex-shrink: 0;
+    animation: statusPulse 2s ease infinite;
+  }
+
+  /* FOOTER */
+  footer { background: var(--near-black); border-top: 1px solid #1a1a1a; padding: 48px 48px 32px; }
+  .footer-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid #1a1a1a; }
+  .footer-logo { font-family: 'Anton', sans-serif; font-size: 28px; letter-spacing: 0.15em; color: var(--white); }
+  .footer-logo span { color: var(--red); }
+  .footer-status { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; color: var(--neon); text-transform: uppercase; }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--neon); animation: statusPulse 2s ease infinite; }
+  @keyframes statusPulse { 0%,100%{box-shadow:0 0 0 0 rgba(0,255,65,0.4)} 50%{box-shadow:0 0 0 6px rgba(0,255,65,0)} }
+  .footer-bottom { display: flex; align-items: center; justify-content: space-between; }
+  .footer-copy { font-family: var(--mono); font-size: 10px; color: var(--silver); letter-spacing: 0.15em; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; color: var(--silver); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--white); }
+
+
+  /* PORTFOLIO VIDEO THUMBNAIL */
+  .portfolio-thumb-wrap {
+    position: absolute; inset: 0; overflow: hidden;
+  }
+  .portfolio-thumb {
+    width: 100%; height: 100%; object-fit: cover;
+    opacity: 0.55; transition: opacity 0.4s, transform 0.6s;
+    pointer-events: none;
+  }
+  .portfolio-item:hover .portfolio-thumb { opacity: 0.75; transform: scale(1.04); }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    section { padding: 72px 24px; }
+    nav { padding: 16px 24px; }
+    .nav-links, .nav-cta { display: none; }
+    .nav-hamburger { display: flex; }
+    #home { padding: 120px 24px 80px; }
+    .hero-title { font-size: clamp(38px, 11vw, 72px); }
+    .sobre-grid { grid-template-columns: 1fr; gap: 48px; }
+    .sobre-right { display: none; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .specialties-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .processo-steps { grid-template-columns: 1fr 1fr; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; }
+    .portfolio-item.featured { grid-column: 1/3; }
+    .contato-grid { grid-template-columns: 1fr; gap: 48px; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-top { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+  }
+  @media (max-width: 480px) {
+    .specialties-grid { grid-template-columns: 1fr; }
+    .processo-steps { grid-template-columns: 1fr; }
+    .processo-steps::before { display: none; }
+    .step { border-right: none; border-bottom: 1px solid #1a1a1a; }
+    .step:last-child { border-bottom: none; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .portfolio-item.featured { grid-column: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  /* DISCORD TOAST */
+  #discord-toast {
+    position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--charcoal); border: 1px solid #2a2a2a;
+    border-left: 3px solid #5865F2;
+    padding: 16px 24px; z-index: 9996;
+    display: flex; align-items: center; gap: 14px;
+    opacity: 0; transition: opacity 0.3s, transform 0.3s;
+    min-width: 300px; max-width: 90vw;
+    pointer-events: none;
+  }
+  #discord-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+  .toast-icon { font-size: 20px; flex-shrink: 0; }
+  .toast-body { flex: 1; }
+  .toast-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: #5865F2; text-transform: uppercase; margin-bottom: 4px; }
+  .toast-text { font-size: 14px; color: var(--white); }
+
+
+
+  /* ══ SKILLS ══ */
+  #skills { background: var(--near-black); }
+
+  .skills-intro {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 56px; flex-wrap: wrap; gap: 16px;
+  }
+  .skills-intro .section-title { margin-bottom: 0; }
+  .skills-scale-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.25em;
+    color: var(--silver); text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .skills-scale-label span { color: var(--red); font-size: 13px; }
+
+  .skills-list { display: flex; flex-direction: column; gap: 2px; }
+
+  .skill-row {
+    display: grid;
+    grid-template-columns: 64px 1fr 1fr auto;
+    align-items: center;
+    gap: 0;
+    padding: 18px 28px;
+    background: var(--charcoal);
+    border: 1px solid #181818;
+    border-left: 3px solid #1a1a1a;
+    transition: border-color 0.3s, background 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .skill-row::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(196,30,30,0.05) 0%, transparent 50%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .skill-row:hover { border-left-color: var(--red); background: #0d0d0d; }
+  .skill-row:hover::before { opacity: 1; }
+
+  /* ── ICON WRAP ── */
+  .skill-icon-wrap {
+    width: 44px; height: 44px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    background: #1a1a1a;
+    border: 1px solid #282828;
+    transition: background 0.35s, border-color 0.35s, box-shadow 0.35s;
+    position: relative; overflow: hidden;
+  }
+  /* Red gradient bg glow on hover */
+  .skill-icon-wrap::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(196,30,30,0.25) 0%, rgba(100,0,0,0.15) 100%);
+    opacity: 0; transition: opacity 0.35s;
+    border-radius: 9px;
+  }
+  .skill-row:hover .skill-icon-wrap {
+    background: #1e0808;
+    border-color: rgba(196,30,30,0.4);
+    box-shadow: 0 0 18px rgba(196,30,30,0.2), inset 0 0 10px rgba(196,30,30,0.08);
+  }
+  .skill-row:hover .skill-icon-wrap::before { opacity: 1; }
+  /* Per-app glow colors */
+  .skill-row:hover .skill-icon-wrap[data-app="ae"] { background:#0d0d1e; border-color:rgba(153,153,255,0.4); box-shadow:0 0 18px rgba(153,153,255,0.2),inset 0 0 10px rgba(153,153,255,0.08); }
+  .skill-row:hover .skill-icon-wrap[data-app="pr"] { background:#1a0d1e; border-color:rgba(234,119,255,0.4); box-shadow:0 0 18px rgba(234,119,255,0.2),inset 0 0 10px rgba(234,119,255,0.08); }
+  .skill-row:hover .skill-icon-wrap[data-app="ps"] { background:#0d1520; border-color:rgba(49,168,255,0.4); box-shadow:0 0 18px rgba(49,168,255,0.2),inset 0 0 10px rgba(49,168,255,0.08); }
+  .skill-row:hover .skill-icon-wrap[data-app="ai"] { background:#1e1200; border-color:rgba(255,154,0,0.4); box-shadow:0 0 18px rgba(255,154,0,0.2),inset 0 0 10px rgba(255,154,0,0.08); }
+
+  /* All icon paths are grey by default, red on hover */
+  .skill-icon-wrap svg { position: relative; z-index: 1; }
+  .skill-icon-wrap .ico { fill: #555; transition: fill 0.35s; }
+  .skill-icon-wrap .ico-stroke { stroke: #555; fill: none; transition: stroke 0.35s; }
+  .skill-row:hover .skill-icon-wrap .ico { fill: var(--red); }
+  .skill-row:hover .skill-icon-wrap .ico-stroke { stroke: var(--red); }
+
+  /* Per-app official brand colors on hover */
+  .skill-row:hover .skill-icon-wrap[data-app="ae"] .ico   { fill: #9999FF; }
+  .skill-row:hover .skill-icon-wrap[data-app="ae"] .ico-stroke { stroke: #9999FF; }
+  .skill-row:hover .skill-icon-wrap[data-app="pr"] .ico   { fill: #EA77FF; }
+  .skill-row:hover .skill-icon-wrap[data-app="pr"] .ico-stroke { stroke: #EA77FF; }
+  .skill-row:hover .skill-icon-wrap[data-app="ps"] .ico   { fill: #31A8FF; }
+  .skill-row:hover .skill-icon-wrap[data-app="ps"] .ico-stroke { stroke: #31A8FF; }
+  .skill-row:hover .skill-icon-wrap[data-app="ai"] .ico   { fill: #FF9A00; }
+  .skill-row:hover .skill-icon-wrap[data-app="ai"] .ico-stroke { stroke: #FF9A00; }
+
+  /* Brand SVGs: greyscale at rest, original colors on hover */
+  .skill-icon-wrap .ico-brand {
+    filter: grayscale(1) brightness(0.45);
+    transition: filter 0.35s;
+    position: relative; z-index: 1;
+  }
+  .skill-row:hover .skill-icon-wrap .ico-brand {
+    filter: grayscale(0) brightness(1);
+  }
+
+
+  /* ── NAME / CAT ── */
+  .skill-meta { padding: 0 24px; }
+  .skill-name {
+    font-family: 'Anton', sans-serif; font-size: 18px;
+    letter-spacing: 0.08em; color: var(--white); line-height: 1;
+  }
+  .skill-cat {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em;
+    color: var(--silver); text-transform: uppercase; margin-top: 4px;
+  }
+
+  /* ── BAR ── */
+  .skill-bar-col { padding-right: 32px; }
+  .skill-bar-track {
+    width: 100%; height: 2px; background: #222; position: relative;
+  }
+  .skill-bar-fill {
+    height: 2px; width: 0%;
+    background: linear-gradient(90deg, #5a0a0a, var(--red));
+    transition: width 1.3s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+  }
+  .skill-bar-fill::after {
+    content: ''; position: absolute; right: -1px; top: -3px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--red); box-shadow: 0 0 8px rgba(196,30,30,0.8);
+    opacity: 0; transition: opacity 0.3s 1s;
+  }
+  .skill-bar-fill.ready::after { opacity: 1; }
+
+  /* ── OVERALL ── */
+  .skill-overall-wrap {
+    display: flex; align-items: baseline; gap: 3px;
+    padding-left: 24px; border-left: 1px solid #222;
+    min-width: 72px; justify-content: center;
+  }
+  .skill-ovr-num {
+    font-family: 'Anton', sans-serif; font-size: 36px;
+    color: var(--white); line-height: 1; letter-spacing: 0.02em;
+    transition: color 0.3s;
+  }
+  .skill-row:hover .skill-ovr-num { color: var(--red); }
+  .skill-ovr-denom {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--silver); padding-bottom: 4px;
+  }
+
+  .skills-divider { height: 1px; background: #111; margin: 6px 0; }
+
+  @media (max-width: 900px) {
+    .skill-row { grid-template-columns: 56px 1fr auto; }
+    .skill-bar-col { display: none; }
+    .skill-meta { padding: 0 16px; }
+  }
+  @media (max-width: 480px) {
+    .skill-row { padding: 16px 18px; }
+    .skill-name { font-size: 15px; }
+    .skill-ovr-num { font-size: 28px; }
+  }
+
+  /* ── HERO TAGS VFX / GFX ── */
+  .hero-tag {
+    display: inline-block;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+    color: var(--accent); border: 1px solid var(--accent);
+    padding: 2px 8px; margin-right: 4px;
+    vertical-align: middle; line-height: 1.8;
+    box-shadow: 0 0 8px var(--accent-glow);
+  }
+
+  /* ══ DESIGN / GFX SECTION ══ */
+  #design { background: var(--near-black); }
+
+  .design-intro {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 48px; flex-wrap: wrap; gap: 16px;
+  }
+  .design-intro .section-title { margin-bottom: 0; }
+  .design-type-badges {
+    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+  }
+  .design-badge {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.25em;
+    text-transform: uppercase; padding: 6px 14px;
+    border: 1px solid rgba(196,30,30,0.3); color: var(--silver);
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    cursor: none; background: transparent;
+  }
+  .design-badge:hover { border-color: var(--accent); color: var(--white); }
+  .design-badge.active { border-color: var(--accent); color: var(--white); background: rgba(196,30,30,0.1); }
+
+  /* ── Specialties category separator ── */
+  .specialties-category-label {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 20px;
+  }
+  .spec-cat-tag {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em;
+    color: var(--red); border: 1px solid rgba(196,30,30,0.5);
+    padding: 4px 12px; text-transform: uppercase; flex-shrink: 0;
+  }
+  .spec-cat-tag--gfx {
+    color: var(--red); border-color: rgba(196,30,30,0.5);
+  }
+  .spec-cat-line {
+    flex: 1; height: 1px; background: linear-gradient(to right, #2a2a2a, transparent);
+  }
+  .spec-cat-sub {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em;
+    color: var(--silver); text-transform: uppercase; flex-shrink: 0;
+  }
+
+  /* GRID DE DESIGN */
+  .design-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 220px;
+    gap: 10px;
+    margin-bottom: 48px;
+  }
+  .design-item {
+    position: relative; overflow: hidden;
+    background: var(--charcoal);
+    border: 1px solid #1a1a1a;
+    cursor: none;
+    transition: border-color 0.3s;
+  }
+  .design-item:hover { border-color: rgba(196,30,30,0.4); }
+
+  /* Itens destacados ocupam mais colunas */
+  .design-item.wide  { grid-column: span 2; }
+  .design-item.tall  { grid-row: span 2; }
+
+  .design-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease, filter 0.4s;
+    filter: brightness(0.8) saturate(0.9);
+    display: block;
+  }
+  .design-item:hover img {
+    transform: scale(1.04);
+    filter: brightness(1) saturate(1);
+  }
+
+  /* Overlay com info */
+  .design-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0) 55%);
+    opacity: 0; transition: opacity 0.3s;
+    display: flex; align-items: flex-end; padding: 18px;
+  }
+  .design-item:hover .design-overlay { opacity: 1; }
+  .design-info { transform: translateY(6px); transition: transform 0.3s; }
+  .design-item:hover .design-info { transform: translateY(0); }
+  .design-tag {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em;
+    color: var(--accent); text-transform: uppercase; margin-bottom: 4px;
+  }
+  .design-name {
+    font-family: 'Anton', sans-serif; font-size: 17px;
+    color: var(--white); letter-spacing: 0.06em;
+  }
+
+  .design-item { cursor: none; }
+
+  /* Placeholder para imagens ainda não adicionadas */
+  .design-placeholder {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 12px;
+    background: var(--charcoal);
+  }
+  .design-placeholder-icon {
+    width: 40px; height: 40px;
+    border: 1px solid #2a2a2a; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: #333;
+  }
+  .design-placeholder-text {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em;
+    color: #2a2a2a; text-transform: uppercase; text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    .design-grid { grid-template-columns: repeat(2, 1fr); }
+    .design-item.wide { grid-column: span 2; }
+    .design-item.tall { grid-row: span 1; }
+  }
+  @media (max-width: 480px) {
+    .design-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 160px; }
+    .design-item.wide { grid-column: span 2; }
+  }
+
+  /* subtipo field slide-in */
+  #subtipo-group {
+    overflow: hidden;
+    transition: opacity 0.35s ease, transform 0.35s ease, max-height 0.35s ease;
+    opacity: 0;
+    transform: translateY(-6px);
+    max-height: 0;
+    pointer-events: none;
+  }
+  #subtipo-group.visible {
+    display: flex !important;
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 120px;
+    pointer-events: auto;
+  }
+
+  /* ══ CLIENTES ══ */
+  #clientes {
+    background: var(--black);
+    padding: 56px 0;
+    border-top: 1px solid #141414;
+    border-bottom: 1px solid #141414;
+    overflow: hidden;
+  }
+  .clientes-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.4em;
+    color: var(--silver); text-transform: uppercase;
+    text-align: center; margin-bottom: 36px;
+    display: flex; align-items: center; justify-content: center; gap: 20px;
+    padding: 0 48px;
+  }
+  .clientes-label::before,
+  .clientes-label::after {
+    content: ''; flex: 1; max-width: 120px; height: 1px; background: #222;
+  }
+  /* marquee wrapper */
+  .clientes-marquee-wrap {
+    position: relative; overflow: hidden;
+  }
+  /* fade edges */
+  .clientes-marquee-wrap::before,
+  .clientes-marquee-wrap::after {
+    content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none;
+  }
+  .clientes-marquee-wrap::before { left: 0; background: linear-gradient(to right, var(--black), transparent); }
+  .clientes-marquee-wrap::after  { right: 0; background: linear-gradient(to left,  var(--black), transparent); }
+  .clientes-marquee-track {
+    display: flex; align-items: center; gap: 0;
+    width: max-content;
+    animation: clientesScroll 28s linear infinite;
+  }
+  .clientes-marquee-wrap:hover .clientes-marquee-track { animation-play-state: paused; }
+  @keyframes clientesScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .cliente-slot {
+    flex-shrink: 0; min-width: 200px;
+    padding: 28px 40px;
+    display: flex; align-items: center; justify-content: center;
+    border-right: 1px solid #141414;
+    transition: background 0.3s;
+    text-decoration: none;
+    cursor: none;
+  }
+  .cliente-slot:hover { background: var(--near-black); }
+  .cliente-slot img {
+    max-width: 120px; max-height: 48px;
+    object-fit: contain;
+    filter: grayscale(1) brightness(2);
+    transition: filter 0.4s ease, transform 0.3s ease;
+  }
+  .cliente-slot:hover img {
+    filter: brightness(0) saturate(1) invert(13%) sepia(97%) saturate(7497%) hue-rotate(1deg) brightness(103%) contrast(112%);
+    transform: scale(1.05);
+  }
+  .cliente-placeholder {
+    width: 110px; height: 36px;
+    background: #1a1a1a; border: 1px dashed #2a2a2a;
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cliente-placeholder span {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em;
+    color: #2a2a2a; text-transform: uppercase;
+  }
+  @media (max-width: 768px) {
+    #clientes { padding: 40px 0; }
+    .clientes-label { padding: 0 24px; }
+    .clientes-marquee-wrap::before, .clientes-marquee-wrap::after { width: 60px; }
+  }
+
+  /* ══ DEPOIMENTOS MARQUEE ══ */
+  .dep-marquee-outer {
+    overflow: hidden; position: relative;
+  }
+  .dep-marquee-outer::before,
+  .dep-marquee-outer::after {
+    content: ''; position: absolute; top: 0; bottom: 0; width: 100px; z-index: 2; pointer-events: none;
+  }
+  .dep-marquee-outer::before { left: 0; background: linear-gradient(to right, var(--near-black), transparent); }
+  .dep-marquee-outer::after  { right: 0; background: linear-gradient(to left, var(--near-black), transparent); }
+  .dep-marquee-track {
+    display: flex; gap: 24px;
+    width: max-content;
+    animation: depScroll 40s linear infinite;
+  }
+  .dep-marquee-outer:hover .dep-marquee-track { animation-play-state: paused; }
+  @keyframes depScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .dep-card {
+    background: var(--charcoal); border: 1px solid #1e1e1e;
+    padding: 36px 32px; position: relative; transition: border-color 0.3s;
+    flex-shrink: 0; width: 360px;
+    display: flex; flex-direction: column;
+  }
+  .dep-card:hover { border-color: var(--red-dim); }
+  .dep-quote-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .dep-stars {
+    display: flex; gap: 3px;
+    font-size: 18px; letter-spacing: 2px;
+    color: var(--red);
+    text-shadow: 0 0 14px rgba(196,30,30,0.7), 0 0 4px rgba(196,30,30,0.4);
+  }
+  .dep-text { font-size: 15px; color: var(--silver); line-height: 1.8; margin-bottom: 24px; font-style: italic; flex: 1; }
+  .dep-service {
+    display: inline-block; margin-top: 4px;
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--red);
+    border: 1px solid rgba(196,30,30,0.35);
+    padding: 2px 8px;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-text">LUCKKX</div>
+  <div class="loader-bar-wrap"><div class="loader-bar" id="loaderBar"></div></div>
+  <div class="loader-label">Carregando...</div>
+</div>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- VIDEO MODAL -->
+<div class="modal-overlay" id="videoModal">
+  <div class="modal-inner">
+    <button class="modal-close" id="modalClose">✕ Fechar</button>
+    <button class="modal-nav-btn modal-nav-prev" id="videoPrev">&#8592;</button>
+    <button class="modal-nav-btn modal-nav-next" id="videoNext">&#8594;</button>
+    <div class="modal-video-wrap" id="modalVideoWrap">
+      <div class="modal-placeholder" id="modalPlaceholder">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="23" stroke="#c41e1e" stroke-width="1"/><path d="M19 15l16 9-16 9V15z" fill="#c41e1e"/></svg>
+        <p id="modalPlaceholderText">VÍDEO NÃO CONFIGURADO</p>
+      </div>
+    </div>
+    <div class="modal-info">
+      <div class="modal-title" id="modalTitle">—</div>
+      <div class="modal-meta" id="modalMeta">—</div>
+    </div>
+  </div>
+</div>
+
+<!-- IMAGE MODAL -->
+<div class="img-modal-overlay" id="imgModal">
+  <div class="img-modal-inner">
+    <button class="img-modal-close" id="imgModalClose">✕ Fechar</button>
+    <button class="modal-nav-btn modal-nav-prev" id="imgPrev">&#8592;</button>
+    <button class="modal-nav-btn modal-nav-next" id="imgNext">&#8594;</button>
+    <div class="img-modal-wrap">
+      <img id="imgModalImg" src="" alt="">
+    </div>
+    <div class="img-modal-info">
+      <div>
+        <div class="img-modal-counter" id="imgModalCounter"></div>
+        <div class="img-modal-title" id="imgModalTitle">—</div>
+      </div>
+      <div class="img-modal-meta" id="imgModalMeta">—</div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#home" class="nav-logo">LUCKKX<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#experiencia">Experiência</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#processo">Processo</a></li>
+    <li><a href="#portfolio">VFX</a></li>
+    <li><a href="#design">GFX</a></li>
+    <li><a href="#depoimentos">Depoimentos</a></li>
+  </ul>
+  <a href="#contato" class="nav-cta">Contato</a>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile" id="mobileMenu">
+  <a href="#sobre" onclick="closeMobile()">Sobre</a>
+  <a href="#experiencia" onclick="closeMobile()">Experiência</a>
+  <a href="#processo" onclick="closeMobile()">Processo</a>
+  <a href="#portfolio" onclick="closeMobile()">VFX</a>
+  <a href="#design" onclick="closeMobile()">GFX</a>
+  <a href="#depoimentos" onclick="closeMobile()">Depoimentos</a>
+  <a href="#contato" onclick="closeMobile()">Contato</a>
+</div>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"><div class="hero-scanline"></div></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">VFX &nbsp;·&nbsp; GFX &nbsp;·&nbsp; Freelancer Internacional</div>
+    <h1 class="hero-title">
+      <span>LUCKKX.</span>
+<!--       <span class="line-red">DRILL.</span> -->
+      <span class="line-outline">EDITOR</span>
+<!--       <span>UNDERGROUND.</span> -->
+    </h1>
+    <p class="hero-sub"><span class="hero-tag">VFX</span> Efeitos visuais, motion e edição que amplificam a energia da música — videoclipes, visualizers e lyric videos com identidade própria. <span class="hero-tag">GFX</span> Logos, flyers, banners e identidade visual que constroem marcas reais. Do conceito à entrega — sem template, sem fórmula.</p>
+    <div class="hero-buttons">
+      <a href="#portfolio" class="btn-primary">Ver Portfólio</a>
+      <a href="#contato" class="btn-secondary">Entrar em Contato</a>
+    </div>
+  </div>
+  <div class="hero-scroll">Rolar</div>
+</section>
+
+<!-- CLIENTES -->
+<section id="clientes">
+  <div class="clientes-label">Clientes &amp; Parceiros</div>
+  <div class="clientes-marquee-wrap">
+    <div class="clientes-marquee-track" id="clientesTrack">
+
+      <a class="cliente-slot" href="https://corredorocha.com.br/" target="_blank" rel="noopener">
+        <img src="Clientes/logo1.png" alt="Corre do Rocha"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="cliente-placeholder" style="display:none"><span>Logo 01</span></div>
+      </a>
+
+      <a class="cliente-slot" href="https://sauced.com.br/" target="_blank" rel="noopener">
+        <img src="Clientes/logo2.png" alt="Sauced"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="cliente-placeholder" style="display:none"><span>Logo 02</span></div>
+      </a>
+
+      <div class="cliente-slot">
+        <img src="Clientes/logo3.png" alt="Wave Extermination"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="cliente-placeholder" style="display:none"><span>Logo 03</span></div>
+      </div>
+
+      <a class="cliente-slot" href="https://www.waveextermination.com.br/" target="_blank" rel="noopener">
+        <img src="Clientes/logo4.png" alt="Cliente 4"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="cliente-placeholder" style="display:none"><span>Logo 04</span></div>
+      </a>
+
+      <!-- duplicado para loop infinito -->
+      <a class="cliente-slot" href="https://corredorocha.com.br/" target="_blank" rel="noopener">
+        <img src="Clientes/logo1.png" alt="Corre do Rocha"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="cliente-placeholder" style="display:none"><span>Logo 01</span></div>
+      </a>
+
+      <a class="cliente-slot" href="https://sauced.com.br/" target="_blank" rel="noopener">
+        <img src="Clientes/logo2.png" alt="Sauced"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="cliente-placeholder" style="display:none"><span>Logo 02</span></div>
+      </a>
+
+      <div class="cliente-slot">
+        <img src="Clientes/logo3.png" alt="Wave Extermination"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="cliente-placeholder" style="display:none"><span>Logo 03</span></div>
+      </div>
+
+      <a class="cliente-slot" href="https://www.waveextermination.com.br/" target="_blank" rel="noopener">
+        <img src="Clientes/logo4.png" alt="Cliente 4"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="cliente-placeholder" style="display:none"><span>Logo 04</span></div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="section-rule"></div>
+  <div class="sobre-grid">
+    <div class="sobre-left">
+      <div class="section-eyebrow reveal">Sobre Mim</div>
+      <h2 class="section-title reveal reveal-delay-1">VFX.<br>GFX.<br><span style="color:var(--red)">6 ANOS.</span></h2>
+      <p class="reveal reveal-delay-2">Comecei editando de tudo — <strong>6 anos no corre</strong>, começei com gameplay/highlights de fortnite, depois disso criei experiencia com a criação de conteudo. Hoje atuo em duas frentes: <strong style="color:var(--white)"><span style="color:var(--red)">VFX</span></strong> — videoclipes musicais focado no TRAP, visualizers e motion design. E <strong style="color:var(--white)"><span style="color:var(--red)">GFX</span></strong> — identidade visual, logos, flyers e banners que constroem marcas reais.</p>
+      <p class="reveal reveal-delay-2">Atendo <strong>clientes ao redor do mundo</strong> — artistas e marcas que entendem que visual não é detalhe, é mensagem. Cada projeto é construído do zero, com intenção e sem compromisso com o comum.</p>
+      <p class="reveal reveal-delay-3">Se você quer algo genérico, não sou eu que você procura. Se quer <strong><span style="color:var(--red)">VFX</span> que impacta</strong> ou <strong><span style="color:var(--red)">GFX</span> que identifica</strong> — vamos conversar.</p>
+      <div class="sobre-signature reveal reveal-delay-4">LUCKKX.</div>
+    </div>
+<div class="sobre-right reveal reveal-delay-2">
+  <div class="sobre-box">
+
+    <img src="GODDAN.jpg" alt="Luckkx" class="sobre-img">
+
+    <div class="sobre-box-inner">
+      <div class="sobre-box-tag">● Disponível para projetos</div>
+      <h3>LUCKKX<br></h3>
+    </div>
+
+  </div>
+</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIÊNCIA -->
+<section id="experiencia">
+  <div class="section-rule"></div>
+  <div class="section-eyebrow reveal">Experiência & Especialidades</div>
+  <h2 class="section-title reveal reveal-delay-1">NÚMEROS<br>QUE FALAM.</h2>
+  <div class="stats-row reveal reveal-delay-2">
+    <div class="stat-item">
+      <div class="stat-num"><span class="counter" data-target="6">0</span><span>+</span></div>
+      <div class="stat-label">Anos de Experiência</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span class="counter" data-target="120">0</span><span>+</span></div>
+      <div class="stat-label">Projetos Entregues</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span style="font-size:clamp(28px,4vw,52px)">+80</span></div>
+      <div class="stat-label">Clientes ao Redor do Mundo</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span class="counter" data-target="50">0</span><span style="font-size:clamp(28px,4vw,48px)">M+</span></div>
+      <div class="stat-label">Visualizações Geradas</div>
+    </div>
+  </div>
+  <!-- VFX -->
+  <div class="specialties-category-label reveal">
+    <span class="spec-cat-tag">VFX</span>
+    <span class="spec-cat-line"></span>
+    <span class="spec-cat-sub">Efeitos Visuais &amp; Edição</span>
+  </div>
+  <div class="specialties-grid reveal reveal-delay-1">
+    <div class="specialty-card">
+      <div class="specialty-num">01</div>
+      <div class="specialty-name">VIDEOCLIPES</div>
+      <div class="specialty-desc">Do briefing ao frame final — edição de videoclipes trap, drill e underground com narrativa visual forte. Corte no ritmo, transições intencionais e color grading que definem a identidade da música. O vídeo não acompanha a faixa, ele é parte dela.</div>
+    </div>
+    <div class="specialty-card">
+      <div class="specialty-num">02</div>
+      <div class="specialty-name">VISUALIZERS</div>
+      <div class="specialty-desc">Conteúdo visual sincronizado com o áudio — cada batida, cada melodia encontra seu equivalente em movimento. Atmosfera, profundidade e loop sem corte. Ideal para lançamentos no YouTube e plataformas digitais onde a música precisa de uma identidade visual imediata.</div>
+    </div>
+    <div class="specialty-card">
+      <div class="specialty-num">03</div>
+      <div class="specialty-name">MOTION DESIGN</div>
+      <div class="specialty-desc">Animações, tipografia em movimento e efeitos visuais que elevam qualquer produção. Intros, letras animadas, overlays e elementos gráficos em movimento — tudo construído frame a frame com precisão, sem plugin genérico, sem resultado previsível.</div>
+    </div>
+  </div>
+
+  <!-- GFX -->
+  <div class="specialties-category-label reveal" style="margin-top:40px">
+    <span class="spec-cat-tag spec-cat-tag--gfx">GFX</span>
+    <span class="spec-cat-line"></span>
+    <span class="spec-cat-sub">Design Gráfico &amp; Identidade Visual</span>
+  </div>
+  <div class="specialties-grid reveal reveal-delay-1">
+    <div class="specialty-card">
+      <div class="specialty-num">04</div>
+      <div class="specialty-name">BANNERS</div>
+      <div class="specialty-desc">Headers de canal, banners de perfil e artes para redes sociais que param o scroll. Composição limpa, hierarquia visual clara e identidade marcante — banners que comunicam quem você é antes mesmo de ler uma palavra. Para YouTube, Twitch, Discord e mais.</div>
+    </div>
+    <div class="specialty-card">
+      <div class="specialty-num">05</div>
+      <div class="specialty-name">FLYERS</div>
+      <div class="specialty-desc">Artes de divulgação para eventos, lançamentos, drops e campanhas. Cada flyer é pensado para funcionar tanto no digital quanto no impresso — tipografia agressiva, composição que vende e visual que representa a energia do projeto sem parecer feito às pressas.</div>
+    </div>
+    <div class="specialty-card">
+      <div class="specialty-num">06</div>
+      <div class="specialty-name">LOGOS / ID VISUAL</div>
+      <div class="specialty-desc">Identidade visual completa do zero — logo, paleta, tipografia e linguagem estética que constroem uma marca de verdade. Para artistas, coletivos e marcas que entendem que imagem não é detalhe. Entregue em todos os formatos, pronto para usar em qualquer contexto.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-rule"></div>
+  <div class="skills-intro">
+    <div>
+      <div class="section-eyebrow reveal">Ferramentas</div>
+      <h2 class="section-title reveal reveal-delay-1" style="margin-bottom:0">SOFTWARE<br>& DOMÍNIO.</h2>
+    </div>
+    <div class="skills-scale-label reveal reveal-delay-2">Nível <span>/ 10</span></div>
+  </div>
+
+  <div class="skills-list reveal reveal-delay-2">
+
+    <!-- AFTER EFFECTS -->
+    <div class="skill-row" data-level="10">
+      <div class="skill-icon-wrap" data-app="ae">
+        <!-- Ae official: rounded square with "Ae" lettermark exact proportions -->
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Ae lettermark — official shape -->
+          <path class="ico" d="M4.5 20.5L9.8 7H12.2L17.5 20.5H15.1L13.7 16.8H8.3L6.9 20.5H4.5ZM9.0 14.9H13.0L11.0 9.6L9.0 14.9Z"/>
+          <path class="ico" d="M19.5 15.8C19.6 17.2 20.7 18.1 22.3 18.1C23.2 18.1 24.0 17.8 24.5 17.1L26.1 18.2C25.3 19.3 24.0 20.0 22.2 20.0C19.6 20.0 17.7 18.2 17.7 15.4C17.7 12.7 19.5 10.9 22.0 10.9C24.4 10.9 26.1 12.6 26.1 15.2C26.1 15.4 26.1 15.6 26.0 15.8H19.5ZM24.2 14.3C24.0 13.0 23.2 12.6 22.0 12.6C20.9 12.6 20.0 13.2 19.6 14.3H24.2Z"/>
+        </svg>
+      </div>
+      <div class="skill-meta">
+        <div class="skill-name">AFTER EFFECTS</div>
+        <div class="skill-cat">Motion · VFX · Compositing</div>
+      </div>
+      <div class="skill-bar-col">
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-target="100"></div></div>
+      </div>
+      <div class="skill-overall-wrap">
+        <div class="skill-ovr-num" data-final="10">0</div>
+        <div class="skill-ovr-denom">/10</div>
+      </div>
+    </div>
+
+    <!-- PREMIERE PRO -->
+    <div class="skill-row" data-level="10">
+      <div class="skill-icon-wrap" data-app="pr">
+        <!-- Pr official lettermark -->
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path class="ico" d="M5 7H10.5C13.5 7 15.4 8.8 15.4 11.6C15.4 14.4 13.4 16.2 10.3 16.2H7.3V20.5H5V7ZM7.3 14.2H10.1C12.0 14.2 13.1 13.2 13.1 11.6C13.1 10.0 12.0 9.0 10.1 9.0H7.3V14.2Z"/>
+          <path class="ico" d="M17 11H19.1V12.7C19.6 11.7 20.6 10.8 22.1 10.8C22.4 10.8 22.6 10.8 22.8 10.9V13.0C22.5 12.9 22.2 12.8 21.8 12.8C20.3 12.8 19.2 13.8 19.2 15.6V20.5H17V11Z"/>
+        </svg>
+      </div>
+      <div class="skill-meta">
+        <div class="skill-name">PREMIERE PRO</div>
+        <div class="skill-cat">Edição · Color · Audio</div>
+      </div>
+      <div class="skill-bar-col">
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-target="100"></div></div>
+      </div>
+      <div class="skill-overall-wrap">
+        <div class="skill-ovr-num" data-final="8">0</div>
+        <div class="skill-ovr-denom">/10</div>
+      </div>
+    </div>
+
+    <div class="skills-divider"></div>
+
+    <!-- PHOTOSHOP -->
+    <div class="skill-row" data-level="10">
+      <div class="skill-icon-wrap" data-app="ps">
+        <!-- Ps official lettermark -->
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path class="ico" d="M4.5 7H10.2C13.0 7 14.8 8.7 14.8 11.4C14.8 14.1 12.9 15.9 10.0 15.9H6.8V20.5H4.5V7ZM6.8 13.9H9.8C11.6 13.9 12.5 13.0 12.5 11.4C12.5 9.9 11.5 9.0 9.7 9.0H6.8V13.9Z"/>
+          <path class="ico" d="M16.2 17.8C17.1 18.4 18.3 18.8 19.6 18.8C21.1 18.8 21.9 18.1 21.9 17.1C21.9 16.1 21.2 15.6 19.4 15.1C17.1 14.4 15.9 13.4 15.9 11.6C15.9 9.6 17.5 8.2 20.0 8.2C21.3 8.2 22.4 8.5 23.2 9.0L22.6 10.9C21.9 10.4 20.9 10.1 19.9 10.1C18.5 10.1 17.8 10.8 17.8 11.6C17.8 12.5 18.5 12.9 20.4 13.5C22.7 14.2 23.8 15.3 23.8 17.1C23.8 19.2 22.2 20.7 19.5 20.7C18.0 20.7 16.7 20.3 15.7 19.7L16.2 17.8Z"/>
+        </svg>
+      </div>
+      <div class="skill-meta">
+        <div class="skill-name">PHOTOSHOP</div>
+        <div class="skill-cat">Design · Retouch · Composite</div>
+      </div>
+      <div class="skill-bar-col">
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-target="100"></div></div>
+      </div>
+      <div class="skill-overall-wrap">
+        <div class="skill-ovr-num" data-final="9">0</div>
+        <div class="skill-ovr-denom">/10</div>
+      </div>
+    </div>
+
+    <!-- ILLUSTRATOR -->
+    <div class="skill-row" data-level="10">
+      <div class="skill-icon-wrap" data-app="ai">
+        <!-- Ai official lettermark -->
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path class="ico" d="M7.2 20.5L10.9 7H13.7L17.4 20.5H15.2L14.2 16.9H10.3L9.4 20.5H7.2ZM10.8 15.1H13.7L12.3 9.9L10.8 15.1Z"/>
+          <rect class="ico" x="19.5" y="7" width="2.2" height="2.4"/>
+          <rect class="ico" x="19.5" y="11" width="2.2" height="9.5"/>
+        </svg>
+      </div>
+      <div class="skill-meta">
+        <div class="skill-name">ILLUSTRATOR</div>
+        <div class="skill-cat">Vector · Identidade · Type</div>
+      </div>
+      <div class="skill-bar-col">
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-target="100"></div></div>
+      </div>
+      <div class="skill-overall-wrap">
+        <div class="skill-ovr-num" data-final="5">0</div>
+        <div class="skill-ovr-denom">/10</div>
+      </div>
+    </div>
+
+    <div class="skills-divider"></div>
+
+    <!-- BLENDER -->
+    <div class="skill-row" data-level="10">
+      <div class="skill-icon-wrap">
+        <!-- Blender logo inline SVG — grey at rest, color on hover -->
+        <svg class="ico-brand" width="30" height="28" viewBox="0 0 512 469" xmlns="http://www.w3.org/2000/svg">
+          <line x1="97" y1="172" x2="269" y2="234" stroke="#EA7600" stroke-width="74" stroke-linecap="round"/>
+          <line x1="97" y1="296" x2="269" y2="234" stroke="#EA7600" stroke-width="74" stroke-linecap="round"/>
+          <line x1="97" y1="172" x2="97" y2="296" stroke="#EA7600" stroke-width="74" stroke-linecap="round"/>
+          <path d="M 397 88 A 168 168 0 1 0 465 312 Q 498 260 468 190 Q 445 130 397 88 Z" fill="#EA7600"/>
+          <circle cx="269" cy="234" r="96" fill="#1a1a1a"/>
+          <circle cx="269" cy="234" r="85" fill="none" stroke="#1a1a1a" stroke-width="18"/>
+          <circle cx="269" cy="234" r="62" fill="#265787"/>
+        </svg>
+      </div>
+      <div class="skill-meta">
+        <div class="skill-name">BLENDER</div>
+        <div class="skill-cat">3D · Render · Animação</div>
+      </div>
+      <div class="skill-bar-col">
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-target="100"></div></div>
+      </div>
+      <div class="skill-overall-wrap">
+        <div class="skill-ovr-num" data-final="5">0</div>
+        <div class="skill-ovr-denom">/10</div>
+      </div>
+    </div>
+
+    <!-- CINEMA 4D -->
+    <div class="skill-row" data-level="10">
+      <div class="skill-icon-wrap">
+        <!-- Cinema 4D logo inline SVG — grey at rest, color on hover -->
+        <svg class="ico-brand" width="28" height="28" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="46" fill="#D0D0DC"/>
+          <ellipse cx="78" cy="22" rx="12" ry="8" transform="rotate(-30,78,22)" fill="#E0E0E8"/>
+          <path d="M 74 16 A 34 34 0 1 0 74 84" stroke="#1A1A2E" stroke-width="18" stroke-linecap="round" fill="none"/>
+          <ellipse cx="46" cy="44" rx="14" ry="18" transform="rotate(-25,46,44)" fill="#5B5EBF"/>
+          <ellipse cx="43" cy="39" rx="6" ry="8" transform="rotate(-25,43,39)" fill="#7B7EDF" opacity="0.7"/>
+        </svg>
+      </div>
+      <div class="skill-meta">
+        <div class="skill-name">CINEMA 4D</div>
+        <div class="skill-cat">3D · MoGraph · Render</div>
+      </div>
+      <div class="skill-bar-col">
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-target="100"></div></div>
+      </div>
+      <div class="skill-overall-wrap">
+        <div class="skill-ovr-num" data-final="4">0</div>
+        <div class="skill-ovr-denom">/10</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- DESIGN / GFX -->
+<section id="design">
+  <div class="section-rule"></div>
+  <div class="design-intro">
+    <div>
+      <div class="section-eyebrow reveal">GFX — Design</div>
+      <h2 class="section-title reveal reveal-delay-1" style="margin-bottom:0">IDENTIDADE<br>& VISUAL.</h2>
+    </div>
+    <div class="design-type-badges reveal reveal-delay-2">
+      <button class="design-badge active" data-design-filter="all">Tudo</button>
+      <button class="design-badge" data-design-filter="logo">Logos / ID Visual</button>
+      <button class="design-badge" data-design-filter="flyer">Flyers</button>
+      <button class="design-badge" data-design-filter="banner">Banners</button>
+    </div>
+  </div>
+
+  <p class="reveal" style="color:var(--silver);max-width:640px;line-height:1.8;margin-bottom:48px;font-size:15px;">
+    No lado <strong style="color:var(--white)"><span style="color:var(--red)">GFX</span></strong>, crio identidades visuais que ficam. Logos com personalidade, flyers que vendem e banners que param o scroll — cada peça construída com intenção, sem template. Se você quer uma marca que representa quem você é de verdade, é aqui.
+  </p>
+
+  <div class="design-grid reveal reveal-delay-2">
+
+    <!-- BANNERS -->
+    <div class="design-item wide" data-category="banner"
+         data-img="Design/BANNERS/Header luckkx.png"
+         data-title="LUCKKX — Header" data-meta="Banner · GFX">
+      <img src="Design/BANNERS/Header luckkx.png" alt="LUCKKX Header" loading="lazy"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="design-placeholder" style="display:none">
+        <div class="design-placeholder-icon">🖼</div>
+        <div class="design-placeholder-text">BANNERS / Header luckkx</div>
+      </div>
+      <div class="design-overlay">
+        <div class="design-info">
+          <div class="design-tag">Banner</div>
+          <div class="design-name">LUCKKX — Header</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="design-item wide" data-category="banner"
+         data-img="Design/BANNERS/Savage bem vindo.png"
+         data-title="Savage — Bem Vindo" data-meta="Banner · GFX">
+      <img src="Design/BANNERS/Savage bem vindo.png" alt="Savage Bem Vindo Banner" loading="lazy"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="design-placeholder" style="display:none">
+        <div class="design-placeholder-icon">🖼</div>
+        <div class="design-placeholder-text">BANNERS / Savage bem vindo</div>
+      </div>
+      <div class="design-overlay">
+        <div class="design-info">
+          <div class="design-tag">Banner</div>
+          <div class="design-name">Savage — Bem Vindo</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="design-item" data-category="banner"
+         data-img="Design/BANNERS/KAOS Header.png"
+         data-title="KAOS Header" data-meta="Banner · GFX">
+      <img src="Design/BANNERS/KAOS Header.png" alt="KAOS Header" loading="lazy"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="design-placeholder" style="display:none">
+        <div class="design-placeholder-icon">🖼</div>
+        <div class="design-placeholder-text">BANNERS / KAOS Header</div>
+      </div>
+      <div class="design-overlay">
+        <div class="design-info">
+          <div class="design-tag">Banner</div>
+          <div class="design-name">KAOS Header</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="design-item" data-category="banner"
+         data-img="Design/BANNERS/CDR Comunity PC.jpg"
+         data-title="Comunidade CDR" data-meta="Banner · GFX">
+      <img src="Design/BANNERS/CDR Comunity PC.jpg" alt="CDR Community PC" loading="lazy"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="design-placeholder" style="display:none">
+        <div class="design-placeholder-icon">🖼</div>
+        <div class="design-placeholder-text">BANNERS / Comunidade CDR</div>
+      </div>
+      <div class="design-overlay">
+        <div class="design-info">
+          <div class="design-tag">Banner</div>
+          <div class="design-name">Comunidade CDR</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FLYERS -->
+    <div class="design-item tall" data-category="flyer"
+         data-img="Design/FLYERS/Modelos wave.jpg"
+         data-title="Wave AVISO (story)" data-meta="Flyer · GFX">
+      <img src="Design/FLYERS/Modelos wave.jpg" alt="Modelos Wave" loading="lazy"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="design-placeholder" style="display:none">
+        <div class="design-placeholder-icon">🖼</div>
+        <div class="design-placeholder-text">FLYERS / Wave AVISO (story)</div>
+      </div>
+      <div class="design-overlay">
+        <div class="design-info">
+          <div class="design-tag">Flyer</div>
+          <div class="design-name">Wave AVISO (story)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="design-item" data-category="flyer"
+         data-img="Design/FLYERS/Bem vindo rocha.png"
+         data-title="Flyer bem-vindo" data-meta="Flyer · GFX">
+      <img src="Design/FLYERS/Bem vindo rocha.png" alt="Bem Vindo Rocha" loading="lazy"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="design-placeholder" style="display:none">
+        <div class="design-placeholder-icon">🖼</div>
+        <div class="design-placeholder-text">FLYERS / Flyer bem-vindo</div>
+      </div>
+      <div class="design-overlay">
+        <div class="design-info">
+          <div class="design-tag">Flyer</div>
+          <div class="design-name">Flyer bem-vindo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOGOS -->
+    <div class="design-item" data-category="logo"
+         data-img="Design/LOGOS/SWAG V1 White.png"
+         data-title="SWAG V1 — White" data-meta="Logo · GFX">
+      <img src="Design/LOGOS/SWAG V1 White.png" alt="SWAG V1 White" loading="lazy"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="design-placeholder" style="display:none">
+        <div class="design-placeholder-icon">🖼</div>
+        <div class="design-placeholder-text">LOGOS / SWAG V1 White</div>
+      </div>
+      <div class="design-overlay">
+        <div class="design-info">
+          <div class="design-tag">Logo</div>
+          <div class="design-name">SWAG V1 — White</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="design-item" data-category="logo"
+         data-img="Design/LOGOS/Savage GREEN.png"
+         data-title="Savage — Green" data-meta="Logo · GFX">
+      <img src="Design/LOGOS/Savage GREEN.png" alt="Savage Green" loading="lazy"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="design-placeholder" style="display:none">
+        <div class="design-placeholder-icon">🖼</div>
+        <div class="design-placeholder-text">LOGOS / Savage GREEN</div>
+      </div>
+      <div class="design-overlay">
+        <div class="design-info">
+          <div class="design-tag">Logo</div>
+          <div class="design-name">Savage — Green</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="design-item wide" data-category="logo"
+         data-img="Design/LOGOS/SWAG V2 Black.png"
+         data-title="SWAG V2 — Black" data-meta="Logo · GFX">
+      <img src="Design/LOGOS/SWAG V2 Black.png" alt="SWAG V2 Black" loading="lazy"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="design-placeholder" style="display:none">
+        <div class="design-placeholder-icon">🖼</div>
+        <div class="design-placeholder-text">LOGOS / SWAG V2 Black</div>
+      </div>
+      <div class="design-overlay">
+        <div class="design-info">
+          <div class="design-tag">Logo</div>
+          <div class="design-name">SWAG V2 — Black</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="text-align:center" class="reveal">
+    <a href="#contato" class="btn-primary">Quero um design assim →</a>
+  </div>
+</section>
+
+
+<!-- PROCESSO -->
+<section id="processo">
+  <div class="section-rule"></div>
+  <div class="section-eyebrow reveal">Processo de Trabalho</div>
+  <h2 class="section-title reveal reveal-delay-1">COMO<br>FUNCIONA.</h2>
+  <div class="processo-steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <div class="step-dot"></div>
+      <div class="step-title">Planejamento</div>
+      <div class="step-desc">Alinhamento de referências, conceito visual, cronograma e briefing completo do projeto.</div>
+    </div>
+    <div class="step reveal reveal-delay-1">
+      <div class="step-num">02</div>
+      <div class="step-dot"></div>
+      <div class="step-title">Direção Criativa</div>
+      <div class="step-desc">Definição da identidade visual, paleta, ritmo e linguagem estética única para o projeto.</div>
+    </div>
+    <div class="step reveal reveal-delay-2">
+      <div class="step-num">03</div>
+      <div class="step-dot"></div>
+      <div class="step-title">Edição & Pós</div>
+      <div class="step-desc">Montagem, color grading, efeitos, motion e finalização com atenção total a cada detalhe.</div>
+    </div>
+    <div class="step reveal reveal-delay-3">
+      <div class="step-num">04</div>
+      <div class="step-dot"></div>
+      <div class="step-title">Entrega Final</div>
+      <div class="step-desc">Exportação nos formatos necessários, revisões incluídas e arquivo entregue no prazo.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFÓLIO -->
+<section id="portfolio">
+  <div class="section-rule"></div>
+  <div class="section-eyebrow reveal">VFX — Portfólio</div>
+  <h2 class="section-title reveal reveal-delay-1">TRABALHOS<br>EM VÍDEO.</h2>
+
+  <p class="reveal" style="color:var(--silver);max-width:640px;line-height:1.8;margin-bottom:48px;font-size:15px;">
+    No lado <strong style="color:var(--white)"><span style="color:var(--red)">VFX</span></strong>, cada frame é intencional. Videoclipes trap e underground, visualizers atmosféricos, lyric videos com peso visual — edição que não suporta a música, faz parte dela. Clique em qualquer projeto para assistir.
+  </p>
+
+  <div class="portfolio-filters reveal reveal-delay-2">
+    <button class="filter-btn active" data-filter="all">Portfolio completo</button>
+<!--     <button class="filter-btn" data-filter="videoclipe">Videoclipes</button>
+    <button class="filter-btn" data-filter="visualizer">Visualizers</button>
+    <button class="filter-btn" data-filter="motion">Motion Design</button> -->
+  </div>
+
+<!-- INSTRUÇÃO PARA O EDITOR
+  <div class="portfolio-add-notice reveal reveal-delay-1">
+    <div class="notice-icon">▶</div>
+    <div class="notice-text">
+      <strong>Como adicionar seus vídeos:</strong> cada card abaixo tem um atributo <strong>data-youtube-id</strong> no HTML. Substitua o valor (ex: <strong>dQw4w9WgXcQ</strong>) pelo ID do seu vídeo do YouTube — é a parte depois de <strong>?v=</strong> na URL. Também atualize o título, tag e descrição dentro de cada <strong>.portfolio-item</strong>. Remova este aviso quando estiver pronto.
+    </div>
+  </div> -->
+
+  <div class="portfolio-grid reveal reveal-delay-2">
+
+    <!-- PROJETO 1 -->
+    <div class="portfolio-item featured" data-category="videoclipe"
+         data-youtube="0z0K6x_24gk"
+         data-title="Cayx666 - Olho da cara (ft. Nekkropsy)" data-meta="Videoclipe · Trap">
+      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#1a0505 0%,#2d0808 50%,#050505 100%)"></div>
+      <div class="portfolio-thumb-wrap">
+        <img class="portfolio-thumb" src="https://img.youtube.com/vi/0z0K6x_24gk/maxresdefault.jpg" alt="Cayx666 — Olho da cara" loading="lazy" onerror="this.src='https://img.youtube.com/vi/0z0K6x_24gk/hqdefault.jpg'">
+      </div>
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <div class="pi-tag">Videoclipe · Trap</div>
+          <div class="pi-name">Cayx666 — Olho da cara (ft. Nekkropsy)</div>
+          <div class="pi-sub">Clique para assistir</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJETO 2 -->
+    <div class="portfolio-item" data-category="videoclipe"
+         data-youtube="gMgVnAT1PO0"
+         data-title="Cayx666 — Landr" data-meta="Videoclipe · Trap">
+      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#0a0a1a 0%,#0f0f2a 50%,#050505 100%)"></div>
+      <div class="portfolio-thumb-wrap">
+        <img class="portfolio-thumb" src="https://img.youtube.com/vi/gMgVnAT1PO0/maxresdefault.jpg" alt="Cayx666 — Landr" loading="lazy" onerror="this.src='https://img.youtube.com/vi/gMgVnAT1PO0/hqdefault.jpg'">
+      </div>
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <div class="pi-tag">Videoclipe · Trap</div>
+          <div class="pi-name">Cayx666 — Landr</div>
+          <div class="pi-sub">Clique para assistir</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJETO 3 -->
+    <div class="portfolio-item" data-category="videoclipe"
+         data-youtube="jSigHg-Jkd8"
+         data-title="Haya — Esperando na Chuva" data-meta="Videoclipe · Trap">
+      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#050a14 0%,#0a1428 50%,#050505 100%)"></div>
+      <div class="portfolio-thumb-wrap">
+        <img class="portfolio-thumb" src="https://img.youtube.com/vi/jSigHg-Jkd8/maxresdefault.jpg" alt="Haya — Esperando na Chuva" loading="lazy" onerror="this.src='https://img.youtube.com/vi/jSigHg-Jkd8/hqdefault.jpg'">
+      </div>
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <div class="pi-tag">Videoclipe · Trap</div>
+          <div class="pi-name">Haya — Esperando na Chuva</div>
+          <div class="pi-sub">Clique para assistir</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJETO 4 -->
+    <div class="portfolio-item" data-category="Preview"
+         data-youtube="JrR0M2ehoB8"
+         data-title="Ozzy — Preview" data-meta="Preview · Trap">
+      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#140505 0%,#1e0808 50%,#050505 100%)"></div>
+      <div class="portfolio-thumb-wrap">
+        <img class="portfolio-thumb" src="https://img.youtube.com/vi/JrR0M2ehoB8/maxresdefault.jpg" alt="Ozzy — Preview" loading="lazy" onerror="this.src='https://img.youtube.com/vi/JrR0M2ehoB8/hqdefault.jpg'">
+      </div>
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <div class="pi-tag">Preview · Trap</div>
+          <div class="pi-name">Ozzy — Preview</div>
+          <div class="pi-sub">Clique para assistir</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJETO 5 -->
+    <div class="portfolio-item" data-category="Anuncio"
+         data-youtube="psLwQ2WTNEI"
+         data-title="Sauced — Drop Brazil" data-meta="Anuncio · Drop sauced">
+      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#141400 0%,#282800 50%,#050505 100%)"></div>
+      <div class="portfolio-thumb-wrap">
+        <img class="portfolio-thumb" src="https://img.youtube.com/vi/psLwQ2WTNEI/maxresdefault.jpg" alt="Sauced — Drop Brazil" loading="lazy" onerror="this.src='https://img.youtube.com/vi/psLwQ2WTNEI/hqdefault.jpg'">
+      </div>
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <div class="pi-tag">Anuncio · Drop sauced</div>
+          <div class="pi-name">Sauced — Drop Brazil</div>
+          <div class="pi-sub">Clique para assistir</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJETO 6 -->
+    <div class="portfolio-item" data-category="motion"
+         data-youtube="aEFwrSLZXok"
+         data-title="Transition LAB" data-meta="VFX · Showcase">
+      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#050514 0%,#0a0a28 50%,#050505 100%)"></div>
+      <div class="portfolio-thumb-wrap">
+        <img class="portfolio-thumb" src="https://img.youtube.com/vi/aEFwrSLZXok/maxresdefault.jpg" alt="Transition LAB" loading="lazy" onerror="this.src='https://img.youtube.com/vi/aEFwrSLZXok/hqdefault.jpg'">
+      </div>
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <div class="pi-tag">VFX · Showcase</div>
+          <div class="pi-name">Transition LAB</div>
+          <div class="pi-sub">Clique para assistir</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJETO 7 -->
+    <div class="portfolio-item" data-category="motion"
+         data-youtube="jBUJ6oJU8nA"
+         data-title="Vortex Effect" data-meta="VFX · Showcase">
+      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#0a0505 0%,#1a0a0a 50%,#050505 100%)"></div>
+      <div class="portfolio-thumb-wrap">
+        <img class="portfolio-thumb" src="https://img.youtube.com/vi/jBUJ6oJU8nA/maxresdefault.jpg" alt="Vortex Effect" loading="lazy" onerror="this.src='https://img.youtube.com/vi/jBUJ6oJU8nA/hqdefault.jpg'">
+      </div>
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <div class="pi-tag">VFX · Showcase</div>
+          <div class="pi-name">Vortex Effect</div>
+          <div class="pi-sub">Clique para assistir</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJETO 8 -->
+    <div class="portfolio-item" data-category="videoclipe"
+         data-youtube="oeEAbyEpgWM"
+         data-title="Haya — Bayonetta" data-meta="Videoclipe · Trap">
+      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#050a14 0%,#0a1428 50%,#050505 100%)"></div>
+      <div class="portfolio-thumb-wrap">
+        <img class="portfolio-thumb" src="https://img.youtube.com/vi/oeEAbyEpgWM/maxresdefault.jpg" alt="Haya — Bayonetta" loading="lazy" onerror="this.src='https://img.youtube.com/vi/oeEAbyEpgWM/hqdefault.jpg'">
+      </div>
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <div class="pi-tag">Videoclipe · Trap</div>
+          <div class="pi-name">Haya — Bayonetta</div>
+          <div class="pi-sub">Clique para assistir</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="portfolio-cta reveal">
+    <a href="#contato" class="btn-primary">Quer um projeto assim? →</a>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section id="depoimentos">
+  <div class="section-rule"></div>
+  <div class="section-eyebrow reveal">Depoimentos</div>
+  <h2 class="section-title reveal reveal-delay-1">O QUE<br>DIZEM.</h2>
+  <div class="dep-marquee-outer">
+    <div class="dep-marquee-track">
+
+      <div class="dep-card">
+        <div class="dep-quote-row"><div class="dep-quote">"</div><div class="dep-stars">★★★★★</div></div>
+        <div class="dep-text">Mano, ficou muito pesado. O VFX trouxe outra energia pro clipe, encaixou exatamente na visão que eu tinha. O resultado ficou sinistro, cada detalhe deixou o som com outra presença. Papo reto, trabalho muito brabo.</div>
+        <div class="dep-author">
+          <div class="dep-avatar">CX</div>
+          <div>
+            <div class="dep-name">cayx666</div>
+            <div class="dep-role">Cliente</div>
+            <div class="dep-service">Videoclipe · VFX</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-card">
+        <div class="dep-quote-row"><div class="dep-quote">"</div><div class="dep-stars">★★★★★</div></div>
+        <div class="dep-text">Sem caô, o resultado ficou absurdo. Cada detalhe fez diferença, parece outro nível de produção. O mano pegou a ideia que eu tinha e elevou demais, ficou muito a cara da track.</div>
+        <div class="dep-author">
+          <div class="dep-avatar">OZ</div>
+          <div>
+            <div class="dep-name">ozzyshii</div>
+            <div class="dep-role">Cliente</div>
+            <div class="dep-service">Videoclipe · VFX</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-card">
+        <div class="dep-quote-row"><div class="dep-quote">"</div><div class="dep-stars">★★★★★</div></div>
+        <div class="dep-text">Trampo muito diferenciado, os efeitos deram outra cara pro som. Ficou com aquela estética sombria que eu queria, tudo bem encaixado e com muita qualidade. O resultado final ficou muito acima do esperado.</div>
+        <div class="dep-author">
+          <div class="dep-avatar">HY</div>
+          <div>
+            <div class="dep-name">hayaisnotdead</div>
+            <div class="dep-role">Cliente</div>
+            <div class="dep-service">Videoclipe · VFX</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-card">
+        <div class="dep-quote-row"><div class="dep-quote">"</div><div class="dep-stars">★★★★★</div></div>
+        <div class="dep-text">Ficou muito chave. O visual combinou com a identidade do projeto e entregou exatamente a pegada que eu queria. Fora que foi entregue antes do prazo, com tudo certinho e sem perder qualidade. Trabalho fino demais.</div>
+        <div class="dep-author">
+          <div class="dep-avatar">RX</div>
+          <div>
+            <div class="dep-name">Rochaxzy</div>
+            <div class="dep-role">Corre do Rocha</div>
+            <div class="dep-service">Pacote Visual · GFX</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-card">
+        <div class="dep-quote-row"><div class="dep-quote">"</div><div class="dep-stars">★★★★★</div></div>
+        <div class="dep-text">O trabalho ficou muito acima do esperado. As estampas da Sauced ficaram com uma identidade muito forte e a cara da marca, tudo bem pensado nos detalhes. Os flyers e banners da Dann das Vendas também ficaram muito profissionais, passando exatamente a mensagem que precisava. Trampo muito brabo, visão diferenciada.</div>
+        <div class="dep-author">
+          <div class="dep-avatar">DF</div>
+          <div>
+            <div class="dep-name">Danyel Ferro</div>
+            <div class="dep-role">Sauced · Dann das Vendas</div>
+            <div class="dep-service">Estampas // Pacote Visual · GFX</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- duplicado para loop infinito -->
+      <div class="dep-card">
+        <div class="dep-quote-row"><div class="dep-quote">"</div><div class="dep-stars">★★★★★</div></div>
+        <div class="dep-text">Mano, ficou muito pesado. O VFX trouxe outra energia pro clipe, encaixou exatamente na visão que eu tinha. O resultado ficou sinistro, cada detalhe deixou o som com outra presença. Papo reto, trabalho muito brabo.</div>
+        <div class="dep-author">
+          <div class="dep-avatar">CX</div>
+          <div>
+            <div class="dep-name">cayx666</div>
+            <div class="dep-role">Cliente</div>
+            <div class="dep-service">Videoclipe · VFX</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-card">
+        <div class="dep-quote-row"><div class="dep-quote">"</div><div class="dep-stars">★★★★★</div></div>
+        <div class="dep-text">Sem caô, o resultado ficou absurdo. Cada detalhe fez diferença, parece outro nível de produção. O mano pegou a ideia que eu tinha e elevou demais, ficou muito a cara da track.</div>
+        <div class="dep-author">
+          <div class="dep-avatar">OZ</div>
+          <div>
+            <div class="dep-name">ozzyshii</div>
+            <div class="dep-role">Cliente</div>
+            <div class="dep-service">Videoclipe · VFX</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-card">
+        <div class="dep-quote-row"><div class="dep-quote">"</div><div class="dep-stars">★★★★★</div></div>
+        <div class="dep-text">Trampo muito diferenciado, os efeitos deram outra cara pro som. Ficou com aquela estética sombria que eu queria, tudo bem encaixado e com muita qualidade. O resultado final ficou muito acima do esperado.</div>
+        <div class="dep-author">
+          <div class="dep-avatar">HY</div>
+          <div>
+            <div class="dep-name">hayaisnotdead</div>
+            <div class="dep-role">Cliente</div>
+            <div class="dep-service">Videoclipe · VFX</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-card">
+        <div class="dep-quote-row"><div class="dep-quote">"</div><div class="dep-stars">★★★★★</div></div>
+        <div class="dep-text">Ficou muito chave. O visual combinou com a identidade do projeto e entregou exatamente a pegada que eu queria. Fora que foi entregue antes do prazo, com tudo certinho e sem perder qualidade. Trabalho fino demais.</div>
+        <div class="dep-author">
+          <div class="dep-avatar">RX</div>
+          <div>
+            <div class="dep-name">Rochaxzy</div>
+            <div class="dep-role">Corre do Rocha</div>
+            <div class="dep-service">Pacote Visual · GFX</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-card">
+        <div class="dep-quote-row"><div class="dep-quote">"</div><div class="dep-stars">★★★★★</div></div>
+        <div class="dep-text">O trabalho ficou muito acima do esperado. As estampas da Sauced ficaram com uma identidade muito forte e a cara da marca, tudo bem pensado nos detalhes. Os flyers e banners da Dann das Vendas também ficaram muito profissionais, passando exatamente a mensagem que precisava. Trampo muito brabo, visão diferenciada.</div>
+        <div class="dep-author">
+          <div class="dep-avatar">DF</div>
+          <div>
+            <div class="dep-name">Danyel Ferro</div>
+            <div class="dep-role">Sauced · Dann das Vendas</div>
+            <div class="dep-service">Estampas // Pacote Visual · GFX</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="section-rule"></div>
+  <div class="contato-grid">
+    <div class="contato-left">
+      <div class="section-eyebrow reveal">Contato</div>
+      <h2 class="section-title reveal reveal-delay-1">VAMOS<br>CRIAR<br><span style="color:var(--red)">ALGO.</span></h2>
+      <p class="reveal reveal-delay-2">Aberto para videoclipes, visualizers, lyric videos e conteúdo para redes sociais. Atendo artistas e clientes ao redor do mundo que valorizam identidade visual de verdade.</p>
+      <div class="contact-links reveal reveal-delay-3">
+
+        <a href="https://instagram.com/1luckkx" target="_blank" class="contact-link">
+          <div class="cl-left">
+            <div class="cl-icon">📷</div>
+            <div><div class="cl-platform">Instagram</div><div class="cl-handle">@1luckkx</div></div>
+          </div>
+          <div class="cl-arrow">→</div>
+        </a>
+
+        <a href="https://wa.me/5515991061286?text=Salve%20irm%C3%A3o,%20gostaria%20de%20fazer%20um%20or%C3%A7amento%20com%20voc%C3%AA%20como%20funciona?" target="_blank" class="contact-link">
+          <div class="cl-left">
+            <div class="cl-icon">📱</div>
+            <div><div class="cl-platform">WhatsApp</div><div class="cl-handle">+55 15 99106-1286</div></div>
+          </div>
+          <div class="cl-arrow">→</div>
+        </a>
+
+        <a href="#" class="contact-link" id="discordBtn">
+          <div class="cl-left">
+            <div class="cl-icon">💬</div>
+            <div><div class="cl-platform">Discord</div><div class="cl-handle">luckkx</div></div>
+          </div>
+          <div class="cl-arrow">→</div>
+        </a>
+
+      </div>
+    </div>
+
+    <div class="reveal reveal-delay-2">
+      <div class="contato-disponivel">
+        <div class="status-dot"></div>
+        <span>Disponível agora — respondo em menos de 24h</span>
+      </div>
+      <form class="contato-form" id="contactForm" action="https://formspree.io/f/mnjybaze" method="POST">
+        <input type="hidden" name="_subject" value="Novo contato via site LUCKKX">
+        <input type="hidden" name="_replyto" id="hidden_email">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" placeholder="Seu nome ou artístico" required>
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="whatsapp">WhatsApp <span style="color:var(--red)">*</span></label>
+            <input type="tel" id="whatsapp" name="whatsapp" placeholder="+55 11 99999-9999" required>
+          </div>
+          <div class="form-group">
+            <label for="discord_usuario">Discord <span style="color:var(--silver);font-size:9px">(opcional)</span></label>
+            <input type="text" id="discord_usuario" name="discord" placeholder="seu_usuario">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="instagram">Instagram <span style="color:var(--silver);font-size:9px">(opcional)</span></label>
+            <input type="text" id="instagram" name="instagram" placeholder="@seu_perfil">
+          </div>
+          <div class="form-group">
+            <label for="orcamento">Orçamento</label>
+            <select id="orcamento" name="orcamento" required>
+              <option value="" disabled selected>Selecione a área primeiro</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="tipo">Área do Projeto</label>
+            <select id="tipo" name="area_do_projeto" required>
+              <option value="" disabled selected>Selecione...</option>
+              <option value="VFX">VFX — Efeitos Visuais & Edição</option>
+              <option value="GFX">GFX — Design Gráfico</option>
+            </select>
+          </div>
+          <div class="form-group" id="subtipo-group" style="display:none">
+            <label for="subtipo" id="subtipo-label">Tipo de Serviço</label>
+            <select id="subtipo" name="tipo_de_projeto">
+              <option value="" disabled selected>Selecione...</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="mensagem">Mensagem</label>
+          <textarea id="mensagem" name="mensagem" placeholder="Fale sobre o projeto, referências, prazos e qualquer detalhe importante..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn-form" id="submitBtn">Começar Projeto →</button>
+      </form>
+
+      <div class="form-success" id="formSuccess">
+        <div class="form-success-title">MENSAGEM ENVIADA ✓</div>
+        <div class="form-success-text">Recebi seu contato — vou retornar em breve pelo meio que você preferir.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo">LUCKKX<span>.</span></div>
+    <div class="footer-status">
+      <div class="status-dot"></div>
+      Disponível para novos projetos
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 LUCKKX — Todos os direitos reservados</div>
+    <div class="footer-links">
+      <a href="#home">Início</a>
+      <a href="#portfolio">Portfólio</a>
+      <a href="#contato">Contato</a>
+    </div>
+  </div>
+</footer>
+
+<!-- DISCORD TOAST -->
+<div id="discord-toast">
+  <div class="toast-icon">💬</div>
+  <div class="toast-body">
+    <div class="toast-label">Discord copiado!</div>
+    <div class="toast-text">luckkx</div>
+  </div>
+</div>
+
+<script>
+// LOADER
+let progress = 0;
+const bar = document.getElementById('loaderBar');
+const loader = document.getElementById('loader');
+const loaderInterval = setInterval(() => {
+  progress += Math.random() * 18 + 5;
+  if (progress >= 100) {
+    progress = 100; bar.style.width = '100%';
+    clearInterval(loaderInterval);
+    setTimeout(() => { loader.classList.add('hidden'); }, 400);
+  } else { bar.style.width = progress + '%'; }
+}, 80);
+
+// CURSOR
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  cursor.style.left = mouseX + 'px'; cursor.style.top = mouseY + 'px';
+});
+(function animateRing() {
+  ringX += (mouseX - ringX) * 0.12; ringY += (mouseY - ringY) * 0.12;
+  ring.style.left = ringX + 'px'; ring.style.top = ringY + 'px';
+  requestAnimationFrame(animateRing);
+})();
+document.querySelectorAll('a, button, input, select, textarea').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width = '14px'; cursor.style.height = '14px';
+    ring.style.width = '48px'; ring.style.height = '48px';
+    ring.style.borderColor = 'rgba(196,30,30,0.9)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width = '8px'; cursor.style.height = '8px';
+    ring.style.width = '32px'; ring.style.height = '32px';
+    ring.style.borderColor = 'rgba(196,30,30,0.5)';
+  });
+});
+
+// NAV SCROLL
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50));
+
+// HAMBURGER
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+// REVEAL
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// COUNTERS
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target), duration = 1800, start = performance.now();
+  (function step(now) {
+    const p = Math.min((now - start) / duration, 1);
+    el.textContent = Math.floor((1 - Math.pow(1 - p, 3)) * target);
+    if (p < 1) requestAnimationFrame(step);
+  })(performance.now());
+}
+new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.querySelectorAll('.counter').forEach(animateCounter); }
+  });
+}, { threshold: 0.3 }).observe(document.querySelector('.stats-row'));
+
+// PORTFOLIO FILTERS
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    const filter = this.dataset.filter;
+    document.querySelectorAll('.portfolio-item').forEach(item => {
+      const show = filter === 'all' || item.dataset.category === filter;
+      item.style.display = show ? 'block' : 'none';
+    });
+  });
+});
+
+// VIDEO MODAL
+const modal = document.getElementById('videoModal');
+const modalVideoWrap = document.getElementById('modalVideoWrap');
+const modalTitle = document.getElementById('modalTitle');
+const modalMeta = document.getElementById('modalMeta');
+const modalPlaceholder = document.getElementById('modalPlaceholder');
+const modalPlaceholderText = document.getElementById('modalPlaceholderText');
+
+const videoItems = Array.from(document.querySelectorAll('.portfolio-item'));
+let currentVideoIndex = 0;
+
+function openVideo(index) {
+  currentVideoIndex = index;
+  const item = videoItems[index];
+  const youtubeId = item.dataset.youtube;
+  if (youtubeId) {
+    window.open('https://www.youtube.com/watch?v=' + youtubeId, '_blank');
+  }
+}
+
+videoItems.forEach((item, i) => {
+  item.addEventListener('click', () => openVideo(i));
+});
+
+function closeModal() {
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('modalClose').addEventListener('click', closeModal);
+modal.addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+
+// IMAGE MODAL
+const imgModal = document.getElementById('imgModal');
+const imgModalImg = document.getElementById('imgModalImg');
+const imgModalTitle = document.getElementById('imgModalTitle');
+const imgModalMeta = document.getElementById('imgModalMeta');
+const imgModalCounter = document.getElementById('imgModalCounter');
+
+const designItems = Array.from(document.querySelectorAll('.design-item[data-img]'));
+let currentImgIndex = 0;
+
+function openImg(index) {
+  currentImgIndex = index;
+  const item = designItems[index];
+  imgModalImg.src = item.dataset.img;
+  imgModalTitle.textContent = item.dataset.title || '—';
+  imgModalMeta.textContent = item.dataset.meta || '—';
+  imgModalCounter.textContent = (index + 1) + ' / ' + designItems.length;
+  imgModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+designItems.forEach((item, i) => {
+  item.style.cursor = 'none';
+  item.addEventListener('click', () => openImg(i));
+});
+
+document.getElementById('imgPrev').addEventListener('click', (e) => {
+  e.stopPropagation();
+  openImg((currentImgIndex - 1 + designItems.length) % designItems.length);
+});
+document.getElementById('imgNext').addEventListener('click', (e) => {
+  e.stopPropagation();
+  openImg((currentImgIndex + 1) % designItems.length);
+});
+
+function closeImgModal() {
+  imgModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('imgModalClose').addEventListener('click', closeImgModal);
+imgModal.addEventListener('click', function(e) { if (e.target === this) closeImgModal(); });
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeImgModal(); }
+  if (modal.classList.contains('open')) {
+    if (e.key === 'ArrowLeft') openVideo((currentVideoIndex - 1 + videoItems.length) % videoItems.length);
+    if (e.key === 'ArrowRight') openVideo((currentVideoIndex + 1) % videoItems.length);
+  }
+  if (imgModal.classList.contains('open')) {
+    if (e.key === 'ArrowLeft') openImg((currentImgIndex - 1 + designItems.length) % designItems.length);
+    if (e.key === 'ArrowRight') openImg((currentImgIndex + 1) % designItems.length);
+  }
+});
+
+// FORMSPREE FORM
+const contactForm = document.getElementById('contactForm');
+const submitBtn = document.getElementById('submitBtn');
+const formSuccess = document.getElementById('formSuccess');
+
+contactForm.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Enviando...';
+  document.getElementById('hidden_email').value = document.getElementById('email').value;
+  const formData = new FormData(this);
+
+  try {
+    const response = await fetch(this.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+      contactForm.style.display = 'none';
+      formSuccess.style.display = 'block';
+      // força o display e anima entrada
+      setTimeout(() => formSuccess.classList.add('show'), 10);
+    } else {
+      submitBtn.textContent = 'Erro — tente novamente';
+      submitBtn.style.borderColor = 'var(--red)';
+      submitBtn.disabled = false;
+    }
+  } catch (err) {
+    contactForm.style.display = 'none';
+    formSuccess.style.display = 'block';
+    setTimeout(() => formSuccess.classList.add('show'), 10);
+  }
+});
+
+// DISCORD — copia ao clicar, mostra toast
+const discordBtn = document.getElementById('discordBtn');
+const discordToast = document.getElementById('discord-toast');
+let discordTimer;
+
+discordBtn.addEventListener('click', function(e) {
+  e.preventDefault();
+  navigator.clipboard.writeText('luckkx').catch(() => {});
+  clearTimeout(discordTimer);
+  discordToast.classList.add('show');
+  discordTimer = setTimeout(() => discordToast.classList.remove('show'), 2500);
+});
+
+// TIPO DE PROJETO — seleção dinâmica GFX / VFX
+const tipoSelect = document.getElementById('tipo');
+const subtipoGroup = document.getElementById('subtipo-group');
+const subtipoSelect = document.getElementById('subtipo');
+const subtipoLabel = document.getElementById('subtipo-label');
+const orcamentoSelect = document.getElementById('orcamento');
+
+const opcoesVFX = [
+  'Videoclipe',
+  'Visualizer',
+  'Lyric Video',
+  'Motion Design',
+  'Conteúdo para Redes Sociais',
+  'Outro'
+];
+const opcoesGFX = [
+  'Logo / Identidade Visual',
+  'Flyer / Arte de Divulgação',
+  'Banner / Header',
+  'Pack Completo (Logo + Arte)',
+  'Outro'
+];
+
+const orcamentoVFX = [
+  'Até R$ 350',
+  'R$ 350 – R$ 1.000',
+  'R$ 1.000 – R$ 2.000',
+  'R$ 2.000 – R$ 3.000',
+  'Acima de R$ 3.000',
+  'A definir'
+];
+const orcamentoGFX = [
+  'Até R$ 150',
+  'R$ 150 – R$ 500',
+  'R$ 500 – R$ 1.000',
+  'R$ 1.000 – R$ 2.000',
+  'Acima de R$ 2.000',
+  'A definir'
+];
+
+tipoSelect.addEventListener('change', function () {
+  const val = this.value;
+
+  // — subtipo —
+  subtipoSelect.innerHTML = '<option value="" disabled selected>Selecione...</option>';
+  const opcoes = val === 'VFX' ? opcoesVFX : opcoesGFX;
+  subtipoLabel.textContent = val === 'VFX' ? 'Tipo de Vídeo' : 'Tipo de Design';
+  opcoes.forEach(o => {
+    const opt = document.createElement('option');
+    opt.value = o; opt.textContent = o;
+    subtipoSelect.appendChild(opt);
+  });
+  subtipoGroup.style.display = 'flex';
+  requestAnimationFrame(() => subtipoGroup.classList.add('visible'));
+
+  // — orçamento —
+  const faixas = val === 'VFX' ? orcamentoVFX : orcamentoGFX;
+  orcamentoSelect.innerHTML = '<option value="" disabled selected>Selecione...</option>';
+  faixas.forEach(f => {
+    const opt = document.createElement('option');
+    opt.value = f; opt.textContent = f;
+    orcamentoSelect.appendChild(opt);
+  });
+});
+
+
+const skillObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const row = entry.target;
+    const bar = row.querySelector('.skill-bar-fill');
+    const num = row.querySelector('.skill-ovr-num');
+    const target = parseInt(bar?.dataset.target || 100);
+    const finalNum = parseInt(num?.dataset.final || 10);
+
+    if (bar) {
+      setTimeout(() => {
+        bar.style.width = target + '%';
+        setTimeout(() => bar.classList.add('ready'), 900);
+      }, 120);
+    }
+    if (num) {
+      const dur = 900, start = performance.now();
+      const tick = (now) => {
+        const p = Math.min((now - start) / dur, 1);
+        const ease = 1 - Math.pow(1 - p, 3);
+        num.textContent = Math.round(ease * finalNum);
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      setTimeout(() => requestAnimationFrame(tick), 120);
+    }
+    skillObserver.unobserve(row);
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.skill-row').forEach(r => skillObserver.observe(r));
+
+// DESIGN / GFX FILTER BADGES
+document.querySelectorAll('.design-badge[data-design-filter]').forEach(btn => {
+  btn.addEventListener('click', function () {
+    document.querySelectorAll('.design-badge[data-design-filter]').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    const filter = this.dataset.designFilter;
+    document.querySelectorAll('.design-item[data-category]').forEach(item => {
+      const match = filter === 'all' || item.dataset.category === filter;
+      item.style.display = match ? '' : 'none';
+    });
+  });
+});
+
+</script>
+</body>
+</html>
