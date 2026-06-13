@@ -1240,9 +1240,133 @@
     .dep-modal-inner { padding: 40px 24px 32px; }
   }
 
+  /* ══ FAQ ══ */
+  #faq { background: var(--black); }
+  .faq-list { display: flex; flex-direction: column; gap: 10px; max-width: 880px; }
+  .faq-item {
+    background: var(--charcoal); border: 1px solid #1a1a1a; border-left: 3px solid #1a1a1a;
+    border-radius: 4px; transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+  }
+  .faq-item.open, .faq-item:hover {
+    border-left-color: var(--red); border-color: #262626;
+    background: var(--near-black); box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  }
+  .faq-question {
+    width: 100%; text-align: left; background: none; border: none; cursor: none;
+    padding: 22px 26px; display: flex; align-items: center; gap: 18px;
+  }
+  .faq-num {
+    font-family: var(--mono); font-size: 13px; color: var(--red);
+    width: 34px; height: 34px; flex-shrink: 0; border-radius: 50%;
+    border: 1px solid #2a2a2a; display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .faq-item.open .faq-num, .faq-item:hover .faq-num { border-color: var(--red); background: var(--accent-bg); }
+  .faq-q-body { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .faq-tag {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.28em;
+    color: var(--red); text-transform: uppercase;
+  }
+  .faq-q-title { font-family: 'Anton', sans-serif; font-size: 17px; letter-spacing: 0.03em; color: var(--white); line-height: 1.4; }
+  .faq-icon {
+    font-family: var(--mono); font-size: 18px; color: var(--red); flex-shrink: 0;
+    width: 28px; height: 28px; border: 1px solid #2a2a2a; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.3s, border-color 0.3s; line-height: 1;
+  }
+  .faq-item.open .faq-icon, .faq-item:hover .faq-icon { border-color: var(--red); }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-answer {
+    max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+    padding: 0 26px 0 78px;
+  }
+  .faq-item.open .faq-answer { max-height: 520px; }
+  .faq-answer p { color: var(--silver); font-size: 14px; line-height: 1.8; padding-bottom: 24px; }
+  .faq-cta-row {
+    margin-top: 40px; padding: 28px 32px;
+    border: 1px solid rgba(196,30,30,0.3); background: var(--accent-bg);
+    display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+  }
+  .faq-cta-text { font-family: 'Anton', sans-serif; font-size: 20px; color: var(--white); letter-spacing: 0.04em; }
+  .faq-cta-text span { color: var(--red); }
+  @media (max-width: 768px) {
+    .faq-question { padding: 18px 18px; gap: 12px; }
+    .faq-num { width: 28px; height: 28px; font-size: 12px; }
+    .faq-q-title { font-size: 15px; }
+    .faq-answer { padding: 0 18px 0 18px; }
+    .faq-cta-row { flex-direction: column; align-items: flex-start; text-align: left; }
+  }
+
+  /* ── item de pagamentos internacionais (dentro do FAQ) ── */
+  .faq-item--payments .faq-answer { padding: 0 26px; }
+  .faq-item--payments.open .faq-answer { max-height: 1100px; }
+  .pay-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 4px; }
+  .pay-card {
+    background: var(--bg-soft); border: 1px solid #1e1e1e;
+    padding: 22px 20px; position: relative; overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .pay-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+  }
+  .pay-card:hover { border-color: #333; transform: translateY(-3px); }
+  .pay-card:hover::before { transform: scaleX(1); }
+  .pay-icon {
+    width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+    border: 1px solid #2a2a2a; border-radius: 50%; margin-bottom: 14px; color: var(--red);
+  }
+  .pay-name { font-family: 'Anton', sans-serif; font-size: 17px; color: var(--white); letter-spacing: 0.05em; margin-bottom: 6px; }
+  .pay-desc { font-size: 13px; color: var(--silver); line-height: 1.7; }
+  .pay-note {
+    margin-top: 18px; padding-bottom: 24px;
+    font-size: 13px; color: var(--silver); line-height: 1.7;
+  }
+  .pay-note strong { color: var(--white); }
+  @media (max-width: 768px) {
+    .pay-grid { grid-template-columns: 1fr; }
+  }
+
+
+
+
+  
+  /* ══ TRADUTOR (Google Translate) ══ */
+/*   .gtranslate-wrap {
+    position: fixed; bottom: 24px; right: 24px; z-index: 9000;
+    background: var(--charcoal); border: 1px solid #2a2a2a; border-radius: 999px;
+    padding: 6px 14px; display: flex; align-items: center; gap: 8px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  } */
+
+
+
+
+
+
+  .gtranslate-wrap .gt-icon { color: var(--red); display: flex; align-items: center; }
+  #google_translate_element { line-height: 1; }
+  #google_translate_element .goog-te-gadget { font-family: var(--mono) !important; font-size: 0 !important; color: var(--silver) !important; }
+  #google_translate_element .goog-te-gadget-simple {
+    background: transparent !important; border: none !important; padding: 0 !important;
+    font-size: 12px !important; display: flex !important; align-items: center;
+  }
+  #google_translate_element .goog-te-gadget-simple .goog-te-menu-value {
+    color: var(--silver) !important; font-family: var(--mono) !important; font-size: 11px !important; letter-spacing: 0.1em;
+  }
+  #google_translate_element .goog-te-gadget-simple .goog-te-menu-value span { color: var(--silver) !important; }
+  #google_translate_element img { display: none !important; }
+  .goog-te-banner-frame { display: none !important; }
+  body { top: 0 !important; }
+  .skiptranslate iframe { display: none !important; }
+  @media (max-width: 768px) {
+    .gtranslate-wrap { bottom: 16px; right: 16px; padding: 6px 12px; }
+  }
+
 </style>
 </head>
 <body>
+
 
 <!-- LOADER -->
 <div id="loader">
@@ -1326,10 +1450,11 @@
     <li><a href="#sobre">Sobre</a></li>
     <li><a href="#experiencia">Experiência</a></li>
     <li><a href="#skills">Skills</a></li>
-    <li><a href="#processo">Processo</a></li>
     <li><a href="#portfolio">VFX</a></li>
     <li><a href="#design">GFX</a></li>
+    <li><a href="#processo">Como Funciona</a></li>
     <li><a href="#depoimentos">Depoimentos</a></li>
+    <li><a href="#faq">FAQ</a></li>
   </ul>
   <a href="#contato" class="nav-cta">Contato</a>
   <button class="nav-hamburger" id="hamburger" aria-label="Menu">
@@ -1339,10 +1464,11 @@
 <div class="nav-mobile" id="mobileMenu">
   <a href="#sobre" onclick="closeMobile()">Sobre</a>
   <a href="#experiencia" onclick="closeMobile()">Experiência</a>
-  <a href="#processo" onclick="closeMobile()">Processo</a>
   <a href="#portfolio" onclick="closeMobile()">VFX</a>
   <a href="#design" onclick="closeMobile()">GFX</a>
+  <a href="#processo" onclick="closeMobile()">Como Funciona</a>
   <a href="#depoimentos" onclick="closeMobile()">Depoimentos</a>
+  <a href="#faq" onclick="closeMobile()">FAQ</a>
   <a href="#contato" onclick="closeMobile()">Contato</a>
 </div>
 
@@ -1689,6 +1815,183 @@
   </div>
 </section>
 
+<!-- PORTFÓLIO -->
+<section id="portfolio">
+  <div class="section-rule"></div>
+  <div class="section-eyebrow reveal">VFX — Portfólio</div>
+  <h2 class="section-title reveal reveal-delay-1">TRABALHOS<br>EM VÍDEO.</h2>
+
+  <p class="reveal" style="color:var(--silver);max-width:640px;line-height:1.8;margin-bottom:48px;font-size:15px;">
+    No lado <strong style="color:var(--white)"><span style="color:var(--red)">VFX</span></strong>, cada frame é intencional. Videoclipes trap e underground, visualizers atmosféricos, lyric videos com peso visual — edição que não suporta a música, faz parte dela. Clique em qualquer projeto para assistir.
+  </p>
+
+  <div class="portfolio-filters reveal reveal-delay-2">
+    <button class="filter-btn active" data-filter="all">Portfolio completo</button>
+<!--     <button class="filter-btn" data-filter="videoclipe">Videoclipes</button>
+    <button class="filter-btn" data-filter="visualizer">Visualizers</button>
+    <button class="filter-btn" data-filter="motion">Motion Design</button> -->
+  </div>
+
+<!-- INSTRUÇÃO PARA O EDITOR
+  <div class="portfolio-add-notice reveal reveal-delay-1">
+    <div class="notice-icon">▶</div>
+    <div class="notice-text">
+      <strong>Como adicionar seus vídeos:</strong> cada card abaixo tem um atributo <strong>data-youtube-id</strong> no HTML. Substitua o valor (ex: <strong>dQw4w9WgXcQ</strong>) pelo ID do seu vídeo do YouTube — é a parte depois de <strong>?v=</strong> na URL. Também atualize o título, tag e descrição dentro de cada <strong>.portfolio-item</strong>. Remova este aviso quando estiver pronto.
+    </div>
+  </div> -->
+
+  <div class="portfolio-grid reveal reveal-delay-2">
+
+    <!-- PROJETO 1 -->
+    <div class="portfolio-item featured" data-category="videoclipe"
+         data-youtube="0z0K6x_24gk"
+         data-title="Cayx666 - Olho da cara (ft. Nekkropsy)" data-meta="Videoclipe · Trap">
+      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#1a0505 0%,#2d0808 50%,#050505 100%)"></div>
+      <div class="portfolio-thumb-wrap">
+        <img class="portfolio-thumb" src="https://img.youtube.com/vi/0z0K6x_24gk/maxresdefault.jpg" alt="Cayx666 — Olho da cara" loading="lazy" onerror="this.src='https://img.youtube.com/vi/0z0K6x_24gk/hqdefault.jpg'">
+      </div>
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <div class="pi-tag">Videoclipe · Trap</div>
+          <div class="pi-name">Cayx666 — Olho da cara (ft. Nekkropsy)</div>
+          <div class="pi-sub">Clique para assistir</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJETO 2 -->
+    <div class="portfolio-item" data-category="videoclipe"
+         data-youtube="gMgVnAT1PO0"
+         data-title="Cayx666 — Landr" data-meta="Videoclipe · Trap">
+      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#0a0a1a 0%,#0f0f2a 50%,#050505 100%)"></div>
+      <div class="portfolio-thumb-wrap">
+        <img class="portfolio-thumb" src="https://img.youtube.com/vi/gMgVnAT1PO0/maxresdefault.jpg" alt="Cayx666 — Landr" loading="lazy" onerror="this.src='https://img.youtube.com/vi/gMgVnAT1PO0/hqdefault.jpg'">
+      </div>
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <div class="pi-tag">Videoclipe · Trap</div>
+          <div class="pi-name">Cayx666 — Landr</div>
+          <div class="pi-sub">Clique para assistir</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJETO 3 -->
+    <div class="portfolio-item" data-category="videoclipe"
+         data-youtube="jSigHg-Jkd8"
+         data-title="Haya — Esperando na Chuva" data-meta="Videoclipe · Trap">
+      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#050a14 0%,#0a1428 50%,#050505 100%)"></div>
+      <div class="portfolio-thumb-wrap">
+        <img class="portfolio-thumb" src="https://img.youtube.com/vi/jSigHg-Jkd8/maxresdefault.jpg" alt="Haya — Esperando na Chuva" loading="lazy" onerror="this.src='https://img.youtube.com/vi/jSigHg-Jkd8/hqdefault.jpg'">
+      </div>
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <div class="pi-tag">Videoclipe · Trap</div>
+          <div class="pi-name">Haya — Esperando na Chuva</div>
+          <div class="pi-sub">Clique para assistir</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJETO 4 -->
+    <div class="portfolio-item" data-category="Preview"
+         data-youtube="JrR0M2ehoB8"
+         data-title="Ozzy — Preview" data-meta="Preview · Trap">
+      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#140505 0%,#1e0808 50%,#050505 100%)"></div>
+      <div class="portfolio-thumb-wrap">
+        <img class="portfolio-thumb" src="https://img.youtube.com/vi/JrR0M2ehoB8/maxresdefault.jpg" alt="Ozzy — Preview" loading="lazy" onerror="this.src='https://img.youtube.com/vi/JrR0M2ehoB8/hqdefault.jpg'">
+      </div>
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <div class="pi-tag">Preview · Trap</div>
+          <div class="pi-name">Ozzy — Preview</div>
+          <div class="pi-sub">Clique para assistir</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJETO 5 -->
+    <div class="portfolio-item" data-category="Anuncio"
+         data-youtube="psLwQ2WTNEI"
+         data-title="Sauced — Drop Brazil" data-meta="Anuncio · Drop sauced">
+      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#141400 0%,#282800 50%,#050505 100%)"></div>
+      <div class="portfolio-thumb-wrap">
+        <img class="portfolio-thumb" src="https://img.youtube.com/vi/psLwQ2WTNEI/maxresdefault.jpg" alt="Sauced — Drop Brazil" loading="lazy" onerror="this.src='https://img.youtube.com/vi/psLwQ2WTNEI/hqdefault.jpg'">
+      </div>
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <div class="pi-tag">Anuncio · Drop sauced</div>
+          <div class="pi-name">Sauced — Drop Brazil</div>
+          <div class="pi-sub">Clique para assistir</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJETO 6 -->
+    <div class="portfolio-item" data-category="motion"
+         data-youtube="aEFwrSLZXok"
+         data-title="Transition LAB" data-meta="VFX · Showcase">
+      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#050514 0%,#0a0a28 50%,#050505 100%)"></div>
+      <div class="portfolio-thumb-wrap">
+        <img class="portfolio-thumb" src="https://img.youtube.com/vi/aEFwrSLZXok/maxresdefault.jpg" alt="Transition LAB" loading="lazy" onerror="this.src='https://img.youtube.com/vi/aEFwrSLZXok/hqdefault.jpg'">
+      </div>
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <div class="pi-tag">VFX · Showcase</div>
+          <div class="pi-name">Transition LAB</div>
+          <div class="pi-sub">Clique para assistir</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJETO 7 -->
+    <div class="portfolio-item" data-category="motion"
+         data-youtube="jBUJ6oJU8nA"
+         data-title="Vortex Effect" data-meta="VFX · Showcase">
+      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#0a0505 0%,#1a0a0a 50%,#050505 100%)"></div>
+      <div class="portfolio-thumb-wrap">
+        <img class="portfolio-thumb" src="https://img.youtube.com/vi/jBUJ6oJU8nA/maxresdefault.jpg" alt="Vortex Effect" loading="lazy" onerror="this.src='https://img.youtube.com/vi/jBUJ6oJU8nA/hqdefault.jpg'">
+      </div>
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <div class="pi-tag">VFX · Showcase</div>
+          <div class="pi-name">Vortex Effect</div>
+          <div class="pi-sub">Clique para assistir</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJETO 8 -->
+    <div class="portfolio-item" data-category="videoclipe"
+         data-youtube="oeEAbyEpgWM"
+         data-title="Haya — Bayonetta" data-meta="Videoclipe · Trap">
+      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#050a14 0%,#0a1428 50%,#050505 100%)"></div>
+      <div class="portfolio-thumb-wrap">
+        <img class="portfolio-thumb" src="https://img.youtube.com/vi/oeEAbyEpgWM/hqdefault.jpg" alt="Haya — Bayonetta" loading="lazy" onerror="this.onerror=null">
+      </div>
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <div class="pi-tag">Videoclipe · Trap</div>
+          <div class="pi-name">Haya — Bayonetta</div>
+          <div class="pi-sub">Clique para assistir</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="portfolio-cta reveal">
+    <a href="#contato" class="btn-primary">Quer um projeto assim? →</a>
+  </div>
+</section>
+
 <!-- DESIGN / GFX -->
 <section id="design">
   <div class="section-rule"></div>
@@ -1908,183 +2211,6 @@
   </div>
 </section>
 
-<!-- PORTFÓLIO -->
-<section id="portfolio">
-  <div class="section-rule"></div>
-  <div class="section-eyebrow reveal">VFX — Portfólio</div>
-  <h2 class="section-title reveal reveal-delay-1">TRABALHOS<br>EM VÍDEO.</h2>
-
-  <p class="reveal" style="color:var(--silver);max-width:640px;line-height:1.8;margin-bottom:48px;font-size:15px;">
-    No lado <strong style="color:var(--white)"><span style="color:var(--red)">VFX</span></strong>, cada frame é intencional. Videoclipes trap e underground, visualizers atmosféricos, lyric videos com peso visual — edição que não suporta a música, faz parte dela. Clique em qualquer projeto para assistir.
-  </p>
-
-  <div class="portfolio-filters reveal reveal-delay-2">
-    <button class="filter-btn active" data-filter="all">Portfolio completo</button>
-<!--     <button class="filter-btn" data-filter="videoclipe">Videoclipes</button>
-    <button class="filter-btn" data-filter="visualizer">Visualizers</button>
-    <button class="filter-btn" data-filter="motion">Motion Design</button> -->
-  </div>
-
-<!-- INSTRUÇÃO PARA O EDITOR
-  <div class="portfolio-add-notice reveal reveal-delay-1">
-    <div class="notice-icon">▶</div>
-    <div class="notice-text">
-      <strong>Como adicionar seus vídeos:</strong> cada card abaixo tem um atributo <strong>data-youtube-id</strong> no HTML. Substitua o valor (ex: <strong>dQw4w9WgXcQ</strong>) pelo ID do seu vídeo do YouTube — é a parte depois de <strong>?v=</strong> na URL. Também atualize o título, tag e descrição dentro de cada <strong>.portfolio-item</strong>. Remova este aviso quando estiver pronto.
-    </div>
-  </div> -->
-
-  <div class="portfolio-grid reveal reveal-delay-2">
-
-    <!-- PROJETO 1 -->
-    <div class="portfolio-item featured" data-category="videoclipe"
-         data-youtube="0z0K6x_24gk"
-         data-title="Cayx666 - Olho da cara (ft. Nekkropsy)" data-meta="Videoclipe · Trap">
-      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#1a0505 0%,#2d0808 50%,#050505 100%)"></div>
-      <div class="portfolio-thumb-wrap">
-        <img class="portfolio-thumb" src="https://img.youtube.com/vi/0z0K6x_24gk/maxresdefault.jpg" alt="Cayx666 — Olho da cara" loading="lazy" onerror="this.src='https://img.youtube.com/vi/0z0K6x_24gk/hqdefault.jpg'">
-      </div>
-      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-      <div class="portfolio-item-overlay">
-        <div class="portfolio-item-info">
-          <div class="pi-tag">Videoclipe · Trap</div>
-          <div class="pi-name">Cayx666 — Olho da cara (ft. Nekkropsy)</div>
-          <div class="pi-sub">Clique para assistir</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PROJETO 2 -->
-    <div class="portfolio-item" data-category="videoclipe"
-         data-youtube="gMgVnAT1PO0"
-         data-title="Cayx666 — Landr" data-meta="Videoclipe · Trap">
-      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#0a0a1a 0%,#0f0f2a 50%,#050505 100%)"></div>
-      <div class="portfolio-thumb-wrap">
-        <img class="portfolio-thumb" src="https://img.youtube.com/vi/gMgVnAT1PO0/maxresdefault.jpg" alt="Cayx666 — Landr" loading="lazy" onerror="this.src='https://img.youtube.com/vi/gMgVnAT1PO0/hqdefault.jpg'">
-      </div>
-      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-      <div class="portfolio-item-overlay">
-        <div class="portfolio-item-info">
-          <div class="pi-tag">Videoclipe · Trap</div>
-          <div class="pi-name">Cayx666 — Landr</div>
-          <div class="pi-sub">Clique para assistir</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PROJETO 3 -->
-    <div class="portfolio-item" data-category="videoclipe"
-         data-youtube="jSigHg-Jkd8"
-         data-title="Haya — Esperando na Chuva" data-meta="Videoclipe · Trap">
-      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#050a14 0%,#0a1428 50%,#050505 100%)"></div>
-      <div class="portfolio-thumb-wrap">
-        <img class="portfolio-thumb" src="https://img.youtube.com/vi/jSigHg-Jkd8/maxresdefault.jpg" alt="Haya — Esperando na Chuva" loading="lazy" onerror="this.src='https://img.youtube.com/vi/jSigHg-Jkd8/hqdefault.jpg'">
-      </div>
-      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-      <div class="portfolio-item-overlay">
-        <div class="portfolio-item-info">
-          <div class="pi-tag">Videoclipe · Trap</div>
-          <div class="pi-name">Haya — Esperando na Chuva</div>
-          <div class="pi-sub">Clique para assistir</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PROJETO 4 -->
-    <div class="portfolio-item" data-category="Preview"
-         data-youtube="JrR0M2ehoB8"
-         data-title="Ozzy — Preview" data-meta="Preview · Trap">
-      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#140505 0%,#1e0808 50%,#050505 100%)"></div>
-      <div class="portfolio-thumb-wrap">
-        <img class="portfolio-thumb" src="https://img.youtube.com/vi/JrR0M2ehoB8/maxresdefault.jpg" alt="Ozzy — Preview" loading="lazy" onerror="this.src='https://img.youtube.com/vi/JrR0M2ehoB8/hqdefault.jpg'">
-      </div>
-      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-      <div class="portfolio-item-overlay">
-        <div class="portfolio-item-info">
-          <div class="pi-tag">Preview · Trap</div>
-          <div class="pi-name">Ozzy — Preview</div>
-          <div class="pi-sub">Clique para assistir</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PROJETO 5 -->
-    <div class="portfolio-item" data-category="Anuncio"
-         data-youtube="psLwQ2WTNEI"
-         data-title="Sauced — Drop Brazil" data-meta="Anuncio · Drop sauced">
-      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#141400 0%,#282800 50%,#050505 100%)"></div>
-      <div class="portfolio-thumb-wrap">
-        <img class="portfolio-thumb" src="https://img.youtube.com/vi/psLwQ2WTNEI/maxresdefault.jpg" alt="Sauced — Drop Brazil" loading="lazy" onerror="this.src='https://img.youtube.com/vi/psLwQ2WTNEI/hqdefault.jpg'">
-      </div>
-      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-      <div class="portfolio-item-overlay">
-        <div class="portfolio-item-info">
-          <div class="pi-tag">Anuncio · Drop sauced</div>
-          <div class="pi-name">Sauced — Drop Brazil</div>
-          <div class="pi-sub">Clique para assistir</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PROJETO 6 -->
-    <div class="portfolio-item" data-category="motion"
-         data-youtube="aEFwrSLZXok"
-         data-title="Transition LAB" data-meta="VFX · Showcase">
-      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#050514 0%,#0a0a28 50%,#050505 100%)"></div>
-      <div class="portfolio-thumb-wrap">
-        <img class="portfolio-thumb" src="https://img.youtube.com/vi/aEFwrSLZXok/maxresdefault.jpg" alt="Transition LAB" loading="lazy" onerror="this.src='https://img.youtube.com/vi/aEFwrSLZXok/hqdefault.jpg'">
-      </div>
-      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-      <div class="portfolio-item-overlay">
-        <div class="portfolio-item-info">
-          <div class="pi-tag">VFX · Showcase</div>
-          <div class="pi-name">Transition LAB</div>
-          <div class="pi-sub">Clique para assistir</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PROJETO 7 -->
-    <div class="portfolio-item" data-category="motion"
-         data-youtube="jBUJ6oJU8nA"
-         data-title="Vortex Effect" data-meta="VFX · Showcase">
-      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#0a0505 0%,#1a0a0a 50%,#050505 100%)"></div>
-      <div class="portfolio-thumb-wrap">
-        <img class="portfolio-thumb" src="https://img.youtube.com/vi/jBUJ6oJU8nA/maxresdefault.jpg" alt="Vortex Effect" loading="lazy" onerror="this.src='https://img.youtube.com/vi/jBUJ6oJU8nA/hqdefault.jpg'">
-      </div>
-      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-      <div class="portfolio-item-overlay">
-        <div class="portfolio-item-info">
-          <div class="pi-tag">VFX · Showcase</div>
-          <div class="pi-name">Vortex Effect</div>
-          <div class="pi-sub">Clique para assistir</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PROJETO 8 -->
-    <div class="portfolio-item" data-category="videoclipe"
-         data-youtube="oeEAbyEpgWM"
-         data-title="Haya — Bayonetta" data-meta="Videoclipe · Trap">
-      <div class="portfolio-item-bg" style="background:linear-gradient(135deg,#050a14 0%,#0a1428 50%,#050505 100%)"></div>
-      <div class="portfolio-thumb-wrap">
-        <img class="portfolio-thumb" src="https://img.youtube.com/vi/oeEAbyEpgWM/hqdefault.jpg" alt="Haya — Bayonetta" loading="lazy" onerror="this.onerror=null">
-      </div>
-      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-      <div class="portfolio-item-overlay">
-        <div class="portfolio-item-info">
-          <div class="pi-tag">Videoclipe · Trap</div>
-          <div class="pi-name">Haya — Bayonetta</div>
-          <div class="pi-sub">Clique para assistir</div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-  <div class="portfolio-cta reveal">
-    <a href="#contato" class="btn-primary">Quer um projeto assim? →</a>
-  </div>
-</section>
-
 <!-- DEPOIMENTOS -->
 <section id="depoimentos">
   <div class="section-rule"></div>
@@ -2225,6 +2351,125 @@
           </a>
         </div>
       </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-rule"></div>
+  <div class="section-eyebrow reveal">Perguntas Frequentes</div>
+  <h2 class="section-title reveal reveal-delay-1">TIRA SUAS<br>DÚVIDAS.</h2>
+
+  <div class="faq-list reveal reveal-delay-2">
+
+    <div class="faq-item">
+      <button class="faq-question">
+        <span class="faq-num">01</span>
+        <span class="faq-q-body"><span class="faq-tag">Prazos</span><span class="faq-q-title">Quanto tempo demora pra entregar um projeto?</span></span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p>Em média, projetos de <strong style="color:var(--white)">GFX</strong> (logos, flyers, banners) ficam prontos entre <strong style="color:var(--white)">4 a 8 dias</strong>, e projetos de <strong style="color:var(--white)">VFX</strong> (videoclipes, visualizers, motion) entre <strong style="color:var(--white)">8 a 13 dias</strong> — podendo ser entregue antes do prazo. <strong style="color:var(--red)">Importante:</strong> isso é uma média geral, não um prazo exato. O tempo real depende do projeto/pacote e é sempre combinado e definido na negociação com você.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        <span class="faq-num">02</span>
+        <span class="faq-q-body"><span class="faq-tag">Pagamento</span><span class="faq-q-title">Como funciona o pagamento?</span></span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p>O padrão é <strong style="color:var(--white)">100% do valor pago antes do início do projeto</strong>. Mas se você preferir e se sentir mais seguro, também aceito o modelo <strong style="color:var(--white)">50/50</strong>: 50% antes do início (após a negociação) e os outros 50% antes da entrega do produto final.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        <span class="faq-num">03</span>
+        <span class="faq-q-body"><span class="faq-tag">Revisões</span><span class="faq-q-title">Quantas revisões estão incluídas?</span></span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p>Você tem direito a <strong style="color:var(--white)">2 ajustes gratuitos</strong> (sempre dependendo do tipo de ajuste solicitado). Se o ajuste pedido não se encaixar nessas 2 rodadas gratuitas, será cobrado um valor adicional — que é negociado com transparência antes de qualquer cobrança.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        <span class="faq-num">04</span>
+        <span class="faq-q-body"><span class="faq-tag">Internacional</span><span class="faq-q-title">Você atende clientes de fora do Brasil?</span></span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p>Sim! Já trabalhei com clientes de vários países e o processo é <strong style="color:var(--white)">100% remoto</strong>. A comunicação pode ser feita em <strong style="color:var(--white)">português, inglês ou espanhol</strong>, pelo WhatsApp, e-mail ou Discord, e me adapto ao fuso horário que for melhor pra você. O fluxo de trabalho — briefing, referências, acompanhamento e entrega final — é exatamente o mesmo de qualquer outro projeto, então a distância não muda em nada a qualidade ou o cuidado. Se quiser saber sobre formas de pagamento pra quem está fora do Brasil, dá uma olhada no item <strong style="color:var(--white)">"Pagamento internacional"</strong> aqui abaixo.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        <span class="faq-num">05</span>
+        <span class="faq-q-body"><span class="faq-tag">Referências</span><span class="faq-q-title">Preciso ter referências visuais?</span></span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p>Sim, isso é essencial — tanto para <strong style="color:var(--white)">VFX</strong> quanto para <strong style="color:var(--white)">GFX</strong>. Preciso de pelo menos <strong style="color:var(--white)">3 a 5 referências visuais</strong> pra termos um norte claro do estilo, da estética e da direção do projeto. Não precisa ser nada perfeito — pode ser print, vídeo, link, qualquer coisa que represente a ideia que você tem na cabeça.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        <span class="faq-num">06</span>
+        <span class="faq-q-body"><span class="faq-tag">VFX & GFX</span><span class="faq-q-title">Qual a diferença entre VFX e GFX?</span></span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p><strong style="color:var(--white)"><span style="color:var(--red)">VFX</span></strong> é tudo relacionado a vídeo — videoclipes, visualizers, lyric videos e motion design. <strong style="color:var(--white)"><span style="color:var(--red)">GFX</span></strong> é design gráfico — logos, flyers, banners e identidade visual. Posso te ajudar com um, com outro, ou com os dois juntos pra fechar o pacote completo da sua marca/projeto.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        <span class="faq-num">07</span>
+        <span class="faq-q-body"><span class="faq-tag">Primeiro passo</span><span class="faq-q-title">Como faço pra começar meu projeto?</span></span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer"><p>É simples: preenche o formulário abaixo ou me manda mensagem direto no WhatsApp/Instagram contando o que você precisa. Eu te respondo em <strong style="color:var(--white)">menos de 24 horas</strong> com o prazo e o valor — e já podemos colocar seu projeto na fila.</p></div>
+    </div>
+
+    <div class="faq-item faq-item--payments">
+      <button class="faq-question">
+        <span class="faq-num">08</span>
+        <span class="faq-q-body"><span class="faq-tag">Pagamento Internacional</span><span class="faq-q-title">Quais formas de pagamento aceita pra quem está fora do Brasil?</span></span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Pra clientes internacionais, essas são as opções:</p>
+        <div class="pay-grid">
+
+          <div class="pay-card">
+            <div class="pay-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </div>
+            <div class="pay-name">Pix</div>
+            <div class="pay-desc">Pra quem tem conta em banco brasileiro (ou alguém de confiança no Brasil que possa ajudar), o Pix continua sendo a forma mais rápida e prática.</div>
+          </div>
+
+          <div class="pay-card">
+            <div class="pay-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+            </div>
+            <div class="pay-name">Cartão de Crédito</div>
+            <div class="pay-desc">Aceito cartão de crédito internacional, <strong style="color:var(--white)">parcelado em até 12x</strong> (juros por conta do cliente) — válido quando o pagamento é de 100% do valor antes do início do projeto.</div>
+          </div>
+
+          <div class="pay-card">
+            <div class="pay-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 0 20a15.3 15.3 0 0 1 0-20"></path></svg>
+            </div>
+            <div class="pay-name">Transferência Internacional</div>
+            <div class="pay-desc">Transferência bancária internacional (wire transfer) ou outras formas digitais como PayPal e Wise — combinamos a opção mais simples pro seu país.</div>
+          </div>
+
+        </div>
+        <div class="pay-note">Independentemente da forma escolhida, vale a mesma regra de sempre: <strong>100% do valor antes do início</strong>, ou o modelo <strong>50/50</strong> (50% antes do início e 50% antes da entrega final).</div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="faq-cta-row reveal">
+    <div class="faq-cta-text">Ainda tem dúvidas? <span>Fala comigo agora</span> e vamos resolver.</div>
+    <a href="#contato" class="btn-primary">Falar com o LUCKKX →</a>
   </div>
 </section>
 
@@ -2539,6 +2784,15 @@ document.addEventListener('keydown', e => {
   }
 });
 
+// FAQ ACCORDION
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.querySelector('.faq-question').addEventListener('click', () => {
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
+
 // FORMSPREE FORM
 const contactForm = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
@@ -2787,5 +3041,26 @@ document.addEventListener('keydown', e => {
 });
 
 </script>
+
+<!-- TRADUTOR DO SITE (Google Translate) -->
+<!-- <div class="gtranslate-wrap" id="gtranslate" translate="no">
+  <span class="gt-icon">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 0 20a15.3 15.3 0 0 1 0-20"></path></svg>
+  </span>
+  <div id="google_translate_element"></div>
+</div>
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'pt',
+      includedLanguages: 'pt,en,es',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script> -->
+
 </body>
 </html>
+
