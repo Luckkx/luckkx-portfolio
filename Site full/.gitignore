@@ -1,1 +1,57 @@
 Portfolio site/Videos/
+
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Admins autenticados: acesso total
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Portfólio: público pode ler itens ativos
+    match /portfolio/{id} {
+      allow read: if resource.data.active == true;
+      allow write: if request.auth != null;
+    }
+
+    // Serviços: público pode ler ativos
+    match /servicos/{id} {
+      allow read: if resource.data.active == true;
+      allow write: if request.auth != null;
+    }
+
+    // Depoimentos: público lê aprovados; público pode criar (1 por email)
+    match /depoimentos/{id} {
+      allow read: if resource.data.status == 'approved';
+      allow create: if request.resource.data.keys().hasAll(['name','text','email','status'])
+                    && request.resource.data.status == 'pending';
+      allow update, delete: if request.auth != null;
+    }
+
+    // Config: público pode ler
+    match /config/{doc} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Analytics: público pode incrementar
+    match /analytics/{doc} {
+      allow read: if request.auth != null;
+      allow write: if true;
+    }
+
+    // Chats: visitante pode criar e ler os próprios
+    match /chats/{chatId} {
+      allow create: if true;
+      allow read, update: if true;
+      allow delete: if request.auth != null;
+
+      match /messages/{msgId} {
+        allow read, create: if true;
+        allow delete: if request.auth != null;
+      }
+    }
+  }
+}
