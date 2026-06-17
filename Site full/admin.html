@@ -1504,6 +1504,561 @@
     min-height: 0;
     overflow-x: hidden;
 }
+
+
+/* ── EQUIPE ── */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+.team-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    position: relative;
+}
+.team-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border);
+    background: var(--bg-soft);
+}
+.team-name {
+    font-family: 'Anton', sans-serif;
+    font-size: 18px;
+    color: #fff;
+    letter-spacing: .05em;
+}
+.team-email {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+}
+.team-role {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: .2em;
+    padding: 4px 12px;
+    border-radius: 3px;
+    text-transform: uppercase;
+}
+.team-role.owner {
+    background: rgba(255, 193, 7, 0.15);
+    color: #ffc107;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+}
+.team-role.admin {
+    background: rgba(196, 30, 30, 0.15);
+    color: #c41e1e;
+    border: 1px solid rgba(196, 30, 30, 0.3);
+}
+.team-role.suporte {
+    background: rgba(52, 152, 219, 0.15);
+    color: #3498db;
+    border: 1px solid rgba(52, 152, 219, 0.3);
+}
+.team-date {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+}
+.btn-remove-member {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(196, 30, 30, 0.1);
+    border: 1px solid rgba(196, 30, 30, 0.3);
+    color: var(--accent);
+    padding: 6px 10px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all .2s;
+    font-family: var(--mono);
+    letter-spacing: .1em;
+}
+.btn-remove-member:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* ── LOGS ── */
+.logs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+.logs-table thead tr {
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+}
+.logs-table th {
+    padding: 12px 16px;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.logs-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background .2s;
+}
+.logs-table tbody tr:hover {
+    background: rgba(255,255,255,.02);
+}
+.logs-table td {
+    padding: 12px 16px;
+}
+.log-status {
+    font-weight: 600;
+    font-family: var(--mono);
+    font-size: 11px;
+}
+.log-status.success {
+    color: #2ecc71;
+}
+.log-status.failed {
+    color: var(--accent);
+}
+.log-ip, .log-email {
+    font-family: var(--mono);
+    font-size: 12px;
+}
+.log-date {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+}
+
+/* ── CHAT EQUIPE ── */
+.team-chat-rooms {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+.chat-room-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 20px;
+    cursor: pointer;
+    transition: all .2s;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.chat-room-card:hover {
+    border-color: var(--accent);
+    background: rgba(196, 30, 30, .05);
+}
+.chat-room-card.active {
+    border-color: var(--accent);
+    background: rgba(196, 30, 30, .1);
+}
+.chat-room-icon {
+    font-size: 32px;
+}
+.chat-room-info h3 {
+    font-family: 'Anton', sans-serif;
+    font-size: 18px;
+    color: #fff;
+    letter-spacing: .05em;
+}
+.chat-room-info p {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+}
+.chat-messages {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    height: 500px;
+    overflow-y: auto;
+    padding: 20px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.chat-message {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.chat-message-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.chat-message-sender {
+    font-family: 'Anton', sans-serif;
+    font-size: 13px;
+    color: #fff;
+    letter-spacing: .05em;
+}
+.chat-message-role {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: .2em;
+    padding: 2px 6px;
+    border-radius: 3px;
+    text-transform: uppercase;
+}
+.chat-message-role.admin {
+    background: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+}
+.chat-message-role.suporte {
+    background: rgba(52, 152, 219, 0.2);
+    color: #3498db;
+}
+.chat-message-time {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    margin-left: auto;
+}
+.chat-message-text {
+    background: var(--bg-soft);
+    padding: 12px 16px;
+    border-left: 2px solid var(--border);
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.5;
+}
+.chat-input-box {
+    display: flex;
+    gap: 12px;
+}
+.chat-input-box input {
+    flex: 1;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: #fff;
+    font-size: 14px;
+    padding: 12px 16px;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+}
+.chat-input-box input:focus {
+    border-color: var(--accent);
+}
+.chat-input-box button {
+    background: var(--accent);
+    border: none;
+    color: #fff;
+    padding: 12px 24px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background .2s;
+}
+.chat-input-box button:hover {
+    background: var(--accent-dim);
+}
+
+
+/* ── CHAT EQUIPE REDESIGN (estilo chat suporte) ── */
+.team-chat-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 0;
+    border: 1px solid var(--border);
+    height: calc(100vh - 220px);
+    min-height: 500px;
+    overflow: hidden;
+}
+.team-chat-sidebar {
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 0;
+    height: 100%;
+    background: var(--bg-soft);
+}
+.team-chat-sidebar-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .2em;
+    color: var(--muted);
+    text-transform: uppercase;
+}
+.team-chat-list {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+.team-chat-list-item {
+    padding: 16px 20px;
+    border-bottom: 1px solid #0a0a0a;
+    cursor: pointer;
+    transition: background .2s;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+}
+.team-chat-list-item:hover {
+    background: rgba(255,255,255,.03);
+}
+.team-chat-list-item.active {
+    background: rgba(196,30,30,.08);
+    border-left: 2px solid var(--accent);
+}
+.team-chat-list-item .tc-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+.team-chat-list-item .tc-info h4 {
+    font-size: 13px;
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+.team-chat-list-item .tc-info p {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: .1em;
+}
+.team-chat-list-item .tc-delete {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity .2s;
+}
+.team-chat-list-item:hover .tc-delete {
+    opacity: 1;
+}
+.team-chat-main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+}
+.team-chat-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.team-chat-header-name {
+    font-family: 'Anton', sans-serif;
+    font-size: 18px;
+    color: #fff;
+    letter-spacing: .05em;
+}
+.team-chat-header-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: .1em;
+    margin-top: 2px;
+}
+.team-chat-msgs {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 0;
+}
+.team-chat-msg-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.team-chat-msg-wrap:hover .tc-msg-actions {
+    opacity: 1;
+}
+.tc-msg-actions {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity .15s;
+    z-index: 2;
+}
+.tc-msg-actions button {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all .15s;
+    padding: 0;
+}
+.tc-msg-actions button:hover {
+    color: #fff;
+    border-color: var(--accent);
+    background: rgba(196,30,30,.15);
+}
+.team-msg-bubble {
+    max-width: 75%;
+    padding: 10px 16px;
+    font-size: 13px;
+    line-height: 1.6;
+    position: relative;
+}
+.team-msg-bubble.self {
+    background: var(--accent);
+    align-self: flex-end;
+    color: #fff;
+}
+.team-msg-bubble.other {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    align-self: flex-start;
+    color: var(--text);
+}
+.team-msg-sender {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: .15em;
+    color: var(--muted);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+.team-msg-time {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: rgba(255,255,255,.35);
+    margin-top: 4px;
+    text-align: right;
+}
+.team-msg-edited {
+    font-family: var(--mono);
+    font-size: 8px;
+    color: rgba(255,255,255,.25);
+    font-style: italic;
+}
+.team-chat-input-area {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 12px;
+}
+.team-chat-input-area input {
+    flex: 1;
+    background: var(--bg-input);
+    border: 1px solid #222;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    padding: 12px 16px;
+    outline: none;
+    transition: border-color .2s;
+}
+.team-chat-input-area input:focus {
+    border-color: var(--accent);
+}
+.team-chat-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+}
+
+/* ── EMOJI PICKER (mini) ── */
+.emoji-picker-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+.emoji-pick {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    background: var(--bg-input);
+    border: 2px solid var(--border);
+    cursor: pointer;
+    transition: all .15s;
+}
+.emoji-pick:hover, .emoji-pick.selected {
+    border-color: var(--accent);
+    background: rgba(196,30,30,.1);
+    transform: scale(1.1);
+}
+
+/* ── LOGS EXTRAS ── */
+.log-type-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    padding: 3px 8px;
+    display: inline-block;
+}
+.log-type-badge.added {
+    background: rgba(46,204,113,.12);
+    color: #2ecc71;
+    border: 1px solid rgba(46,204,113,.3);
+}
+.log-type-badge.removed {
+    background: rgba(196,30,30,.12);
+    color: var(--accent);
+    border: 1px solid rgba(196,30,30,.3);
+}
+.log-type-badge.deleted {
+    background: rgba(196,30,30,.12);
+    color: var(--accent);
+    border: 1px solid rgba(196,30,30,.3);
+}
+.log-type-badge.edited {
+    background: rgba(52,152,219,.12);
+    color: #3498db;
+    border: 1px solid rgba(52,152,219,.3);
+}
+
+.log-type-badge.created {
+    background: rgba(46,204,113,.12);
+    color: #2ecc71;
+    border: 1px solid rgba(46,204,113,.3);
+}
     </style>
     <link
         href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap"
@@ -1525,7 +2080,7 @@
                 <label>Senha</label>
                 <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
             </div>
-            <button class="login-btn" onclick="doLogin()">Entrar</button>
+<button class="login-btn" id="btn-login">Entrar</button>
             <div class="login-error" id="login-error"></div>
         </div>
     </div>
@@ -1550,6 +2105,16 @@
                 <div class="nav-item" onclick="showPage('depoimentos')" data-page="depoimentos">
                     <span class="nav-icon">💬</span> Depoimentos
                 </div>
+                <div class="nav-section">EQUIPE</div>
+<div class="nav-item" onclick="showPage('team')" data-page="team">
+    <span class="nav-icon">👥</span> Membros
+</div>
+<div class="nav-item" onclick="showPage('logs')" data-page="logs">
+    <span class="nav-icon">📋</span> Logs
+</div>
+<div class="nav-item" onclick="showPage('team-chat')" data-page="team-chat">
+    <span class="nav-icon">💬</span> Chat Equipe
+</div>
                 <div class="nav-section">Sistema</div>
                 <div class="nav-item" onclick="showPage('chat')" data-page="chat">
                     <span class="nav-icon">💬</span> Chat Suporte
@@ -1757,6 +2322,115 @@
                 </div>
             </div>
 
+
+            <!-- ══════════════════════════════════════════════════════════════
+     PÁGINA: MEMBROS DA EQUIPE
+     ══════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-team">
+    <div class="page-header">
+        <h2 class="page-title">MEMBROS DA EQUIPE</h2>
+        <p class="page-sub">Gerencie acessos e permissões do painel administrativo</p>
+    </div>
+
+    <button class="btn-primary admin-only" id="btn-add-member" style="margin-bottom:24px">
+        + ADICIONAR MEMBRO
+    </button>
+
+    <div class="team-grid" id="team-grid"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PÁGINA: LOGS
+     ══════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-logs">
+    <div class="page-header">
+        <h2 class="page-title">LOGS DO SISTEMA</h2>
+        <p class="page-sub">Histórico de acessos e ações administrativas</p>
+    </div>
+
+    <div class="card admin-only">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <h3 class="card-title" style="margin-bottom:0">🔐 LOGS DE LOGIN</h3>
+            <button class="btn btn-sm btn-danger" onclick="clearLogs(['login_success','login_failed'])">🗑 Limpar</button>
+        </div>
+        <div style="overflow-x:auto">
+            <table class="logs-table"><thead><tr>
+                <th>Status</th><th>E-mail</th><th>IP</th><th>Navegador</th><th>Data/Hora</th>
+            </tr></thead><tbody id="login-logs-body"></tbody></table>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:24px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <h3 class="card-title" style="margin-bottom:0">💬 LOGS DE CHAT SUPORTE</h3>
+            <button class="btn btn-sm btn-danger admin-only" onclick="clearLogs(['chat_closed','chat_reopened','chat_deleted'])">🗑 Limpar</button>
+        </div>
+        <div style="overflow-x:auto">
+            <table class="logs-table"><thead><tr>
+                <th>Tipo</th><th>Assunto</th><th>Motivo</th><th>Admin</th><th>Data/Hora</th><th>Transcript</th>
+            </tr></thead><tbody id="chat-logs-body"></tbody></table>
+        </div>
+    </div>
+
+    <div class="card admin-only" style="margin-top:24px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <h3 class="card-title" style="margin-bottom:0">👥 LOGS DE EQUIPE</h3>
+            <button class="btn btn-sm btn-danger" onclick="clearLogs(['member_added','member_removed'])">🗑 Limpar</button>
+        </div>
+        <div style="overflow-x:auto">
+            <table class="logs-table"><thead><tr>
+                <th>Tipo</th><th>Membro</th><th>Admin</th><th>IP</th><th>Data/Hora</th>
+            </tr></thead><tbody id="team-logs-body"></tbody></table>
+        </div>
+    </div>
+
+    <div class="card admin-only" style="margin-top:24px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <h3 class="card-title" style="margin-bottom:0">💬 LOGS DE CHAT EQUIPE</h3>
+            <button class="btn btn-sm btn-danger" onclick="clearLogs(['team_chat_deleted','team_chat_created'])">🗑 Limpar</button>
+        </div>
+        <div style="overflow-x:auto">
+            <table class="logs-table"><thead><tr>
+                <th>Tipo</th><th>Chat</th><th>Motivo</th><th>Admin</th><th>Data/Hora</th>
+            </tr></thead><tbody id="team-chat-logs-body"></tbody></table>
+        </div>
+    </div>
+
+    <div class="card admin-only" style="margin-top:24px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <h3 class="card-title" style="margin-bottom:0">🗑 LOGS DE MENSAGENS (Deletadas/Editadas)</h3>
+            <button class="btn btn-sm btn-danger" onclick="clearLogs(['team_msg_deleted','team_msg_edited'])">🗑 Limpar</button>
+        </div>
+        <div style="overflow-x:auto">
+            <table class="logs-table"><thead><tr>
+                <th>Tipo</th><th>Mensagem Original</th><th>Mensagem Nova</th><th>Chat</th><th>Admin</th><th>Data/Hora</th>
+            </tr></thead><tbody id="msg-logs-body"></tbody></table>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PÁGINA: CHAT EQUIPE
+     ══════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-team-chat">
+    <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between">
+        <div>
+            <h2 class="page-title">CHAT DA EQUIPE</h2>
+            <p class="page-sub">Comunicação interna entre membros da equipe</p>
+        </div>
+        <button class="btn btn-primary admin-only" id="btn-create-chat">+ CRIAR NOVO CHAT</button>
+    </div>
+    <div class="team-chat-layout">
+        <div class="team-chat-sidebar">
+            <div class="team-chat-sidebar-header">Canais</div>
+            <div class="team-chat-list" id="team-chat-list"></div>
+        </div>
+        <div class="team-chat-main" id="team-chat-main">
+            <div class="team-chat-empty">Selecione um canal</div>
+        </div>
+    </div>
+</div>
+
         </main>
     </div>
 
@@ -1963,972 +2637,918 @@
         src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhS0psmq+qjGFFRmGVqaaIXz9BXJGko4NZOz1YjqGggFUzNlSKnaF8UTESNUZ/lpx3SDYRME10kZZxQzEOMWyNk21ALC0sZ4iOaT0nKylio4hkOSMoI1yAiGI3HyokWHmEYDUfKCJUdoFdMyAlIFBzfl07HiUfTW97Wjcf"
         preload="auto" style="display:none"></audio>
 
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
-            from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-        import {
-            getFirestore, collection, doc, addDoc, setDoc, updateDoc, deleteDoc,
-            onSnapshot, query, orderBy, where, getDocs, getDoc, serverTimestamp, increment
-        } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-        import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL }
-            from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js';
+        <script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import {
+    getFirestore, collection, doc, addDoc, setDoc, updateDoc, deleteDoc,
+    onSnapshot, query, orderBy, where, getDocs, getDoc, serverTimestamp, increment
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword, deleteUser }
+    from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL }
+    from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js';
 
-        /* ── CONFIG ── */
-        const firebaseConfig = {
-            apiKey: "AIzaSyAXh6nY9VQAgdJDNuUP-AYPtpnb3kn0Fkc",
-            authDomain: "luckkx.firebaseapp.com",
-            projectId: "luckkx",
-            storageBucket: "luckkx.firebasestorage.app",
-            messagingSenderId: "896762351632",
-            appId: "1:896762351632:web:0290fb2326faa7f0cdfa95",
-            measurementId: "G-G9WLTKT9TM"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const storage = getStorage(app);
-
-        /* ── STATE ── */
-        let currentPage = 'dashboard';
-        let portfolioFilter = 'all';
-        let depFilter = 'all';
-        let portfolioItems = [];
-        let servicosItems = [];
-        let depoimentosItems = [];
-        let currentChatId = null;
-        let chatListeners = {};
-        let unreadCounts = {};
-        let currentStatus = 'disponivel';
-        let sectionsState = {};
-        let portfolioUploadedUrl = '';
-
-        /* ── AUTH ── */
-        window.doLogin = async () => {
-            const email = document.getElementById('login-email').value;
-            const pass = document.getElementById('login-password').value;
-            const err = document.getElementById('login-error');
-            err.textContent = '';
-            try {
-                await signInWithEmailAndPassword(auth, email, pass);
-            } catch (e) {
-                err.textContent = 'Email ou senha inválidos.';
-            }
-        };
-
-        window.doLogout = async () => {
-            await signOut(auth);
-        };
-
-        onAuthStateChanged(auth, user => {
-            if (user) {
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('app').style.display = 'block';
-                document.getElementById('sidebar-user-email').textContent = user.email;
-                initAdmin();
-            } else {
-                document.getElementById('login-screen').style.display = 'flex';
-                document.getElementById('app').style.display = 'none';
-            }
-        });
-
-        /* ── NAVIGATION ── */
-        window.showPage = (page) => {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById('page-' + page).classList.add('active');
-            document.querySelector(`[data-page="${page}"]`)?.classList.add('active');
-            currentPage = page;
-        };
-
-        /* ── INIT ── */
-        function initAdmin() {
-            listenPortfolio();
-            listenServicos();
-            listenDepoimentos();
-            listenChats();
-            listenStatus();
-            listenSections();
-            listenAnalytics();
-        }
-
-        /* ══════════════════════════════════════════
-           PORTFÓLIO
-        ══════════════════════════════════════════ */
-        function listenPortfolio() {
-            const q = query(collection(db, 'portfolio'), orderBy('order', 'asc'));
-            onSnapshot(q, snap => {
-                portfolioItems = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                renderPortfolioAdmin();
-                document.getElementById('d-portfolio').textContent = portfolioItems.length;
-            });
-        }
-
-        window.setPortfolioFilter = (f) => {
-            portfolioFilter = f;
-            ['all', 'vfx', 'gfx'].forEach(x => {
-                const el = document.getElementById('pf-filter-' + x);
-                if (el) el.className = 'btn btn-sm ' + (x === f ? 'btn-primary' : 'btn-secondary');
-            });
-            renderPortfolioAdmin();
-        };
-
-        function renderPortfolioAdmin() {
-            const grid = document.getElementById('portfolio-grid-admin');
-            const items = portfolioFilter === 'all' ? portfolioItems : portfolioItems.filter(i => i.type === portfolioFilter);
-            if (!items.length) { grid.innerHTML = '<div class="empty-state">Nenhum item encontrado.</div>'; return; }
-            grid.innerHTML = items.map(item => {
-                const thumb = item.thumbnail || (item.youtubeId ? `https://img.youtube.com/vi/${item.youtubeId}/mqdefault.jpg` : '');
-                const thumbHtml = thumb
-                    ? `<img src="${thumb}" class="admin-portfolio-thumb" onerror="this.style.display='none'" alt="">`
-                    : `<div class="admin-portfolio-thumb-placeholder">${item.name || 'ITEM'}</div>`;
-                return `
-    <div class="admin-portfolio-item" id="pf-item-${item.id}">
-      <div class="admin-portfolio-order"><span class="drag-handle">⠿</span> #${item.order || 0}</div>
-      ${thumbHtml}
-      <div class="admin-portfolio-info">
-        <div class="admin-portfolio-name">${item.name || '—'}</div>
-        <div class="admin-portfolio-meta">${(item.type || '').toUpperCase()} · ${item.subtitle || ''}</div>
-        <div style="margin-bottom:8px">
-          <span class="badge ${item.active !== false ? 'badge-green' : 'badge-red'}">${item.active !== false ? 'ATIVO' : 'INATIVO'}</span>
-          ${item.featured ? '<span class="badge badge-yellow" style="margin-left:4px">DESTAQUE</span>' : ''}
-        </div>
-        <div class="admin-portfolio-actions">
-          <button class="btn btn-sm btn-secondary" onclick="editPortfolioItem('${item.id}')">✏ Editar</button>
-          <button class="btn btn-sm btn-danger" onclick="deletePortfolioItem('${item.id}')">🗑 Excluir</button>
-          <button class="btn btn-sm btn-secondary" onclick="movePortfolioItem('${item.id}',-1)" title="Subir">↑</button>
-          <button class="btn btn-sm btn-secondary" onclick="movePortfolioItem('${item.id}',1)" title="Descer">↓</button>
-        </div>
-      </div>
-    </div>`;
-            }).join('');
-        }
-
-        window.openPortfolioModal = () => {
-            document.getElementById('pf-id').value = '';
-            document.getElementById('pf-name').value = '';
-            document.getElementById('pf-sub').value = '';
-document.getElementById('pf-type').value = '';
-            document.getElementById('pf-media-type').value = 'video-url';
-            document.getElementById('pf-url').value = '';
-            document.getElementById('pf-img-url').value = '';
-            document.getElementById('pf-thumb').value = '';
-            document.getElementById('pf-featured').checked = false;
-            document.getElementById('pf-active').checked = true;
-            document.getElementById('pf-order').value = portfolioItems.length;
-            document.getElementById('portfolio-modal-title').textContent = 'Adicionar Item';
-            portfolioUploadedUrl = '';
-            toggleMediaFields();
-            openModal('modal-portfolio');
-        };
-
-        window.editPortfolioItem = (id) => {
-            const item = portfolioItems.find(i => i.id === id);
-            if (!item) return;
-            document.getElementById('pf-id').value = id;
-            document.getElementById('pf-name').value = item.name || '';
-            document.getElementById('pf-sub').value = item.subtitle || '';
-const normalizedType = (item.type || 'vfx').toLowerCase().trim();
-document.getElementById('pf-type').value = normalizedType;
-console.log('[PORTFOLIO EDIT] type from Firestore =', item.type, '→ normalized =', normalizedType);
-document.getElementById('pf-url').value = item.videoUrl || '';
-document.getElementById('pf-img-url').value = item.imageUrl || '';
-            document.getElementById('pf-thumb').value = item.thumbnail || '';
-            document.getElementById('pf-featured').checked = !!item.featured;
-            document.getElementById('pf-active').checked = item.active !== false;
-            document.getElementById('pf-order').value = item.order || 0;
-            document.getElementById('portfolio-modal-title').textContent = 'Editar Item';
-            portfolioUploadedUrl = item.fileUrl || '';
-const mediaType = (item.videoUrl || item.youtubeId) ? 'video-url' : 'image-url';
-document.getElementById('pf-media-type').value = mediaType;
-            toggleMediaFields();
-            openModal('modal-portfolio');
-        };
-
-        window.savePortfolioItem = async () => {
-            const id = document.getElementById('pf-id').value;
-            const name = document.getElementById('pf-name').value.trim();
-            const sub = document.getElementById('pf-sub').value.trim();
-const type = document.getElementById('pf-type').value.toLowerCase().trim();
-if (!type || (type !== 'vfx' && type !== 'gfx')) { showToast('Selecione o tipo (VFX ou GFX).', 'error'); return; }
-console.log('[PORTFOLIO SAVE] type =', type);
-            const mType = document.getElementById('pf-media-type').value;
-            const url = document.getElementById('pf-url').value.trim();
-            const imgUrl = document.getElementById('pf-img-url').value.trim();
-            const thumb = document.getElementById('pf-thumb').value.trim();
-            const featured = document.getElementById('pf-featured').checked;
-            const active = document.getElementById('pf-active').checked;
-            const order = parseInt(document.getElementById('pf-order').value) || 0;
-            if (!name) { showToast('Nome é obrigatório.', 'error'); return; }
-
-            let youtubeId = '';
-            let videoUrl = '';
-            let imageUrl = '';
-            let fileUrl = portfolioUploadedUrl;
-
-            if (mType === 'video-url') {
-                videoUrl = url;
-                const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
-                const vmMatch = url.match(/vimeo\.com\/(\d+)/);
-                if (ytMatch) youtubeId = ytMatch[1];
-            } else if (mType === 'image-url') {
-                imageUrl = imgUrl || url;
-            }
-
-            const data = {
-                name, subtitle: sub, type, featured, active, order, updatedAt: serverTimestamp(),
-                youtubeId, videoUrl, imageUrl, fileUrl,
-                thumbnail: thumb || (youtubeId ? '' : ''),
-            };
-
-            try {
-                if (id) {
-                    await updateDoc(doc(db, 'portfolio', id), data);
-                    showToast('Item atualizado!', 'success');
-                } else {
-                    data.createdAt = serverTimestamp();
-                    await addDoc(collection(db, 'portfolio'), data);
-                    showToast('Item adicionado!', 'success');
-                }
-                closeModal('modal-portfolio');
-            } catch (e) { showToast('Erro: ' + e.message, 'error'); }
-        };
-
-        window.deletePortfolioItem = async (id) => {
-            if (!confirm('Excluir este item do portfólio?')) return;
-            await deleteDoc(doc(db, 'portfolio', id));
-            showToast('Item excluído.', 'success');
-        };
-
-        window.movePortfolioItem = async (id, dir) => {
-            const idx = portfolioItems.findIndex(i => i.id === id);
-            const target = portfolioItems[idx + dir];
-            if (!target) return;
-            const batch1 = updateDoc(doc(db, 'portfolio', id), { order: target.order });
-            const batch2 = updateDoc(doc(db, 'portfolio', target.id), { order: portfolioItems[idx].order });
-            await Promise.all([batch1, batch2]);
-        };
-
-window.toggleMediaFields = () => {
-    const v = document.getElementById('pf-media-type').value;
-    document.getElementById('pf-url-field').style.display = v === 'video-url' ? '' : 'none';
-    document.getElementById('pf-img-url-field').style.display = v === 'image-url' ? '' : 'none';
+const firebaseConfig = {
+    apiKey: "AIzaSyAXh6nY9VQAgdJDNuUP-AYPtpnb3kn0Fkc",
+    authDomain: "luckkx.firebaseapp.com",
+    projectId: "luckkx",
+    storageBucket: "luckkx.firebasestorage.app",
+    messagingSenderId: "896762351632",
+    appId: "1:896762351632:web:0290fb2326faa7f0cdfa95",
+    measurementId: "G-G9WLTKT9TM"
 };
 
-        window.handlePortfolioFile = async (input) => {
-            const file = input.files[0];
-            if (!file) return;
-            const progress = document.getElementById('pf-upload-progress');
-            const bar = document.getElementById('pf-upload-bar');
-            const status = document.getElementById('pf-upload-status');
-            const result = document.getElementById('pf-upload-result');
-            progress.style.display = 'block';
-            bar.style.width = '0%';
-            status.textContent = 'Enviando...';
-            const sRef = storageRef(storage, `portfolio/${Date.now()}_${file.name}`);
-            const task = uploadBytesResumable(sRef, file);
-            task.on('state_changed',
-                snap => {
-                    const pct = Math.round(snap.bytesTransferred / snap.totalBytes * 100);
-                    bar.style.width = pct + '%';
-                    status.textContent = `Enviando... ${pct}%`;
-                },
-                err => { showToast('Erro no upload: ' + err.message, 'error'); },
-                async () => {
-                    const url = await getDownloadURL(task.snapshot.ref);
-                    portfolioUploadedUrl = url;
-                    status.textContent = 'Upload concluído!';
-                    bar.style.width = '100%';
-                    result.textContent = '✓ Arquivo salvo.';
-                }
-            );
-        };
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
 
-        /* ══════════════════════════════════════════
-           SERVIÇOS
-        ══════════════════════════════════════════ */
-        function listenServicos() {
-            const q = query(collection(db, 'servicos'), orderBy('order', 'asc'));
-            onSnapshot(q, snap => {
-                servicosItems = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                renderServicos();
-            });
-        }
+// ── OWNER ──
+const OWNER_EMAIL = 'pluck809@gmail.com';
+const OWNER_PASS = '__l.ccxx1812';
 
-        function renderServicos() {
-            const el = document.getElementById('servicos-list');
-            if (!servicosItems.length) { el.innerHTML = '<div class="empty-state">Nenhum serviço. Adicione um.</div>'; return; }
-            el.innerHTML = servicosItems.map(s => `
-    <div class="service-card">
-      <div class="service-order-badge">${(s.order || 0).toString().padStart(2, '0')}</div>
-      <div class="service-info">
-        <div class="service-name">${s.name || '—'}</div>
-        <div class="service-desc">${s.description || ''}</div>
-        <div class="service-price">${s.price || ''}</div>
-        <div style="margin-top:8px"><span class="badge ${s.active !== false ? 'badge-green' : 'badge-red'}">${s.active !== false ? 'ATIVO' : 'INATIVO'}</span></div>
-      </div>
-      <div class="service-actions">
-        <button class="btn btn-sm btn-secondary" onclick="editService('${s.id}')">✏</button>
-        <button class="btn btn-sm btn-danger" onclick="deleteService('${s.id}')">🗑</button>
-      </div>
-    </div>
-  `).join('');
-        }
+// ── STATE ──
+let currentPage = 'dashboard';
+let portfolioFilter = 'all';
+let depFilter = 'all';
+let portfolioItems = [];
+let servicosItems = [];
+let depoimentosItems = [];
+let currentChatId = null;
+let chatListeners = {};
+let unreadCounts = {};
+let currentStatus = 'disponivel';
+let sectionsState = {};
+let portfolioUploadedUrl = '';
+let _adminPassword = null;
+let activeTeamChatId = null;
+let chatSelectMode = false;
+let _teamChatListeners = {};
+const PRESET_EMOJIS = ['💬','🛠️','📢','🎮','🎬','📋','🔥','⭐','🚀','💡','📊','🤝'];
 
-        window.openServiceModal = () => {
-            document.getElementById('svc-id').value = '';
-            document.getElementById('svc-name').value = '';
-            document.getElementById('svc-desc').value = '';
-            document.getElementById('svc-price').value = '';
-            document.getElementById('svc-order').value = servicosItems.length;
-            document.getElementById('svc-active').checked = true;
-            document.getElementById('service-modal-title').textContent = 'Adicionar Serviço';
-            openModal('modal-service');
-        };
-
-        window.editService = (id) => {
-            const s = servicosItems.find(i => i.id === id);
-            if (!s) return;
-            document.getElementById('svc-id').value = id;
-            document.getElementById('svc-name').value = s.name || '';
-            document.getElementById('svc-desc').value = s.description || '';
-            document.getElementById('svc-price').value = s.price || '';
-            document.getElementById('svc-order').value = s.order || 0;
-            document.getElementById('svc-active').checked = s.active !== false;
-            document.getElementById('service-modal-title').textContent = 'Editar Serviço';
-            openModal('modal-service');
-        };
-
-        window.saveService = async () => {
-            const id = document.getElementById('svc-id').value;
-            const name = document.getElementById('svc-name').value.trim();
-            if (!name) { showToast('Nome é obrigatório.', 'error'); return; }
-            const data = {
-                name,
-                description: document.getElementById('svc-desc').value.trim(),
-                price: document.getElementById('svc-price').value.trim(),
-                order: parseInt(document.getElementById('svc-order').value) || 0,
-                active: document.getElementById('svc-active').checked,
-                updatedAt: serverTimestamp()
-            };
-            try {
-                if (id) { await updateDoc(doc(db, 'servicos', id), data); showToast('Serviço atualizado!', 'success'); }
-                else { data.createdAt = serverTimestamp(); await addDoc(collection(db, 'servicos'), data); showToast('Serviço adicionado!', 'success'); }
-                closeModal('modal-service');
-            } catch (e) { showToast('Erro: ' + e.message, 'error'); }
-        };
-
-        window.deleteService = async (id) => {
-            if (!confirm('Excluir este serviço?')) return;
-            await deleteDoc(doc(db, 'servicos', id));
-            showToast('Serviço excluído.', 'success');
-        };
-
-        /* ══════════════════════════════════════════
-           DEPOIMENTOS
-        ══════════════════════════════════════════ */
-        function listenDepoimentos() {
-            const q = query(collection(db, 'depoimentos'), orderBy('createdAt', 'desc'));
-            onSnapshot(q, snap => {
-                depoimentosItems = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                renderDepoimentos();
-                document.getElementById('d-depoimentos').textContent = depoimentosItems.filter(d => d.status === 'approved').length;
-            });
-        }
-
-        window.setDepFilter = (f) => { depFilter = f; renderDepoimentos(); };
-
-        function renderDepoimentos() {
-            const el = document.getElementById('depoimentos-list');
-            const items = depFilter === 'all' ? depoimentosItems : depoimentosItems.filter(d => d.status === depFilter);
-            if (!items.length) { el.innerHTML = '<div class="empty-state">Nenhum depoimento.</div>'; return; }
-            el.innerHTML = items.map(d => `
-    <div class="dep-card">
-      <div class="dep-card-header">
-        <div>
-          <div class="dep-card-author">${d.name || '—'}</div>
-          <div class="dep-card-role">${d.role || ''} ${d.email ? '· ' + d.email : ''}</div>
-        </div>
-        <span class="badge ${d.status === 'approved' ? 'badge-green' : 'badge-yellow'}">${d.status === 'approved' ? 'APROVADO' : 'PENDENTE'}</span>
-      </div>
-      <div class="dep-card-text">"${d.text || ''}"</div>
-      <div class="dep-card-footer">
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          ${d.status !== 'approved' ? `<button class="btn btn-sm btn-success" onclick="approveDepoimento('${d.id}')">✓ Aprovar</button>` : ''}
-          <button class="btn btn-sm btn-secondary" onclick="editDepoimento('${d.id}')">✏ Editar</button>
-          <button class="btn btn-sm btn-danger" onclick="deleteDepoimento('${d.id}')">🗑 Excluir</button>
-        </div>
-        <div style="font-family:var(--mono);font-size:10px;color:var(--muted)">${d.createdAt?.toDate ? d.createdAt.toDate().toLocaleDateString('pt-BR') : '—'}</div>
-      </div>
-    </div>
-  `).join('');
-        }
-
-        window.openDepModal = () => {
-            document.getElementById('dep-id').value = '';
-            document.getElementById('dep-name').value = '';
-            document.getElementById('dep-role').value = '';
-            document.getElementById('dep-email').value = '';
-            document.getElementById('dep-text').value = '';
-            document.getElementById('dep-status').value = 'approved';
-            document.getElementById('dep-modal-title').textContent = 'Adicionar Depoimento';
-            openModal('modal-dep');
-        };
-
-        window.editDepoimento = (id) => {
-            const d = depoimentosItems.find(i => i.id === id);
-            if (!d) return;
-            document.getElementById('dep-id').value = id;
-            document.getElementById('dep-name').value = d.name || '';
-            document.getElementById('dep-role').value = d.role || '';
-            document.getElementById('dep-email').value = d.email || '';
-            document.getElementById('dep-text').value = d.text || '';
-            document.getElementById('dep-status').value = d.status || 'pending';
-            document.getElementById('dep-modal-title').textContent = 'Editar Depoimento';
-            openModal('modal-dep');
-        };
-
-window.saveDepoimento = async () => {
-    const id = document.getElementById('dep-id').value;
-    const name = document.getElementById('dep-name').value.trim();
-    const text = document.getElementById('dep-text').value.trim();
-    if (!name || !text) { showToast('Nome e texto são obrigatórios.', 'error'); return; }
-    const email = document.getElementById('dep-email').value.trim();
-    console.log('[DEPOIMENTO SAVE] id=', id, 'name=', name, 'email=', email);
-const data = {
-    name, text,
-    role: document.getElementById('dep-role').value.trim(),
-    email,
-    status: document.getElementById('dep-status').value,
-    stars: 5,
-    updatedAt: serverTimestamp()
+// ── UTILS ──
+window.openModal = (id) => document.getElementById(id)?.classList.add('open');
+window.closeModal = (id) => document.getElementById(id)?.classList.remove('open');
+document.querySelectorAll('.modal-bg').forEach(m => {
+    m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+});
+window.showToast = (msg, type = 'success') => {
+    const c = document.getElementById('toast-container');
+    const t = document.createElement('div');
+    t.className = `toast ${type}`;
+    t.innerHTML = `<span class="toast-icon">${type === 'success' ? '✓' : '✕'}</span>${msg}`;
+    c.appendChild(t);
+    requestAnimationFrame(() => t.classList.add('show'));
+    setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 3000);
 };
-            try {
-                if (id) { await updateDoc(doc(db, 'depoimentos', id), data); showToast('Depoimento atualizado!', 'success'); }
-                else { data.createdAt = serverTimestamp(); await addDoc(collection(db, 'depoimentos'), data); showToast('Depoimento adicionado!', 'success'); }
-                closeModal('modal-dep');
-   } catch (e) {
-    console.error('[DEPOIMENTO SAVE ERROR]', e.code, e.message, e);
-    showToast('Erro: ' + e.message, 'error');
+
+async function getVisitorIP() {
+    try { const r = await fetch('https://api.ipify.org?format=json'); return (await r.json()).ip; }
+    catch { return 'IP indisponível'; }
 }
-        };
 
-        window.approveDepoimento = async (id) => {
-            await updateDoc(doc(db, 'depoimentos', id), { status: 'approved', updatedAt: serverTimestamp() });
-            showToast('Depoimento aprovado!', 'success');
-        };
-
-        window.deleteDepoimento = async (id) => {
-            if (!confirm('Excluir este depoimento?')) return;
-            await deleteDoc(doc(db, 'depoimentos', id));
-            showToast('Depoimento excluído.', 'success');
-        };
-
-        /* ══════════════════════════════════════════
-           CHAT
-        ══════════════════════════════════════════ */
-        function listenChats() {
-            const q = query(collection(db, 'chats'), orderBy('lastMessageAt', 'desc'));
-            onSnapshot(q, snap => {
-                const chats = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                renderChatList(chats);
-                const totalUnread = chats.reduce((acc, c) => acc + (c.adminUnread || 0), 0);
-                const badge = document.getElementById('chat-badge');
-                if (totalUnread > 0) { badge.style.display = ''; badge.textContent = totalUnread; }
-                else { badge.style.display = 'none'; }
-                document.getElementById('d-chats').textContent = chats.length;
-            });
-        }
-
-function renderChatList(chats) {
-    const list = document.getElementById('chat-list');
-    if (!list) return;
-
-    if (!chats.length) {
-        list.innerHTML = '<div class="empty-state">Nenhuma conversa.</div>';
-        return;
+// ── AUTH ──
+window.doLogin = async () => {
+    const email = document.getElementById('login-email').value;
+    const pass = document.getElementById('login-password').value;
+    const err = document.getElementById('login-error');
+    err.textContent = '';
+    try {
+        await signInWithEmailAndPassword(auth, email, pass);
+        _adminPassword = pass;
+        saveAdminLog('login_success', email).catch(() => {});
+    } catch (e) {
+        err.textContent = 'Email ou senha inválidos.';
+        saveAdminLog('login_failed', email).catch(() => {});
     }
+};
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('btn-login')?.addEventListener('click', doLogin);
+    document.getElementById('login-password')?.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+});
+window.doLogout = async () => { _adminPassword = null; await signOut(auth); };
 
-    list.innerHTML = chats.map(c => {
-        const isClosed = c.status === 'closed';
-        const hasCloseReq = c.closeRequested;
-        const hasReopenReq = c.reopenRequested;
-        const unread = c.adminUnread || 0;
-        const date = c.lastMessageAt?.toDate ? c.lastMessageAt.toDate().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '';
+onAuthStateChanged(auth, user => {
+    if (user) {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('sidebar-user-email').textContent = user.email;
+        initAdmin();
+    } else {
+        document.getElementById('login-screen').style.display = 'flex';
+        document.getElementById('app').style.display = 'none';
+    }
+});
 
-        let statusDot = isClosed ? '🔴' : '🟢';
-        let statusExtra = '';
-        if (hasCloseReq && !isClosed) { statusDot = '🟡'; statusExtra = ' · Encerr. solicitado'; }
-        if (hasReopenReq && isClosed) { statusDot = '🔵'; statusExtra = ' · Reabertura solicitada'; }
+// ── NAV ──
+window.showPage = (page) => {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('page-' + page)?.classList.add('active');
+    document.querySelector(`[data-page="${page}"]`)?.classList.add('active');
+    currentPage = page;
+};
 
-        return `
-          <div class="chat-list-item ${currentChatId === c.id ? 'active' : ''}" data-chatid="${c.id}" onclick="if(!event.target.classList.contains('chat-sel-cb'))openChat('${c.id}','${(c.visitorName||'Visitante').replace(/'/g,"\\'")}','${(c.subject||'').replace(/'/g,"\\'")}')">
-            <input type="checkbox" class="chat-sel-cb" data-chatid="${c.id}" onclick="event.stopPropagation()" onchange="updateChatSelUI()" style="accent-color:var(--accent);position:absolute;top:12px;right:12px;display:none;width:14px;height:14px;cursor:pointer">
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <span class="chat-list-name">${c.visitorName||'Visitante'}</span>
-              <span class="chat-list-time">${date}</span>
+// ── RELOGIN ──
+async function autoReloginAsAdmin() {
+    const adminPass = _adminPassword || OWNER_PASS;
+    try {
+        await signOut(auth).catch(() => {});
+        await signInWithEmailAndPassword(auth, OWNER_EMAIL, adminPass);
+        _adminPassword = adminPass;
+        return true;
+    } catch (e) { console.error('[RELOGIN]', e); return false; }
+}
+
+function showReloginModal(adminEmail) {
+    return new Promise((resolve, reject) => {
+        const existing = document.getElementById('modal-relogin-temp');
+        if (existing) existing.remove();
+        const modal = document.createElement('div');
+        modal.className = 'modal-bg open';
+        modal.id = 'modal-relogin-temp';
+        modal.innerHTML = `
+            <div class="modal-box" style="max-width:420px">
+                <div class="modal-head"><h2>CONFIRME SUA SENHA</h2></div>
+                <div class="modal-body">
+                    <p style="color:var(--muted);margin-bottom:16px;font-size:13px">Relogando como <strong style="color:#fff">${adminEmail}</strong></p>
+                    <div class="form-group"><label class="form-label">Sua senha</label>
+                        <div style="position:relative">
+                            <input type="password" class="form-input" id="relogin-pass" placeholder="••••••••" style="padding-right:44px">
+                            <button type="button" onclick="const i=document.getElementById('relogin-pass');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'👁':'👁‍🗨'" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px">👁</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-foot">
+                    <button class="btn btn-secondary" id="relogin-cancel-btn">Cancelar</button>
+                    <button class="btn btn-primary" id="relogin-confirm-btn">Confirmar</button>
+                </div>
+            </div>`;
+        document.body.appendChild(modal);
+        const passInput = document.getElementById('relogin-pass');
+        passInput.focus();
+        passInput.addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('relogin-confirm-btn').click(); });
+        document.getElementById('relogin-confirm-btn').addEventListener('click', async () => {
+            const pass = passInput.value;
+            if (!pass) { showToast('Digite a senha.', 'error'); return; }
+            try { await signInWithEmailAndPassword(auth, adminEmail, pass); _adminPassword = pass; modal.remove(); resolve(); }
+            catch { showToast('Senha incorreta.', 'error'); passInput.value = ''; passInput.focus(); }
+        });
+        document.getElementById('relogin-cancel-btn').addEventListener('click', () => { modal.remove(); reject(new Error('Cancelado')); });
+    });
+}
+
+// ── ADMIN LOG ──
+async function saveAdminLog(type, email, extra = null, chatId = null) {
+    const ip = await getVisitorIP();
+    const logData = {
+        type, email: email || auth.currentUser?.email || 'desconhecido',
+        ip, userAgent: navigator.userAgent, timestamp: serverTimestamp()
+    };
+    const resolvedChatId = chatId || currentChatId || '';
+
+    if (['chat_closed','chat_reopened','chat_deleted'].includes(type)) {
+        logData.reason = extra || '';
+        logData.chatId = resolvedChatId;
+        if (resolvedChatId) {
+            try { const s = await getDoc(doc(db,'chats',resolvedChatId)); if(s.exists()) logData.chatSubject = s.data().subject||'Sem assunto'; } catch{}
+        }
+    } else if (['member_added','member_removed'].includes(type)) {
+        logData.reason = extra || '';
+    } else if (type === 'team_chat_deleted') {
+        logData.reason = extra || ''; logData.chatId = chatId || '';
+    } else if (['team_msg_deleted','team_msg_edited'].includes(type)) {
+        if (typeof extra === 'object') {
+            logData.originalMessage = extra.originalMessage || '';
+            logData.newMessage = extra.newMessage || '';
+            logData.chatName = extra.chatName || '';
+            logData.chatId = chatId || '';
+        } else { logData.reason = extra || ''; logData.chatId = chatId || ''; }
+    }
+    await addDoc(collection(db, 'admin_logs'), logData);
+}
+
+// ── INIT ──
+async function initAdmin() {
+    listenPortfolio(); listenServicos(); listenDepoimentos();
+    listenChats(); listenStatus(); listenSections(); listenAnalytics();
+
+    try {
+        const myDoc = await getDoc(doc(db, 'team_members', auth.currentUser.uid));
+        if (!myDoc.exists()) {
+            await setDoc(doc(db, 'team_members', auth.currentUser.uid), {
+                uid: auth.currentUser.uid, name: 'DONO', email: auth.currentUser.email,
+                role: 'ADMIN', isOwner: true, photoURL: null, createdAt: serverTimestamp()
+            });
+        } else if (auth.currentUser.email === OWNER_EMAIL && !myDoc.data().isOwner) {
+            await updateDoc(doc(db, 'team_members', auth.currentUser.uid), { isOwner: true, role: 'ADMIN' });
+        }
+    } catch (e) { console.warn('[AUTO-REG]', e); }
+
+    await applyPermissions();
+    await initDefaultTeamChats();
+    loadTeamMembers();
+    const role = localStorage.getItem('userRole');
+    if (role === 'ADMIN') loadLoginLogs();
+    loadChatLogs(); loadTeamLogs(); loadTeamChatLogs(); loadMsgLogs(); loadTeamChats();
+}
+
+// ══════════════════════════════════════
+// PORTFÓLIO
+// ══════════════════════════════════════
+function listenPortfolio() {
+    const q = query(collection(db,'portfolio'), orderBy('order','asc'));
+    onSnapshot(q, snap => {
+        portfolioItems = snap.docs.map(d => ({id:d.id,...d.data()}));
+        renderPortfolioAdmin();
+        document.getElementById('d-portfolio').textContent = portfolioItems.length;
+    });
+}
+window.setPortfolioFilter = (f) => {
+    portfolioFilter = f;
+    ['all','vfx','gfx'].forEach(x => {
+        const el = document.getElementById('pf-filter-'+x);
+        if(el) el.className = 'btn btn-sm '+(x===f?'btn-primary':'btn-secondary');
+    });
+    renderPortfolioAdmin();
+};
+function renderPortfolioAdmin() {
+    const grid = document.getElementById('portfolio-grid-admin');
+    const items = portfolioFilter==='all'?portfolioItems:portfolioItems.filter(i=>i.type===portfolioFilter);
+    if(!items.length){grid.innerHTML='<div class="empty-state">Nenhum item encontrado.</div>';return;}
+    grid.innerHTML = items.map(item => {
+        const thumb = item.thumbnail||(item.youtubeId?`https://img.youtube.com/vi/${item.youtubeId}/mqdefault.jpg`:'');
+        const thumbHtml = thumb?`<img src="${thumb}" class="admin-portfolio-thumb" onerror="this.style.display='none'" alt="">`:`<div class="admin-portfolio-thumb-placeholder">${item.name||'ITEM'}</div>`;
+        return `<div class="admin-portfolio-item" id="pf-item-${item.id}">
+            <div class="admin-portfolio-order"><span class="drag-handle">⠿</span> #${item.order||0}</div>
+            ${thumbHtml}
+            <div class="admin-portfolio-info">
+                <div class="admin-portfolio-name">${item.name||'—'}</div>
+                <div class="admin-portfolio-meta">${(item.type||'').toUpperCase()} · ${item.subtitle||''}</div>
+                <div style="margin-bottom:8px"><span class="badge ${item.active!==false?'badge-green':'badge-red'}">${item.active!==false?'ATIVO':'INATIVO'}</span>${item.featured?'<span class="badge badge-yellow" style="margin-left:4px">DESTAQUE</span>':''}</div>
+                <div class="admin-portfolio-actions">
+                    <button class="btn btn-sm btn-secondary" onclick="editPortfolioItem('${item.id}')">✏ Editar</button>
+                    <button class="btn btn-sm btn-danger" onclick="deletePortfolioItem('${item.id}')">🗑 Excluir</button>
+                    <button class="btn btn-sm btn-secondary" onclick="movePortfolioItem('${item.id}',-1)">↑</button>
+                    <button class="btn btn-sm btn-secondary" onclick="movePortfolioItem('${item.id}',1)">↓</button>
+                </div>
             </div>
+        </div>`;
+    }).join('');
+}
+window.openPortfolioModal = () => {
+    document.getElementById('pf-id').value='';document.getElementById('pf-name').value='';
+    document.getElementById('pf-sub').value='';document.getElementById('pf-type').value='';
+    document.getElementById('pf-media-type').value='video-url';document.getElementById('pf-url').value='';
+    document.getElementById('pf-img-url').value='';document.getElementById('pf-thumb').value='';
+    document.getElementById('pf-featured').checked=false;document.getElementById('pf-active').checked=true;
+    document.getElementById('pf-order').value=portfolioItems.length;
+    document.getElementById('portfolio-modal-title').textContent='Adicionar Item';
+    portfolioUploadedUrl='';toggleMediaFields();openModal('modal-portfolio');
+};
+window.editPortfolioItem = (id) => {
+    const item=portfolioItems.find(i=>i.id===id);if(!item)return;
+    document.getElementById('pf-id').value=id;document.getElementById('pf-name').value=item.name||'';
+    document.getElementById('pf-sub').value=item.subtitle||'';
+    document.getElementById('pf-type').value=(item.type||'vfx').toLowerCase().trim();
+    document.getElementById('pf-url').value=item.videoUrl||'';document.getElementById('pf-img-url').value=item.imageUrl||'';
+    document.getElementById('pf-thumb').value=item.thumbnail||'';document.getElementById('pf-featured').checked=!!item.featured;
+    document.getElementById('pf-active').checked=item.active!==false;document.getElementById('pf-order').value=item.order||0;
+    document.getElementById('portfolio-modal-title').textContent='Editar Item';
+    portfolioUploadedUrl=item.fileUrl||'';
+    document.getElementById('pf-media-type').value=(item.videoUrl||item.youtubeId)?'video-url':'image-url';
+    toggleMediaFields();openModal('modal-portfolio');
+};
+window.savePortfolioItem = async () => {
+    const id=document.getElementById('pf-id').value;const name=document.getElementById('pf-name').value.trim();
+    const sub=document.getElementById('pf-sub').value.trim();const type=document.getElementById('pf-type').value.toLowerCase().trim();
+    if(!type||!['vfx','gfx'].includes(type)){showToast('Selecione o tipo.','error');return;}
+    const mType=document.getElementById('pf-media-type').value;const url=document.getElementById('pf-url').value.trim();
+    const imgUrl=document.getElementById('pf-img-url').value.trim();const thumb=document.getElementById('pf-thumb').value.trim();
+    const featured=document.getElementById('pf-featured').checked;const active=document.getElementById('pf-active').checked;
+    const order=parseInt(document.getElementById('pf-order').value)||0;
+    if(!name){showToast('Nome obrigatório.','error');return;}
+    let youtubeId='',videoUrl='',imageUrl='',fileUrl=portfolioUploadedUrl;
+    if(mType==='video-url'){videoUrl=url;const m=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);if(m)youtubeId=m[1];}
+    else if(mType==='image-url'){imageUrl=imgUrl||url;}
+    const data={name,subtitle:sub,type,featured,active,order,updatedAt:serverTimestamp(),youtubeId,videoUrl,imageUrl,fileUrl,thumbnail:thumb||(youtubeId?'':'')};
+    try{if(id){await updateDoc(doc(db,'portfolio',id),data);showToast('Atualizado!','success');}
+    else{data.createdAt=serverTimestamp();await addDoc(collection(db,'portfolio'),data);showToast('Adicionado!','success');}
+    closeModal('modal-portfolio');}catch(e){showToast('Erro: '+e.message,'error');}
+};
+window.deletePortfolioItem = async (id) => {if(!confirm('Excluir?'))return;await deleteDoc(doc(db,'portfolio',id));showToast('Excluído.','success');};
+window.movePortfolioItem = async (id,dir) => {
+    const idx=portfolioItems.findIndex(i=>i.id===id);const target=portfolioItems[idx+dir];if(!target)return;
+    await Promise.all([updateDoc(doc(db,'portfolio',id),{order:target.order}),updateDoc(doc(db,'portfolio',target.id),{order:portfolioItems[idx].order})]);
+};
+window.toggleMediaFields = () => {
+    const v=document.getElementById('pf-media-type').value;
+    document.getElementById('pf-url-field').style.display=v==='video-url'?'':'none';
+    document.getElementById('pf-img-url-field').style.display=v==='image-url'?'':'none';
+};
+
+// ══════════════════════════════════════
+// SERVIÇOS
+// ══════════════════════════════════════
+function listenServicos(){const q=query(collection(db,'servicos'),orderBy('order','asc'));onSnapshot(q,snap=>{servicosItems=snap.docs.map(d=>({id:d.id,...d.data()}));renderServicos();});}
+function renderServicos(){
+    const el=document.getElementById('servicos-list');if(!el)return;
+    if(!servicosItems.length){el.innerHTML='<div class="empty-state">Nenhum serviço.</div>';return;}
+    el.innerHTML=servicosItems.map(s=>`<div class="service-card"><div class="service-order-badge">${String(s.order||0).padStart(2,'0')}</div><div class="service-info"><div class="service-name">${s.name||'—'}</div><div class="service-desc">${s.description||''}</div><div class="service-price">${s.price||''}</div><div style="margin-top:8px"><span class="badge ${s.active!==false?'badge-green':'badge-red'}">${s.active!==false?'ATIVO':'INATIVO'}</span></div></div><div class="service-actions"><button class="btn btn-sm btn-secondary" onclick="editService('${s.id}')">✏</button><button class="btn btn-sm btn-danger" onclick="deleteService('${s.id}')">🗑</button></div></div>`).join('');
+}
+window.openServiceModal=()=>{document.getElementById('svc-id').value='';document.getElementById('svc-name').value='';document.getElementById('svc-desc').value='';document.getElementById('svc-price').value='';document.getElementById('svc-order').value=servicosItems.length;document.getElementById('svc-active').checked=true;document.getElementById('service-modal-title').textContent='Adicionar Serviço';openModal('modal-service');};
+window.editService=(id)=>{const s=servicosItems.find(i=>i.id===id);if(!s)return;document.getElementById('svc-id').value=id;document.getElementById('svc-name').value=s.name||'';document.getElementById('svc-desc').value=s.description||'';document.getElementById('svc-price').value=s.price||'';document.getElementById('svc-order').value=s.order||0;document.getElementById('svc-active').checked=s.active!==false;document.getElementById('service-modal-title').textContent='Editar Serviço';openModal('modal-service');};
+window.saveService=async()=>{const id=document.getElementById('svc-id').value;const name=document.getElementById('svc-name').value.trim();if(!name){showToast('Nome obrigatório.','error');return;}const data={name,description:document.getElementById('svc-desc').value.trim(),price:document.getElementById('svc-price').value.trim(),order:parseInt(document.getElementById('svc-order').value)||0,active:document.getElementById('svc-active').checked,updatedAt:serverTimestamp()};try{if(id){await updateDoc(doc(db,'servicos',id),data);showToast('Atualizado!','success');}else{data.createdAt=serverTimestamp();await addDoc(collection(db,'servicos'),data);showToast('Adicionado!','success');}closeModal('modal-service');}catch(e){showToast('Erro: '+e.message,'error');}};
+window.deleteService=async(id)=>{if(!confirm('Excluir?'))return;await deleteDoc(doc(db,'servicos',id));showToast('Excluído.','success');};
+
+// ══════════════════════════════════════
+// DEPOIMENTOS
+// ══════════════════════════════════════
+function listenDepoimentos(){const q=query(collection(db,'depoimentos'),orderBy('createdAt','desc'));onSnapshot(q,snap=>{depoimentosItems=snap.docs.map(d=>({id:d.id,...d.data()}));renderDepoimentos();document.getElementById('d-depoimentos').textContent=depoimentosItems.filter(d=>d.status==='approved').length;});}
+window.setDepFilter=(f)=>{depFilter=f;renderDepoimentos();};
+function renderDepoimentos(){
+    const el=document.getElementById('depoimentos-list');
+    const items=depFilter==='all'?depoimentosItems:depoimentosItems.filter(d=>d.status===depFilter);
+    if(!items.length){el.innerHTML='<div class="empty-state">Nenhum depoimento.</div>';return;}
+    el.innerHTML=items.map(d=>`<div class="dep-card"><div class="dep-card-header"><div><div class="dep-card-author">${d.name||'—'}</div><div class="dep-card-role">${d.role||''}${d.email?' · '+d.email:''}</div></div><span class="badge ${d.status==='approved'?'badge-green':'badge-yellow'}">${d.status==='approved'?'APROVADO':'PENDENTE'}</span></div><div class="dep-card-text">"${d.text||''}"</div><div class="dep-card-footer"><div style="display:flex;gap:8px;flex-wrap:wrap">${d.status!=='approved'?`<button class="btn btn-sm btn-success" onclick="approveDepoimento('${d.id}')">✓ Aprovar</button>`:''}<button class="btn btn-sm btn-secondary" onclick="editDepoimento('${d.id}')">✏ Editar</button><button class="btn btn-sm btn-danger" onclick="deleteDepoimento('${d.id}')">🗑 Excluir</button></div><div style="font-family:var(--mono);font-size:10px;color:var(--muted)">${d.createdAt?.toDate?d.createdAt.toDate().toLocaleDateString('pt-BR'):'—'}</div></div></div>`).join('');
+}
+window.openDepModal=()=>{document.getElementById('dep-id').value='';document.getElementById('dep-name').value='';document.getElementById('dep-role').value='';document.getElementById('dep-email').value='';document.getElementById('dep-text').value='';document.getElementById('dep-status').value='approved';document.getElementById('dep-modal-title').textContent='Adicionar Depoimento';openModal('modal-dep');};
+window.editDepoimento=(id)=>{const d=depoimentosItems.find(i=>i.id===id);if(!d)return;document.getElementById('dep-id').value=id;document.getElementById('dep-name').value=d.name||'';document.getElementById('dep-role').value=d.role||'';document.getElementById('dep-email').value=d.email||'';document.getElementById('dep-text').value=d.text||'';document.getElementById('dep-status').value=d.status||'pending';document.getElementById('dep-modal-title').textContent='Editar Depoimento';openModal('modal-dep');};
+window.saveDepoimento=async()=>{const id=document.getElementById('dep-id').value;const name=document.getElementById('dep-name').value.trim();const text=document.getElementById('dep-text').value.trim();if(!name||!text){showToast('Nome e texto obrigatórios.','error');return;}const data={name,text,role:document.getElementById('dep-role').value.trim(),email:document.getElementById('dep-email').value.trim(),status:document.getElementById('dep-status').value,stars:5,updatedAt:serverTimestamp()};try{if(id){await updateDoc(doc(db,'depoimentos',id),data);showToast('Atualizado!','success');}else{data.createdAt=serverTimestamp();await addDoc(collection(db,'depoimentos'),data);showToast('Adicionado!','success');}closeModal('modal-dep');}catch(e){showToast('Erro: '+e.message,'error');}};
+window.approveDepoimento=async(id)=>{await updateDoc(doc(db,'depoimentos',id),{status:'approved',updatedAt:serverTimestamp()});showToast('Aprovado!','success');};
+window.deleteDepoimento=async(id)=>{if(!confirm('Excluir?'))return;await deleteDoc(doc(db,'depoimentos',id));showToast('Excluído.','success');};
+
+// ══════════════════════════════════════
+// CHAT SUPORTE
+// ══════════════════════════════════════
+function listenChats(){
+    const q=query(collection(db,'chats'),orderBy('lastMessageAt','desc'));
+    onSnapshot(q,snap=>{
+        const chats=snap.docs.map(d=>({id:d.id,...d.data()}));
+        renderChatList(chats);
+        const totalUnread=chats.reduce((a,c)=>a+(c.adminUnread||0),0);
+        const badge=document.getElementById('chat-badge');
+        if(totalUnread>0){badge.style.display='';badge.textContent=totalUnread;}else{badge.style.display='none';}
+        document.getElementById('d-chats').textContent=chats.length;
+    });
+}
+
+function renderChatList(chats){
+    const list=document.getElementById('chat-list');if(!list)return;
+    if(!chats.length){list.innerHTML='<div class="empty-state">Nenhuma conversa.</div>';return;}
+    list.innerHTML=chats.map(c=>{
+        const isClosed=c.status==='closed';const unread=c.adminUnread||0;
+        const date=c.lastMessageAt?.toDate?c.lastMessageAt.toDate().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}):'';
+        let statusDot=isClosed?'🔴':'🟢';let statusExtra='';
+        if(c.closeRequested&&!isClosed){statusDot='🟡';statusExtra=' · Encerr. solicitado';}
+        if(c.reopenRequested&&isClosed){statusDot='🔵';statusExtra=' · Reabertura solicitada';}
+        return `<div class="chat-list-item ${currentChatId===c.id?'active':''}" data-chatid="${c.id}" onclick="if(!event.target.classList.contains('chat-sel-cb'))openChat('${c.id}','${(c.visitorName||'Visitante').replace(/'/g,"\\'")}','${(c.subject||'').replace(/'/g,"\\'")}')">
+            <input type="checkbox" class="chat-sel-cb" data-chatid="${c.id}" onclick="event.stopPropagation()" onchange="updateChatSelUI()" style="accent-color:var(--accent);position:absolute;top:12px;right:12px;display:none;width:14px;height:14px;cursor:pointer">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span class="chat-list-name">${c.visitorName||'Visitante'}</span><span class="chat-list-time">${date}</span></div>
             <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.1em;margin:2px 0">${c.subject||'Sem assunto'}</div>
             <div class="chat-list-preview">${c.lastMessage||'...'}</div>
-            <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
-              <span style="font-size:10px">${statusDot}</span>
-              <span style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.1em">${isClosed?'Fechado':'Aberto'}${statusExtra}</span>
-              ${unread > 0 ? `<span class="chat-list-unread">${unread}</span>` : ''}
-            </div>
-          </div>
-        `;
+            <div style="display:flex;align-items:center;gap:6px;margin-top:4px"><span style="font-size:10px">${statusDot}</span><span style="font-family:var(--mono);font-size:9px;color:var(--muted)">${isClosed?'Fechado':'Aberto'}${statusExtra}</span>${unread>0?`<span class="chat-list-unread">${unread}</span>`:''}</div>
+        </div>`;
     }).join('');
 }
 
-window.toggleSelectAllChats = () => {
-    const all = document.getElementById('chat-sel-all').checked;
-    document.querySelectorAll('.chat-sel-cb').forEach(cb => cb.checked = all);
+window.toggleChatSelectMode=(on)=>{
+    chatSelectMode=on;
+    document.getElementById('chat-sel-bar').style.display=on?'flex':'none';
+    const selAll=document.getElementById('chat-sel-all');if(selAll)selAll.checked=false;
+    document.querySelectorAll('.chat-sel-cb').forEach(cb=>{cb.style.display=on?'block':'none';cb.checked=false;});
+    document.querySelectorAll('.chat-list-item').forEach(el=>el.classList.remove('selected'));
     updateChatSelUI();
 };
-
-window.updateChatSelUI = () => {
-    const checked = document.querySelectorAll('.chat-sel-cb:checked');
-    const btn = document.getElementById('chat-del-sel-btn');
-    if (btn) btn.style.display = checked.length > 0 ? 'block' : 'none';
+window.toggleSelectAllChats=()=>{const a=document.getElementById('chat-sel-all')?.checked;document.querySelectorAll('.chat-sel-cb').forEach(cb=>cb.checked=a);updateChatSelUI();};
+window.updateChatSelUI=()=>{
+    const checked=[...document.querySelectorAll('.chat-sel-cb:checked')];
+    const btn=document.getElementById('chat-del-sel-btn');const cnt=document.getElementById('chat-sel-count');
+    if(btn)btn.style.display=checked.length>0?'block':'none';
+    if(cnt){cnt.style.display=checked.length>0?'':'none';cnt.textContent=checked.length+' selecionado(s)';}
+    document.querySelectorAll('.chat-list-item').forEach(el=>{const cb=el.querySelector('.chat-sel-cb');el.classList.toggle('selected',cb?.checked||false);});
 };
 
-window.deleteSelectedChats = async () => {
-    const checked = document.querySelectorAll('.chat-sel-cb:checked');
-    if (!checked.length) return;
-    const ids = [...checked].map(cb => cb.dataset.chatid);
-    if (!confirm(`Excluir ${ids.length} chat(s) permanentemente? Isso não pode ser desfeito.`)) return;
-
-    for (const chatId of ids) {
-        try {
-            // Deleta todas as mensagens primeiro
-            const msgsSnap = await getDocs(collection(db, 'chats', chatId, 'messages'));
-            for (const msgDoc of msgsSnap.docs) {
-                await deleteDoc(doc(db, 'chats', chatId, 'messages', msgDoc.id));
-            }
-            // Deleta o chat
-            await deleteDoc(doc(db, 'chats', chatId));
-        } catch(e) {
-            console.error('[DELETE CHAT] Erro:', chatId, e);
-        }
-    }
-
-    showToast(`${ids.length} chat(s) excluído(s) permanentemente.`, 'success');
-    document.getElementById('chat-sel-all').checked = false;
-    updateChatSelUI();
+window.openChat=async(chatId,visitorName,subject)=>{
+    currentChatId=chatId;
+    const chatSnap=await getDoc(doc(db,'chats',chatId));const chatData=chatSnap.exists()?chatSnap.data():{};
+    const isClosed=chatData.status==='closed';const subjectText=subject||chatData.subject||'Chat';
+    const main=document.getElementById('chat-main-area');
+    main.innerHTML=`
+        <div class="chat-header"><div><div class="chat-header-name">${visitorName}</div><div class="chat-header-meta" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><span>${subjectText}</span><span style="color:${isClosed?'var(--accent)':'#4caf50'}">${isClosed?'● FINALIZADO':'● ATIVO'}</span></div></div>
+        <div style="display:flex;gap:8px">${isClosed?`<button class="btn btn-sm btn-success" onclick="reopenChatAdmin('${chatId}')">🔓 Reabrir</button>`:`<button class="btn btn-sm btn-danger" onclick="closeChat('${chatId}')">🔒 Encerrar</button>`}</div></div>
+        <div class="chat-messages" id="chat-msgs-${chatId}"></div>
+        ${isClosed?`<div style="padding:14px 24px;text-align:center;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:12px"><span style="font-family:var(--mono);font-size:11px;color:var(--muted)">CONVERSA ENCERRADA</span><button class="btn btn-sm btn-success" onclick="reopenChatAdmin('${chatId}')">🔓 Reabrir</button></div>`:`${chatData.closeRequested?`<div style="padding:10px 24px;text-align:center;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:12px;background:#1a1a00"><span style="font-family:var(--mono);font-size:10px;color:#ffc107">⚠ CLIENTE SOLICITOU ENCERRAMENTO</span><button class="btn btn-sm btn-danger" onclick="closeChat('${chatId}')" style="padding:4px 12px;font-size:9px">🔒 Encerrar</button></div>`:''}<div class="chat-input-area"><textarea class="chat-input" id="chat-reply-input" placeholder="Digite..." onkeydown="chatKeydown(event,'${chatId}')"></textarea><button class="btn btn-primary" onclick="sendAdminMessage('${chatId}')">Enviar</button></div>`}`;
+    updateDoc(doc(db,'chats',chatId),{adminUnread:0});
+    if(chatListeners[chatId])chatListeners[chatId]();
+    const q=query(collection(db,'chats',chatId,'messages'),orderBy('createdAt','asc'));
+    chatListeners[chatId]=onSnapshot(q,snap=>{
+        const msgs=snap.docs.map(d=>({id:d.id,...d.data()}));renderChatMessages(chatId,msgs);
+    });
+    document.querySelectorAll('.chat-list-item').forEach(el=>el.classList.remove('active'));
+    event?.target?.closest('.chat-list-item')?.classList.add('active');
 };
 
-window.openChat = async (chatId, visitorName, subject) => {
-  currentChatId = chatId;
-
-  // Busca dados atuais do chat
-  const chatSnap = await getDoc(doc(db, 'chats', chatId));
-  const chatData = chatSnap.exists() ? chatSnap.data() : {};
-const isClosed = chatData.status === 'closed';
-  const subjectText = subject || chatData.subject || 'Chat';
-
-  const main = document.getElementById('chat-main-area');
-  main.innerHTML = `
-    <div class="chat-header">
-      <div>
-        <div class="chat-header-name">${visitorName}</div>
-        <div class="chat-header-meta" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-          <span>${subjectText}</span>
-          <span style="color:${isClosed ? 'var(--accent)' : '#4caf50'}">${isClosed ? '● FINALIZADO' : '● ATIVO'}</span>
-        </div>
-      </div>
-<div style="display:flex;gap:8px">
-  ${isClosed
-    ? `<button class="btn btn-sm btn-success" onclick="reopenChatAdmin('${chatId}')">🔓 Reabrir</button>`
-    : `<button class="btn btn-sm btn-danger" onclick="closeChat('${chatId}')">🔒 Encerrar</button>`
-  }
-</div>
-    </div>
-    <div class="chat-messages" id="chat-msgs-${chatId}"></div>
-${isClosed ? `
-  <div style="padding:14px 24px;text-align:center;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:12px">
-    <span style="font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.15em">CONVERSA ENCERRADA</span>
-    <button class="btn btn-sm btn-success" onclick="reopenChatAdmin('${chatId}')">🔓 Reabrir</button>
-  </div>
-` : `
-  ${chatData.closeRequested ? `
-    <div style="padding:10px 24px;text-align:center;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:12px;background:#1a1a00">
-      <span style="font-family:var(--mono);font-size:10px;color:#ffc107;letter-spacing:.12em">⚠ CLIENTE SOLICITOU ENCERRAMENTO</span>
-      <button class="btn btn-sm btn-danger" onclick="closeChat('${chatId}')" style="padding:4px 12px;font-size:9px">🔒 Encerrar</button>
-    </div>
-  ` : ''}
-  <div class="chat-input-area">
-    <textarea class="chat-input" id="chat-reply-input" placeholder="Digite sua resposta..." onkeydown="chatKeydown(event,'${chatId}')"></textarea>
-    <button class="btn btn-primary" onclick="sendAdminMessage('${chatId}')">Enviar</button>
-  </div>
-`}
-  `;
-            updateDoc(doc(db, 'chats', chatId), { adminUnread: 0 });
-            if (chatListeners[chatId]) chatListeners[chatId]();
-            const q = query(collection(db, 'chats', chatId, 'messages'), orderBy('createdAt', 'asc'));
-            chatListeners[chatId] = onSnapshot(q, snap => {
-                const msgs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                renderChatMessages(chatId, msgs);
-            });
-            document.querySelectorAll('.chat-list-item').forEach(el => el.classList.remove('active'));
-            event?.target?.closest('.chat-list-item')?.classList.add('active');
-        };
-
-function renderChatMessages(chatId, msgs) {
-  const el = document.getElementById('chat-msgs-' + chatId);
-  if (!el) return;
-  el.innerHTML = msgs.map(m => {
-    const isAdmin = m.sender === 'admin';
-    const isSystem = m.sender === 'system';
-    let cls = isAdmin ? 'admin' : 'visitor';
-    let name = isAdmin ? 'Luckkx ● ADMIN' : (m.senderName || 'Visitante');
-    let style = '';
-
-    if(isSystem){
-      cls = 'visitor';
-      name = '⚙ Sistema';
-      style = 'background:#1a1a00;border-color:#333;color:#ffc107;font-style:italic';
-    }
-
-    return `
-      <div class="chat-msg ${cls}" style="${style}">
-        <div class="chat-msg-name">${name}</div>
-        ${m.text.replace(/\n/g,'<br>')}
-        <div class="chat-msg-time">${m.createdAt?.toDate ? m.createdAt.toDate().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : ''}</div>
-      </div>
-    `;
-  }).join('');
-  el.scrollTop = el.scrollHeight;
+function renderChatMessages(chatId,msgs){
+    const el=document.getElementById('chat-msgs-'+chatId);if(!el)return;
+    el.innerHTML=msgs.map(m=>{
+        const isAdmin=m.sender==='admin';const isSystem=m.sender==='system';
+        let cls=isAdmin?'admin':'visitor';let name=isAdmin?'Luckkx ● ADMIN':(m.senderName||'Visitante');let style='';
+        if(isSystem){cls='visitor';name='⚙ Sistema';style='background:#1a1a00;border-color:#333;color:#ffc107;font-style:italic';}
+        return `<div class="chat-msg ${cls}" style="${style}"><div class="chat-msg-name">${name}</div>${m.text.replace(/\n/g,'<br>')}<div class="chat-msg-time">${m.createdAt?.toDate?m.createdAt.toDate().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}):''}</div></div>`;
+    }).join('');
+    el.scrollTop=el.scrollHeight;
 }
 
-        window.chatKeydown = (e, chatId) => {
-            if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendAdminMessage(chatId); }
-        };
-
-window.sendAdminMessage = async (chatId) => {
-  const input = document.getElementById('chat-reply-input');
-  const text = input.value.trim();
-  if (!text) return;
-  input.value = '';
-  await addDoc(collection(db, 'chats', chatId, 'messages'), {
-    text, sender: 'admin', senderName: 'Luckkx ● ADMIN',
-    createdAt: serverTimestamp()
-  });
-            await updateDoc(doc(db, 'chats', chatId), {
-                lastMessage: text, lastMessageAt: serverTimestamp(), visitorUnread: increment(1)
-            });
-        };
-
-window.closeChat = (chatId) => {
-    document.getElementById('chat-reason-id').value = chatId;
-    document.getElementById('chat-reason-action').value = 'close';
-    document.getElementById('chat-reason-title').textContent = 'Motivo do Encerramento';
-    document.getElementById('chat-reason-text').value = '';
-    openModal('modal-chat-reason');
+window.chatKeydown=(e,chatId)=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendAdminMessage(chatId);}};
+window.sendAdminMessage=async(chatId)=>{
+    const input=document.getElementById('chat-reply-input');const text=input.value.trim();if(!text)return;input.value='';
+    await addDoc(collection(db,'chats',chatId,'messages'),{text,sender:'admin',senderName:'Luckkx ● ADMIN',createdAt:serverTimestamp()});
+    await updateDoc(doc(db,'chats',chatId),{lastMessage:text,lastMessageAt:serverTimestamp(),visitorUnread:increment(1)});
 };
+window.closeChat=(chatId)=>{document.getElementById('chat-reason-id').value=chatId;document.getElementById('chat-reason-action').value='close';document.getElementById('chat-reason-title').textContent='Motivo do Encerramento';document.getElementById('chat-reason-text').value='';openModal('modal-chat-reason');};
+window.reopenChatAdmin=(chatId)=>{document.getElementById('chat-reason-id').value=chatId;document.getElementById('chat-reason-action').value='reopen';document.getElementById('chat-reason-title').textContent='Motivo da Reabertura';document.getElementById('chat-reason-text').value='';openModal('modal-chat-reason');};
 
-window.reopenChatAdmin = (chatId) => {
-    document.getElementById('chat-reason-id').value = chatId;
-    document.getElementById('chat-reason-action').value = 'reopen';
-    document.getElementById('chat-reason-title').textContent = 'Motivo da Reabertura';
-    document.getElementById('chat-reason-text').value = '';
-    openModal('modal-chat-reason');
-};
-
-window.confirmChatReason = async () => {
-    const chatId = document.getElementById('chat-reason-id').value;
-    const action = document.getElementById('chat-reason-action').value;
-    const reason = document.getElementById('chat-reason-text').value.trim();
-    if (!reason) { showToast('Informe o motivo.', 'error'); return; }
+window.confirmChatReason=async()=>{
+    const chatId=document.getElementById('chat-reason-id').value;const action=document.getElementById('chat-reason-action').value;
+    const reason=document.getElementById('chat-reason-text').value.trim();if(!reason){showToast('Informe o motivo.','error');return;}
     closeModal('modal-chat-reason');
+    if(action==='close'){
+        await addDoc(collection(db,'chats',chatId,'messages'),{text:'🔒 Chat encerrado.\nMotivo: '+reason,sender:'system',senderName:'Sistema',createdAt:serverTimestamp()});
+        await updateDoc(doc(db,'chats',chatId),{status:'closed',closedAt:serverTimestamp(),lastMessage:'Encerrado: '+reason,lastMessageAt:serverTimestamp(),visitorUnread:increment(1)});
+        const closedId=chatId;currentChatId=null;showToast('Encerrada.','success');
+        await saveAdminLog('chat_closed',auth.currentUser?.email,reason,closedId);
+    } else if(action==='reopen'){
+        const msg='🔓 Chat reaberto.\nMotivo: '+reason;
+        await updateDoc(doc(db,'chats',chatId),{status:'open',reopenRequested:false,closeRequested:false,reopenedAt:serverTimestamp(),lastMessage:msg,lastMessageAt:serverTimestamp(),visitorUnread:increment(1)});
+        await addDoc(collection(db,'chats',chatId,'messages'),{text:msg,sender:'system',senderName:'Sistema',createdAt:serverTimestamp()});
+        showToast('Reaberta.','success');await saveAdminLog('chat_reopened',auth.currentUser?.email,reason,chatId);
+        const s=await getDoc(doc(db,'chats',chatId));const d=s.data();openChat(chatId,d.visitorName||'Visitante',d.subject||'Chat');
+    }
+};
 
-    if (action === 'close') {
-        await addDoc(collection(db, 'chats', chatId, 'messages'), {
-            text: '🔒 Chat encerrado pelo admin.\nMotivo: ' + reason,
-            sender: 'system', senderName: 'Sistema', createdAt: serverTimestamp()
-        });
-        await updateDoc(doc(db, 'chats', chatId), {
-            status: 'closed', closedAt: serverTimestamp(),
-            lastMessage: 'Encerrado: ' + reason, lastMessageAt: serverTimestamp(),
-            visitorUnread: increment(1)
-        });
-        const inputArea = document.querySelector('.chat-input-area');
-        if (inputArea) {
-            inputArea.innerHTML = '<div style="padding:12px;text-align:center;font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.15em">CONVERSA ENCERRADA</div>';
-        }
-        currentChatId = null;
-        showToast('Conversa encerrada.', 'success');
- } else if (action === 'reopen') {
-    const reopenMsg = '🔓 Chat reaberto pelo admin.\nMotivo: ' + reason;
-    await updateDoc(doc(db, 'chats', chatId), {
-        status: 'open',
-        reopenRequested: false,
-        closeRequested: false,
-        reopenedAt: serverTimestamp(),
-        lastMessage: reopenMsg,
-        lastMessageAt: serverTimestamp(),
-        visitorUnread: increment(1)
+window.deleteSelectedChats=async()=>{
+    if(localStorage.getItem('userRole')==='SUPORTE'){showToast('Sem permissão.','error');return;}
+    const checked=[...document.querySelectorAll('.chat-sel-cb:checked')];if(!checked.length)return;
+    const ids=checked.map(cb=>cb.dataset.chatid);
+    if(!confirm(`Excluir ${ids.length} conversa(s)?`))return;
+    const subjects={};
+    for(const cid of ids){try{const s=await getDoc(doc(db,'chats',cid));if(s.exists())subjects[cid]=s.data().subject||'Sem assunto';}catch{}}
+    for(const cid of ids){
+        const msgsSnap=await getDocs(collection(db,'chats',cid,'messages'));
+        for(const m of msgsSnap.docs)await deleteDoc(doc(db,'chats',cid,'messages',m.id));
+        await deleteDoc(doc(db,'chats',cid));
+        await saveAdminLog('chat_deleted',auth.currentUser?.email,subjects[cid]||'Sem assunto',cid);
+    }
+    showToast(`${ids.length} chat(s) excluído(s).`,'success');
+    document.getElementById('chat-main-area').innerHTML='<div class="chat-empty">Selecione uma conversa</div>';currentChatId=null;
+};
+
+// ══════════════════════════════════════
+// STATUS
+// ══════════════════════════════════════
+function listenStatus(){
+    onSnapshot(doc(db,'config','status'),snap=>{
+        if(snap.exists()){currentStatus=snap.data().status||'disponivel';const msg=snap.data().message||'';
+        document.getElementById('status-msg').value=msg;renderStatusOptions(currentStatus);updateDashStatus(currentStatus,msg);}
     });
-    await addDoc(collection(db, 'chats', chatId, 'messages'), {
-        text: reopenMsg,
-        sender: 'system',
-        senderName: 'Sistema',
-        createdAt: serverTimestamp()
-    });
-    showToast('Chat reaberto.', 'success');
-    const chatSnap = await getDoc(doc(db, 'chats', chatId));
-    const data = chatSnap.data();
-    openChat(chatId, data.visitorName || 'Visitante', data.subject || 'Chat');
 }
-};
+function renderStatusOptions(s){['disponivel','ocupado','limitado'].forEach(o=>{document.getElementById('status-'+o)?.classList.toggle('selected',o===s);});}
+function updateDashStatus(s,msg){
+    const map={disponivel:{e:'🟢',l:'Disponível'},ocupado:{e:'🔴',l:'Ocupado'},limitado:{e:'🟡',l:'Vagas limitadas'}};
+    const c=map[s]||map.disponivel;const el=document.getElementById('dash-status-preview');
+    if(el)el.textContent=c.e+' '+c.l+(msg?' — '+msg:'');
+    const nav=document.querySelector('[data-page="status"] .nav-icon');if(nav)nav.textContent=c.e;
+}
+window.setStatus=(s)=>{currentStatus=s;renderStatusOptions(s);};
+window.saveStatus=async()=>{await setDoc(doc(db,'config','status'),{status:currentStatus,message:document.getElementById('status-msg').value.trim(),updatedAt:serverTimestamp()});showToast('Status salvo!','success');};
 
+// ══════════════════════════════════════
+// SEÇÕES
+// ══════════════════════════════════════
+const SECTIONS_CONFIG=[{id:'hero',name:'Hero',desc:'Banner principal'},{id:'sobre',name:'Sobre',desc:'Seção sobre'},{id:'experiencia',name:'Experiência',desc:'Stats'},{id:'processo',name:'Processo',desc:'Etapas'},{id:'portfolio',name:'Portfólio',desc:'Galeria'},{id:'depoimentos',name:'Depoimentos',desc:'Avaliações'},{id:'contato',name:'Contato',desc:'Formulário'}];
+function listenSections(){onSnapshot(doc(db,'config','sections'),snap=>{sectionsState=snap.exists()?snap.data():{};renderSections();});}
+function renderSections(){
+    const grid=document.getElementById('sections-grid');
+    grid.innerHTML=SECTIONS_CONFIG.map(s=>{const active=sectionsState[s.id]!==false;return `<div class="section-ctrl"><div class="section-ctrl-info"><div class="section-ctrl-name">${s.name}</div><div class="section-ctrl-desc">${s.desc}</div></div><label class="toggle"><input type="checkbox" ${active?'checked':''} onchange="toggleSection('${s.id}',this.checked)"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>`;}).join('');
+}
+window.toggleSection=async(id,val)=>{sectionsState[id]=val;await setDoc(doc(db,'config','sections'),sectionsState);showToast(`Seção "${id}" ${val?'ativada':'desativada'}.`,'success');};
 
-/* ── CHAT SELECT & DELETE ── */
-let chatSelectMode = false;
-
-window.toggleChatSelectMode = (on) => {
-    chatSelectMode = on;
-    const selBar = document.getElementById('chat-sel-bar');
-    if (selBar) selBar.style.display = on ? 'flex' : 'none';
-    const selAll = document.getElementById('chat-sel-all');
-    if (selAll) selAll.checked = false;
-    document.querySelectorAll('.chat-sel-cb').forEach(cb => {
-        cb.style.display = on ? 'block' : 'none';
-        cb.checked = false;
+// ══════════════════════════════════════
+// ANALYTICS
+// ══════════════════════════════════════
+function listenAnalytics(){
+    onSnapshot(doc(db,'analytics','totals'),snap=>{
+        const d=snap.exists()?snap.data():{};
+        document.getElementById('d-views').textContent=d.pageviews||0;
+        document.getElementById('an-views').textContent=d.pageviews||0;
+        document.getElementById('an-whatsapp').textContent=d.whatsapp||0;
+        document.getElementById('an-portfolio-clicks').textContent=d.portfolio||0;
+        document.getElementById('an-chats').textContent=d.chats||0;
+        renderPageChart(d.pages||{});
     });
-    document.querySelectorAll('.chat-list-item').forEach(el => el.classList.remove('selected'));
-    updateChatSelUI();
-};
+}
+function renderPageChart(pages){
+    const el=document.getElementById('analytics-pages');const entries=Object.entries(pages).sort((a,b)=>b[1]-a[1]).slice(0,8);
+    if(!entries.length){el.innerHTML='<div style="color:var(--muted);font-family:var(--mono);font-size:10px">Sem dados.</div>';return;}
+    const max=entries[0][1]||1;
+    el.innerHTML=entries.map(([p,c])=>`<div class="chart-bar-item"><div class="chart-bar-label">${p}</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:${Math.round(c/max*100)}%"></div></div><div class="chart-bar-val">${c}</div></div>`).join('');
+}
 
-
-window.toggleSelectAllChats = () => {
-    const allChecked = document.getElementById('chat-sel-all')?.checked;
-    document.querySelectorAll('.chat-sel-cb').forEach(cb => cb.checked = allChecked);
-    updateChatSelUI();
-};
-
-window.updateChatSelUI = () => {
-    const checked = [...document.querySelectorAll('.chat-sel-cb:checked')];
-    const delBtn = document.getElementById('chat-del-sel-btn');
-    const countEl = document.getElementById('chat-sel-count');
-    if (delBtn) delBtn.style.display = checked.length > 0 ? 'block' : 'none';
-    if (countEl) {
-        countEl.style.display = checked.length > 0 ? '' : 'none';
-        countEl.textContent = checked.length + ' selecionado(s)';
-    }
-    // Update visual selection
-    document.querySelectorAll('.chat-list-item').forEach(el => {
-        const cb = el.querySelector('.chat-sel-cb');
-        el.classList.toggle('selected', cb?.checked || false);
+// ── DASHBOARD CHATS RECENTES ──
+setTimeout(()=>{
+    const q=query(collection(db,'chats'),orderBy('lastMessageAt','desc'));
+    onSnapshot(q,snap=>{
+        const el=document.getElementById('dash-chats-recent');if(!el)return;
+        const chats=snap.docs.slice(0,5).map(d=>({id:d.id,...d.data()}));
+        if(!chats.length){el.innerHTML='<div class="text-muted text-mono" style="font-size:11px">Nenhuma conversa.</div>';return;}
+        el.innerHTML=`<table><thead><tr><th>Visitante</th><th>Última msg</th><th>Status</th><th></th></tr></thead><tbody>${chats.map(c=>`<tr><td>${c.visitorName||'Visitante'}</td><td style="color:var(--muted);font-size:12px">${c.lastMessage||'—'}</td><td><span class="badge ${c.status==='closed'?'badge-red':'badge-green'}">${c.status==='closed'?'ENCERRADO':'ATIVO'}</span></td><td><button class="btn btn-sm btn-secondary" onclick="showPage('chat')">Ver</button></td></tr>`).join('')}</tbody></table>`;
     });
-};
+},500);
 
-window.deleteSelectedChats = async () => {
-    const checked = [...document.querySelectorAll('.chat-sel-cb:checked')];
-    if (!checked.length) return;
-    const ids = checked.map(cb => cb.dataset.chatid);
-    if (!confirm(`Excluir ${ids.length} conversa(s) permanentemente? Não pode ser desfeito.`)) return;
+// ── NOTIFICATION SOUND ──
+let prevTotalUnread=0;
+setInterval(()=>{const badge=document.getElementById('chat-badge');if(!badge)return;const cur=parseInt(badge.textContent)||0;if(cur>prevTotalUnread)document.getElementById('notify-sound')?.play().catch(()=>{});prevTotalUnread=cur;},2000);
 
-    for (const chatId of ids) {
-        try {
-            const msgsSnap = await getDocs(collection(db, 'chats', chatId, 'messages'));
-            for (const msgDoc of msgsSnap.docs) {
-                await deleteDoc(doc(db, 'chats', chatId, 'messages', msgDoc.id));
-            }
-            await deleteDoc(doc(db, 'chats', chatId));
-        } catch(e) { console.error('[DELETE CHAT]', chatId, e); }
+// ══════════════════════════════════════
+// MEMBROS DA EQUIPE
+// ══════════════════════════════════════
+function loadTeamMembers(){
+    const grid=document.getElementById('team-grid');if(!grid)return;
+    const q=query(collection(db,'team_members'),orderBy('createdAt','desc'));
+    onSnapshot(q,snapshot=>{
+        if(snapshot.empty){grid.innerHTML='<p style="color:var(--muted);text-align:center;padding:40px">Nenhum membro.</p>';return;}
+        const myUid=auth.currentUser?.uid;const myRole=localStorage.getItem('userRole');
+        grid.innerHTML=snapshot.docs.map(ds=>{
+            const d=ds.data();const date=d.createdAt?.toDate();const dateStr=date?date.toLocaleDateString('pt-BR'):'—';
+            const isOwner=d.isOwner===true;
+            const roleClass=isOwner?'owner':(d.role==='ADMIN'?'admin':'suporte');
+            const roleLabel=isOwner?'👑 DONO':d.role;
+            const myIsOwner=localStorage.getItem('isOwner')==='true';
+            const canManage=(myIsOwner&&!isOwner&&ds.id!==myUid)||(myRole==='ADMIN'&&!myIsOwner&&d.role==='SUPORTE'&&ds.id!==myUid);
+            return `<div class="team-card">${canManage?`<div style="position:absolute;top:12px;right:12px;display:flex;gap:6px"><button class="btn-remove-member" style="position:static;background:rgba(52,152,219,.1);border-color:rgba(52,152,219,.3);color:#3498db" onclick="editMember('${ds.id}')">Editar</button><button class="btn-remove-member" style="position:static" onclick="removeMember('${ds.id}','${d.email}')">Remover</button></div>`:''}<img src="${d.photoURL||'https://ui-avatars.com/api/?name='+encodeURIComponent(d.name)+'&background=111&color=fff'}" class="team-avatar"><h3 class="team-name">${d.name}</h3><p class="team-email">${d.email}</p><span class="team-role ${roleClass}">${roleLabel}</span><p class="team-date">Desde ${dateStr}</p></div>`;
+        }).join('');
+    });
+}
+
+// ── Adicionar membro ──
+document.addEventListener('DOMContentLoaded',()=>{
+    document.getElementById('btn-add-member')?.addEventListener('click',()=>{
+        const existing=document.getElementById('modal-add-member-temp');if(existing)existing.remove();
+        const modal=document.createElement('div');modal.className='modal-bg open';modal.id='modal-add-member-temp';
+        modal.innerHTML=`<div class="modal-box" style="max-width:480px"><div class="modal-head"><h2>ADICIONAR MEMBRO</h2><button class="modal-close-btn" onclick="document.getElementById('modal-add-member-temp').remove()">✕</button></div><div class="modal-body"><div class="form-group"><label class="form-label">Nome</label><input type="text" class="form-input" id="new-member-name" placeholder="Nome completo"></div><div class="form-group"><label class="form-label">E-mail</label><input type="email" class="form-input" id="new-member-email" placeholder="email@exemplo.com"></div><div class="form-group"><label class="form-label">Senha inicial</label><div style="position:relative"><input type="password" class="form-input" id="new-member-password" placeholder="Mínimo 6 caracteres" style="padding-right:44px"><button type="button" onclick="const i=document.getElementById('new-member-password');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'👁':'👁‍🗨'" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px">👁</button></div></div><div class="form-group"><label class="form-label">Cargo</label><select class="form-select form-input" id="new-member-role"><option value="SUPORTE">SUPORTE</option>${localStorage.getItem('isOwner')==='true'?'<option value="ADMIN">ADMIN</option>':''}</select></div><div class="form-group"><label class="form-label">Foto (URL) — opcional</label><input type="text" class="form-input" id="new-member-photo" placeholder="https://..."></div></div><div class="modal-foot"><button class="btn btn-secondary" onclick="document.getElementById('modal-add-member-temp').remove()">Cancelar</button><button class="btn btn-primary" onclick="saveNewMember()">Salvar</button></div></div>`;
+        document.body.appendChild(modal);
+    });
+});
+
+window.saveNewMember=async()=>{
+    const name=document.getElementById('new-member-name').value.trim();
+    const email=document.getElementById('new-member-email').value.trim();
+    const password=document.getElementById('new-member-password').value;
+    const role=document.getElementById('new-member-role').value;
+    const photoURL=document.getElementById('new-member-photo').value.trim();
+    if(!name||!email||!password){showToast('Preencha todos os campos.','error');return;}
+    if(password.length<6){showToast('Senha mínima: 6 caracteres.','error');return;}
+
+    const myDoc=await getDoc(doc(db,'team_members',auth.currentUser.uid));
+    const isOwner=myDoc.exists()&&myDoc.data().isOwner===true;
+    if(!isOwner&&role==='ADMIN'){showToast('Apenas o DONO pode criar ADMINs.','error');return;}
+
+    const adminEmail=auth.currentUser.email;let uid=null;
+    try{const cred=await createUserWithEmailAndPassword(auth,email,password);uid=cred.user.uid;}
+    catch(err){
+        const msgs={'auth/email-already-in-use':'E-mail já em uso.','auth/weak-password':'Senha fraca.','auth/invalid-email':'E-mail inválido.'};
+        showToast(msgs[err.code]||'Erro: '+err.message,'error');
+        if(!auth.currentUser||auth.currentUser.email!==adminEmail)await autoReloginAsAdmin();
+        return;
     }
+    const relogged=await autoReloginAsAdmin();
+    if(!relogged){try{await showReloginModal(adminEmail);}catch{return;}}
+    try{
+        await setDoc(doc(db,'team_members',uid),{uid,name,email,role,photoURL:photoURL||null,createdAt:serverTimestamp()});
+        saveAdminLog('member_added',adminEmail,`${name} (${role})`).catch(()=>{});
+        showToast(`✓ ${name} adicionado como ${role}!`,'success');
+        document.getElementById('modal-add-member-temp')?.remove();
+    }catch(e){showToast('Erro: '+e.message,'error');}
+};
 
-    showToast(`${ids.length} chat(s) excluído(s).`, 'success');
-    document.getElementById('chat-main-area').innerHTML = '<div class="chat-empty">Selecione uma conversa</div>';
-    currentChatId = null;
+// ── Editar membro ──
+window.editMember=async(memberId)=>{
+    const memberSnap=await getDoc(doc(db,'team_members',memberId));if(!memberSnap.exists()){showToast('Não encontrado.','error');return;}
+    const data=memberSnap.data();
+    const existing=document.getElementById('modal-edit-member-temp');if(existing)existing.remove();
+    const modal=document.createElement('div');modal.className='modal-bg open';modal.id='modal-edit-member-temp';
+    modal.innerHTML=`<div class="modal-box" style="max-width:480px"><div class="modal-head"><h2>EDITAR MEMBRO</h2><button class="modal-close-btn" onclick="document.getElementById('modal-edit-member-temp').remove()">✕</button></div><div class="modal-body"><p style="color:var(--muted);margin-bottom:16px;font-size:12px">${data.email}</p><div class="form-group"><label class="form-label">Nome</label><input type="text" class="form-input" id="edit-member-name" value="${data.name||''}"></div><div class="form-group"><label class="form-label">Cargo</label><select class="form-select form-input" id="edit-member-role"><option value="SUPORTE" ${data.role==='SUPORTE'?'selected':''}>SUPORTE</option>${localStorage.getItem('isOwner')==='true'?`<option value="ADMIN" ${data.role==='ADMIN'?'selected':''}>ADMIN</option>`:''}</select></div><div class="form-group"><label class="form-label">Nova senha (vazio = não altera)</label><div style="position:relative"><input type="password" class="form-input" id="edit-member-pass" placeholder="••••••••" style="padding-right:44px"><button type="button" onclick="const i=document.getElementById('edit-member-pass');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'👁':'👁‍🗨'" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px">👁</button></div><div class="form-hint">Senha só alterável via Firebase Console.</div></div></div><div class="modal-foot"><button class="btn btn-secondary" onclick="document.getElementById('modal-edit-member-temp').remove()">Cancelar</button><button class="btn btn-primary" onclick="saveEditMember('${memberId}')">Salvar</button></div></div>`;
+    document.body.appendChild(modal);
+};
+
+window.saveEditMember=async(memberId)=>{
+    const name=document.getElementById('edit-member-name').value.trim();const role=document.getElementById('edit-member-role').value;
+    if(!name){showToast('Nome obrigatório.','error');return;}
+    if(role==='ADMIN'&&localStorage.getItem('isOwner')!=='true'){showToast('Apenas o DONO pode promover.','error');return;}
+    try{await updateDoc(doc(db,'team_members',memberId),{name,role,updatedAt:serverTimestamp()});showToast('Atualizado!','success');document.getElementById('modal-edit-member-temp')?.remove();}
+    catch(e){showToast('Erro: '+e.message,'error');}
+};
+
+// ── Remover membro ──
+window.removeMember=async(memberId,memberEmail)=>{
+    const existing=document.getElementById('modal-remove-member-temp');if(existing)existing.remove();
+    const modal=document.createElement('div');modal.className='modal-bg open';modal.id='modal-remove-member-temp';
+    modal.innerHTML=`<div class="modal-box" style="max-width:480px"><div class="modal-head"><h2>REMOVER MEMBRO</h2><button class="modal-close-btn" onclick="document.getElementById('modal-remove-member-temp').remove()">✕</button></div><div class="modal-body"><p style="color:var(--muted);margin-bottom:16px">Removendo <strong style="color:#fff">${memberEmail}</strong></p><div class="form-group"><label class="form-label">Motivo</label><textarea class="form-textarea" id="remove-reason" placeholder="Motivo..."></textarea></div><div class="form-group"><label class="form-label">Senha do membro</label><div style="position:relative"><input type="password" class="form-input" id="remove-member-pass" placeholder="Para deletar do Auth" style="padding-right:44px"><button type="button" onclick="const i=document.getElementById('remove-member-pass');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'👁':'👁‍🗨'" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px">👁</button></div><div class="form-hint">Sem a senha, remove só do painel.</div></div></div><div class="modal-foot"><button class="btn btn-secondary" onclick="document.getElementById('modal-remove-member-temp').remove()">Cancelar</button><button class="btn btn-danger" onclick="confirmRemoveMember('${memberId}','${memberEmail}')">Remover</button></div></div>`;
+    document.body.appendChild(modal);
+};
+
+window.confirmRemoveMember=async(memberId,memberEmail)=>{
+    const reason=document.getElementById('remove-reason').value.trim();const memberPass=document.getElementById('remove-member-pass').value;
+    if(!reason){showToast('Informe o motivo.','error');return;}
+    const myDoc=await getDoc(doc(db,'team_members',auth.currentUser.uid));const isOwner=myDoc.exists()&&myDoc.data().isOwner===true;
+    const targetDoc=await getDoc(doc(db,'team_members',memberId));
+    if(targetDoc.exists()&&targetDoc.data().role==='ADMIN'&&!isOwner){showToast('Apenas o DONO pode remover ADMINs.','error');return;}
+    const adminEmail=auth.currentUser.email;let authDeleted=false;
+    if(memberPass){
+        try{await signOut(auth);const mc=await signInWithEmailAndPassword(auth,memberEmail,memberPass);await deleteUser(mc.user);authDeleted=true;}catch(e){console.warn('[REMOVE]',e.code);}
+        const r=await autoReloginAsAdmin();if(!r){try{await showReloginModal(adminEmail);}catch{document.getElementById('modal-remove-member-temp')?.remove();return;}}
+    }
+    try{await deleteDoc(doc(db,'team_members',memberId));saveAdminLog('member_removed',adminEmail,`${memberEmail} — ${reason}`).catch(()=>{});
+    showToast(authDeleted?`✓ ${memberEmail} removido completamente.`:`✓ ${memberEmail} removido do painel.`,'success');}catch(e){showToast('Erro: '+e.message,'error');}
+    document.getElementById('modal-remove-member-temp')?.remove();
+};
+
+// ══════════════════════════════════════
+// CHAT EQUIPE
+// ══════════════════════════════════════
+document.addEventListener('DOMContentLoaded',()=>{
+    document.getElementById('btn-create-chat')?.addEventListener('click',()=>{
+        const existing=document.getElementById('modal-create-chat-temp');if(existing)existing.remove();
+        const modal=document.createElement('div');modal.className='modal-bg open';modal.id='modal-create-chat-temp';
+        modal.innerHTML=`<div class="modal-box" style="max-width:500px"><div class="modal-head"><h2>CRIAR CHAT</h2><button class="modal-close-btn" onclick="document.getElementById('modal-create-chat-temp').remove()">✕</button></div><div class="modal-body"><div class="form-group"><label class="form-label">Nome do Chat</label><input type="text" class="form-input" id="new-chat-name" placeholder="Ex: Projetos VFX"></div><div class="form-group"><label class="form-label">Motivo / Descrição</label><input type="text" class="form-input" id="new-chat-reason" placeholder="Para que serve?"></div><div class="form-group"><label class="form-label">Quem pode acessar?</label><div style="display:flex;gap:16px;margin-top:8px"><label style="display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--muted);font-size:13px"><input type="checkbox" id="new-chat-role-admin" checked style="accent-color:var(--accent)"> ADMIN</label><label style="display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--muted);font-size:13px"><input type="checkbox" id="new-chat-role-suporte" style="accent-color:var(--accent)"> SUPORTE</label></div></div><div class="form-group"><label class="form-label">Símbolo (Emoji)</label><input type="hidden" id="new-chat-emoji" value="💬"><div class="emoji-picker-grid">${PRESET_EMOJIS.map((e,i)=>`<div class="emoji-pick ${i===0?'selected':''}" onclick="document.getElementById('new-chat-emoji').value='${e}';document.querySelectorAll('.emoji-pick').forEach(x=>x.classList.remove('selected'));this.classList.add('selected')">${e}</div>`).join('')}</div></div></div><div class="modal-foot"><button class="btn btn-secondary" onclick="document.getElementById('modal-create-chat-temp').remove()">Cancelar</button><button class="btn btn-primary" onclick="saveNewTeamChat()">Criar</button></div></div>`;
+        document.body.appendChild(modal);
+    });
+});
+
+window.saveNewTeamChat=async()=>{
+    const name=document.getElementById('new-chat-name').value.trim();const reason=document.getElementById('new-chat-reason').value.trim();
+    const emoji=document.getElementById('new-chat-emoji').value||'💬';if(!name){showToast('Nome obrigatório.','error');return;}
+    const roles=[];if(document.getElementById('new-chat-role-admin').checked)roles.push('ADMIN');
+    if(document.getElementById('new-chat-role-suporte').checked)roles.push('SUPORTE');
+    if(!roles.length){showToast('Selecione pelo menos um cargo.','error');return;}
+    try{
+        const chatRef = await addDoc(collection(db,'team_chats'),{name,description:reason,emoji,allowedRoles:roles,isDefault:false,createdAt:serverTimestamp()});
+        saveAdminLog('team_chat_created',auth.currentUser?.email,name,chatRef.id).catch(()=>{});
+        showToast(`Chat "${name}" criado!`,'success');
+        document.getElementById('modal-create-chat-temp')?.remove();
+    }catch(e){showToast('Erro: '+e.message,'error');}
+};
+
+async function initDefaultTeamChats(){
+    const snap=await getDocs(collection(db,'team_chats'));if(!snap.empty)return;
+    await setDoc(doc(db,'team_chats','admin-chat'),{name:'Chat Admin',emoji:'💬',description:'Apenas admins',allowedRoles:['ADMIN'],isDefault:true,createdAt:serverTimestamp()});
+    await setDoc(doc(db,'team_chats','suporte-chat'),{name:'Chat Suporte',emoji:'🛠️',description:'Suporte e admins',allowedRoles:['ADMIN','SUPORTE'],isDefault:true,createdAt:serverTimestamp()});
+}
+
+function loadTeamChats(){
+    const list=document.getElementById('team-chat-list');if(!list)return;
+    const q=query(collection(db,'team_chats'),orderBy('createdAt','asc'));
+    onSnapshot(q,async snapshot=>{
+        if(snapshot.empty){list.innerHTML='<p style="color:var(--muted);text-align:center;padding:40px">Nenhum chat.</p>';return;}
+                let userRole='SUPORTE';
+        try{
+            const m=await getDoc(doc(db,'team_members',auth.currentUser.uid));
+            if(m.exists()){
+                userRole=m.data().role||'SUPORTE';
+                if(m.data().isOwner===true || auth.currentUser.email===OWNER_EMAIL) userRole='ADMIN';
+            } else if(auth.currentUser.email===OWNER_EMAIL){ userRole='ADMIN'; }
+        }catch{}
+const filtered=snapshot.docs.filter(d=>{
+    const data=d.data();
+    if(!data.allowedRoles||!data.allowedRoles.length)return false;
+    // ADMIN e DONO veem todos os chats
+    if(userRole==='ADMIN')return true;
+    // SUPORTE só vê chats que incluem SUPORTE explicitamente
+    return data.allowedRoles.includes(userRole);
+});        if(!filtered.length){list.innerHTML='<p style="color:var(--muted);text-align:center;padding:40px">Nenhum chat disponível.</p>';return;}
+        list.innerHTML=filtered.map(d=>{
+            const data=d.data();const isDefault=data.isDefault===true;const canDelete=userRole==='ADMIN'&&!isDefault;
+            return `<div class="team-chat-list-item ${activeTeamChatId===d.id?'active':''}" onclick="openTeamChat('${d.id}','${data.name.replace(/'/g,"\\'")}')"><span class="tc-icon">${data.emoji||'💬'}</span><div class="tc-info"><h4>${data.name}</h4><p>${data.allowedRoles.join(', ')}${data.description?' · '+data.description:''}</p></div>${canDelete?`<button class="tc-delete" onclick="event.stopPropagation();deleteTeamChat('${d.id}','${data.name.replace(/'/g,"\\'")}')">🗑</button>`:''}</div>`;
+        }).join('');
+    });
+}
+
+window.deleteTeamChat=async(chatId,chatName)=>{
+    if(!confirm(`Excluir "${chatName}"?`))return;
+    try{const msgsSnap=await getDocs(collection(db,'team_chats',chatId,'messages'));
+    for(const m of msgsSnap.docs)await deleteDoc(doc(db,'team_chats',chatId,'messages',m.id));
+    await deleteDoc(doc(db,'team_chats',chatId));
+    saveAdminLog('team_chat_deleted',auth.currentUser?.email,chatName,chatId).catch(()=>{});
+    showToast(`"${chatName}" excluído.`,'success');
+    if(activeTeamChatId===chatId){activeTeamChatId=null;document.getElementById('team-chat-main').innerHTML='<div class="team-chat-empty">Selecione um canal</div>';}
+    }catch(e){showToast('Erro: '+e.message,'error');}
+};
+
+window.openTeamChat=(chatId,chatName)=>{
+    activeTeamChatId=chatId;const main=document.getElementById('team-chat-main');
+    main.innerHTML=`<div class="team-chat-header"><div><div class="team-chat-header-name">${chatName}</div><div class="team-chat-header-meta">Canal da equipe</div></div></div><div class="team-chat-msgs" id="tc-msgs-${chatId}"></div><div class="team-chat-input-area"><input type="text" id="tc-input-${chatId}" placeholder="Digite sua mensagem..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendTeamMessage('${chatId}')}"><button class="btn btn-primary" onclick="sendTeamMessage('${chatId}')">Enviar</button></div>`;
+    if(_teamChatListeners[chatId])_teamChatListeners[chatId]();
+    const q=query(collection(db,'team_chats',chatId,'messages'),orderBy('timestamp','asc'));
+    _teamChatListeners[chatId]=onSnapshot(q,snapshot=>{
+        const msgsDiv=document.getElementById('tc-msgs-'+chatId);if(!msgsDiv)return;
+        if(snapshot.empty){msgsDiv.innerHTML='<div class="team-chat-empty" style="height:auto;padding:40px">Sem mensagens</div>';return;}
+        const myEmail=auth.currentUser?.email;const myRole=localStorage.getItem('userRole');
+        msgsDiv.innerHTML=snapshot.docs.map(d=>{
+            const m=d.data();const isMine=m.senderEmail===myEmail;
+            const time=m.timestamp?.toDate?m.timestamp.toDate().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}):'';
+            const editedTag=m.edited?'<span class="team-msg-edited"> (editado)</span>':'';const canMod=myRole==='ADMIN';
+            return `<div class="team-chat-msg-wrap" style="align-items:${isMine?'flex-end':'flex-start'}">${canMod?`<div class="tc-msg-actions"><button title="Editar" onclick="editTeamMsg('${chatId}','${d.id}','${chatName.replace(/'/g,"\\'")}')">✏</button><button title="Excluir" onclick="deleteTeamMsg('${chatId}','${d.id}','${chatName.replace(/'/g,"\\'")}')">🗑</button></div>`:''} ${!isMine?`<div class="team-msg-sender">${m.senderName||'Anônimo'} · <span style="color:${m.senderRole==='ADMIN'?'#2ecc71':'#3498db'}">${m.senderRole||''}</span></div>`:''}<div class="team-msg-bubble ${isMine?'self':'other'}">${m.text.replace(/\n/g,'<br>')}${editedTag}</div><div class="team-msg-time">${time}</div></div>`;
+        }).join('');
+        msgsDiv.scrollTop=msgsDiv.scrollHeight;
+    });
+    document.querySelectorAll('.team-chat-list-item').forEach(el=>el.classList.remove('active'));
+    event?.target?.closest('.team-chat-list-item')?.classList.add('active');
+};
+
+window.sendTeamMessage=async(chatId)=>{
+    const input=document.getElementById('tc-input-'+chatId);if(!input)return;const text=input.value.trim();if(!text)return;
+    const ud=await getDoc(doc(db,'team_members',auth.currentUser.uid));const uData=ud.exists()?ud.data():{};
+    await addDoc(collection(db,'team_chats',chatId,'messages'),{text,senderName:uData.name||auth.currentUser.email,senderEmail:auth.currentUser.email,senderRole:uData.role||'ADMIN',timestamp:serverTimestamp()});
+    input.value='';
+};
+
+window.deleteTeamMsg=async(chatId,msgId,chatName)=>{
+    if(!confirm('Excluir esta mensagem?'))return;
+    try{const s=await getDoc(doc(db,'team_chats',chatId,'messages',msgId));const msgText=s.exists()?s.data().text:'(não encontrada)';
+    await deleteDoc(doc(db,'team_chats',chatId,'messages',msgId));
+    saveAdminLog('team_msg_deleted',auth.currentUser?.email,{originalMessage:msgText,newMessage:'',chatName},chatId).catch(()=>{});
+    showToast('Mensagem excluída.','success');}catch(e){showToast('Erro: '+e.message,'error');}
+};
+
+window.editTeamMsg=async(chatId,msgId,chatName)=>{
+    const s=await getDoc(doc(db,'team_chats',chatId,'messages',msgId));if(!s.exists()){showToast('Não encontrada.','error');return;}
+    const oldText=s.data().text;
+    const existing=document.getElementById('modal-edit-msg-temp');if(existing)existing.remove();
+    const modal=document.createElement('div');modal.className='modal-bg open';modal.id='modal-edit-msg-temp';
+    modal.innerHTML=`<div class="modal-box" style="max-width:500px"><div class="modal-head"><h2>EDITAR MENSAGEM</h2><button class="modal-close-btn" onclick="document.getElementById('modal-edit-msg-temp').remove()">✕</button></div><div class="modal-body"><div class="form-group"><label class="form-label">Original</label><div style="background:var(--bg-soft);border:1px solid var(--border);padding:12px 16px;color:var(--muted);font-size:13px;margin-bottom:12px">${oldText.replace(/\n/g,'<br>')}</div></div><div class="form-group"><label class="form-label">Nova mensagem</label><textarea class="form-textarea" id="edit-msg-text" style="min-height:80px">${oldText}</textarea></div></div><div class="modal-foot"><button class="btn btn-secondary" onclick="document.getElementById('modal-edit-msg-temp').remove()">Cancelar</button><button class="btn btn-primary" onclick="confirmEditMsg('${chatId}','${msgId}','${chatName.replace(/'/g,"\\'")}')">Salvar</button></div></div>`;
+    document.body.appendChild(modal);
+};
+
+window.confirmEditMsg=async(chatId,msgId,chatName)=>{
+    const newText=document.getElementById('edit-msg-text').value.trim();if(!newText){showToast('Não pode ficar vazio.','error');return;}
+    const s=await getDoc(doc(db,'team_chats',chatId,'messages',msgId));const oldText=s.exists()?s.data().text:'';
+    if(newText===oldText){document.getElementById('modal-edit-msg-temp')?.remove();return;}
+    try{await updateDoc(doc(db,'team_chats',chatId,'messages',msgId),{text:newText,edited:true,editedAt:serverTimestamp()});
+    saveAdminLog('team_msg_edited',auth.currentUser?.email,{originalMessage:oldText,newMessage:newText,chatName},chatId).catch(()=>{});
+    showToast('Editada.','success');document.getElementById('modal-edit-msg-temp')?.remove();}catch(e){showToast('Erro: '+e.message,'error');}
+};// ══════════════════════════════════════
+// LOGS (TODOS)
+// ══════════════════════════════════════
+function loadLoginLogs(){
+    const tbody=document.getElementById('login-logs-body');if(!tbody)return;
+    const q=query(collection(db,'admin_logs'),where('type','in',['login_success','login_failed']),orderBy('timestamp','desc'));
+    onSnapshot(q,snap=>{
+        if(snap.empty){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--muted)">Nenhum log</td></tr>';return;}
+        tbody.innerHTML=snap.docs.map(d=>{const data=d.data();const date=data.timestamp?.toDate();const ok=data.type==='login_success';
+        return `<tr><td><span class="log-status ${ok?'success':'failed'}">${ok?'✓ Sucesso':'✗ Falhou'}</span></td><td class="log-email">${data.email||'—'}</td><td class="log-ip">${data.ip||'—'}</td><td style="font-size:11px;color:var(--muted)">${(data.userAgent||'').substring(0,50)}...</td><td class="log-date">${date?date.toLocaleString('pt-BR'):'—'}</td></tr>`;}).join('');
+    });
+}
+
+function loadChatLogs(){
+    const tbody=document.getElementById('chat-logs-body');if(!tbody)return;
+    const q=query(collection(db,'admin_logs'),where('type','in',['chat_closed','chat_reopened','chat_deleted']),orderBy('timestamp','desc'));
+    onSnapshot(q,snap=>{
+        if(snap.empty){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--muted)">Nenhum log</td></tr>';return;}
+        tbody.innerHTML=snap.docs.map(d=>{const data=d.data();const date=data.timestamp?.toDate();
+        const typeMap={chat_closed:'🔒 Encerrado',chat_reopened:'🔓 Reaberto',chat_deleted:'🗑 Excluído'};
+        const subject=data.chatSubject||data.reason||'—';const chatId=data.chatId||'';
+        return `<tr><td>${typeMap[data.type]||data.type}</td><td style="font-size:12px">${subject}</td><td style="font-size:12px">${data.reason||'—'}</td><td class="log-email">${data.email||'—'}</td><td class="log-date">${date?date.toLocaleString('pt-BR'):'—'}</td><td>${chatId&&data.type!=='chat_deleted'?`<button class="btn btn-sm btn-secondary" onclick="viewTranscript('${chatId}')">📄 Ver</button>`:'—'}</td></tr>`;}).join('');
+    });
+}
+
+function loadTeamLogs(){
+    const tbody=document.getElementById('team-logs-body');if(!tbody)return;
+    const q=query(collection(db,'admin_logs'),where('type','in',['member_added','member_removed']),orderBy('timestamp','desc'));
+    onSnapshot(q,snap=>{
+        if(snap.empty){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--muted)">Nenhum log</td></tr>';return;}
+        tbody.innerHTML=snap.docs.map(d=>{const data=d.data();const date=data.timestamp?.toDate();const isAdd=data.type==='member_added';
+        return `<tr><td><span class="log-type-badge ${isAdd?'added':'removed'}">${isAdd?'✓ Adicionado':'✗ Removido'}</span></td><td style="font-size:12px">${data.reason||'—'}</td><td class="log-email">${data.email||'—'}</td><td class="log-ip">${data.ip||'—'}</td><td class="log-date">${date?date.toLocaleString('pt-BR'):'—'}</td></tr>`;}).join('');
+    });
+}
+
+function loadTeamChatLogs(){
+    const tbody=document.getElementById('team-chat-logs-body');if(!tbody)return;
+    const q=query(collection(db,'admin_logs'),where('type','in',['team_chat_deleted','team_chat_created']),orderBy('timestamp','desc'));
+    onSnapshot(q,snap=>{
+        if(snap.empty){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--muted)">Nenhum log</td></tr>';return;}
+        tbody.innerHTML=snap.docs.map(d=>{const data=d.data();const date=data.timestamp?.toDate();
+        const isCreated=data.type==='team_chat_created';
+        return `<tr><td><span class="log-type-badge ${isCreated?'added':'deleted'}">${isCreated?'✓ Criado':'🗑 Excluído'}</span></td><td style="font-size:12px">${data.reason||'—'}</td><td style="font-size:12px">—</td><td class="log-email">${data.email||'—'}</td><td class="log-date">${date?date.toLocaleString('pt-BR'):'—'}</td></tr>`;}).join('');
+    });
+}
+
+function loadMsgLogs(){
+    const tbody=document.getElementById('msg-logs-body');if(!tbody)return;
+    const q=query(collection(db,'admin_logs'),where('type','in',['team_msg_deleted','team_msg_edited']),orderBy('timestamp','desc'));
+    onSnapshot(q,snap=>{
+        if(snap.empty){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--muted)">Nenhum log</td></tr>';return;}
+        tbody.innerHTML=snap.docs.map(d=>{const data=d.data();const date=data.timestamp?.toDate();const isEdit=data.type==='team_msg_edited';
+        const original=data.originalMessage||data.reason||'—';const newMsg=data.newMessage||'—';
+        return `<tr><td><span class="log-type-badge ${isEdit?'edited':'deleted'}">${isEdit?'✏ Editada':'🗑 Apagada'}</span></td><td style="font-size:12px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${original}">${original}</td><td style="font-size:12px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${newMsg}">${isEdit?newMsg:'—'}</td><td style="font-size:12px">${data.chatName||'—'}</td><td class="log-email">${data.email||'—'}</td><td class="log-date">${date?date.toLocaleString('pt-BR'):'—'}</td></tr>`;}).join('');
+    });
+}
+
+window.clearLogs=async(types)=>{
+    if(localStorage.getItem('userRole')!=='ADMIN'&&localStorage.getItem('isOwner')!=='true'){showToast('Sem permissão.','error');return;}
+    if(!confirm(`Limpar ${types.length} tipo(s) de log? Essa ação é irreversível.`))return;
+    try{
+        const q=query(collection(db,'admin_logs'),where('type','in',types));
+        const snap=await getDocs(q);
+        let count=0;
+        for(const d of snap.docs){await deleteDoc(doc(db,'admin_logs',d.id));count++;}
+        showToast(`${count} registro(s) removidos.`,'success');
+    }catch(e){showToast('Erro: '+e.message,'error');}
 };
 
 
-        /* ══════════════════════════════════════════
-           STATUS
-        ══════════════════════════════════════════ */
-        function listenStatus() {
-            onSnapshot(doc(db, 'config', 'status'), snap => {
-                if (snap.exists()) {
-                    currentStatus = snap.data().status || 'disponivel';
-                    const msg = snap.data().message || '';
-                    document.getElementById('status-msg').value = msg;
-                    renderStatusOptions(currentStatus);
-                    updateDashStatus(currentStatus, msg);
-                }
-            });
-        }
-
-        function renderStatusOptions(s) {
-            ['disponivel', 'ocupado', 'limitado'].forEach(opt => {
-                const el = document.getElementById('status-' + opt);
-                el.classList.toggle('selected', opt === s);
-            });
-        }
-
-        function updateDashStatus(s, msg) {
-            const map = {
-              disponivel: { emoji: '🟢', label: 'Disponível para projetos' },
-              ocupado:    { emoji: '🔴', label: 'Ocupado' },
-              limitado:   { emoji: '🟡', label: 'Vagas limitadas' }
-            };
-            const cfg = map[s] || map.disponivel;
-            const el = document.getElementById('dash-status-preview');
-            if (el) el.textContent = cfg.emoji + ' ' + cfg.label + (msg ? ' — ' + msg : '');
-
-            // Atualiza o emoji no nav-item do status
-            const statusNav = document.querySelector('[data-page="status"] .nav-icon');
-            if (statusNav) statusNav.textContent = cfg.emoji;
-        }
-
-        window.setStatus = (s) => { currentStatus = s; renderStatusOptions(s); };
-
-        window.saveStatus = async () => {
-            await setDoc(doc(db, 'config', 'status'), {
-                status: currentStatus,
-                message: document.getElementById('status-msg').value.trim(),
-                updatedAt: serverTimestamp()
-            });
-            showToast('Status atualizado!', 'success');
-        };
-
-        /* ══════════════════════════════════════════
-           SEÇÕES
-        ══════════════════════════════════════════ */
-        const SECTIONS_CONFIG = [
-            { id: 'hero', name: 'Hero', desc: 'Banner principal' },
-            { id: 'sobre', name: 'Sobre', desc: 'Seção sobre o artista' },
-            { id: 'experiencia', name: 'Experiência', desc: 'Stats e especialidades' },
-            { id: 'processo', name: 'Processo', desc: 'Etapas de trabalho' },
-            { id: 'portfolio', name: 'Portfólio', desc: 'Galeria de trabalhos' },
-            { id: 'depoimentos', name: 'Depoimentos', desc: 'Avaliações de clientes' },
-            { id: 'contato', name: 'Contato', desc: 'Formulário e links' },
-        ];
-
-        function listenSections() {
-            onSnapshot(doc(db, 'config', 'sections'), snap => {
-                sectionsState = snap.exists() ? snap.data() : {};
-                renderSections();
-            });
-        }
-
-        function renderSections() {
-            const grid = document.getElementById('sections-grid');
-            grid.innerHTML = SECTIONS_CONFIG.map(s => {
-                const active = sectionsState[s.id] !== false;
-                return `
-    <div class="section-ctrl">
-      <div class="section-ctrl-info">
-        <div class="section-ctrl-name">${s.name}</div>
-        <div class="section-ctrl-desc">${s.desc}</div>
-      </div>
-      <label class="toggle">
-        <input type="checkbox" ${active ? 'checked' : ''} onchange="toggleSection('${s.id}', this.checked)">
-        <span class="toggle-track"></span>
-        <span class="toggle-thumb"></span>
-      </label>
+window.viewTranscript=async(chatId)=>{
+    const existing=document.getElementById('modal-transcript-temp');if(existing)existing.remove();
+    let chatInfo={};
+    try{const s=await getDoc(doc(db,'chats',chatId));if(s.exists())chatInfo=s.data();}catch{}
+    let messages=[];
+    try{
+        const snap=await getDocs(query(collection(db,'chats',chatId,'messages'),orderBy('createdAt','asc')));
+        messages=snap.docs.map(d=>({id:d.id,...d.data()}));
+    }catch(e){
+        console.warn('[TRANSCRIPT]',e);
+    }
+    if(!messages.length&&!chatInfo.visitorName){
+        showToast('Chat não encontrado ou já foi excluído.','error');
+        return;
+    }
+    const modal=document.createElement('div');modal.className='modal-bg open';modal.id='modal-transcript-temp';
+    modal.innerHTML=`<div class="modal-box" style="max-width:640px;max-height:85vh">
+        <div class="modal-head">
+            <div><h2>TRANSCRIPT</h2><p style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:4px">${chatInfo.visitorName||'Visitante'} — ${chatInfo.subject||'Sem assunto'}</p></div>
+            <button class="modal-close-btn" onclick="document.getElementById('modal-transcript-temp').remove()">✕</button>
+        </div>
+        <div class="modal-body" style="max-height:60vh;overflow-y:auto;padding:16px 24px">
+            ${messages.length===0?'<p style="color:var(--muted);text-align:center">Nenhuma mensagem encontrada.</p>':messages.map(m=>{
+                const isAdmin=m.sender==='admin';const isSystem=m.sender==='system';
+                const time=m.createdAt?.toDate?m.createdAt.toDate().toLocaleString('pt-BR'):'';
+                let bc='var(--border)';let cl='var(--text)';let name=m.senderName||'Visitante';
+                if(isAdmin){bc='var(--accent)';cl='#fff';}
+                if(isSystem){bc='#ffc107';cl='#ffc107';name='⚙ Sistema';}
+                return `<div style="margin-bottom:12px;padding:12px 16px;background:var(--bg-soft);border-left:3px solid ${bc}">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                        <span style="font-family:var(--mono);font-size:10px;color:${cl};text-transform:uppercase;font-weight:bold">${name}</span>
+                        <span style="font-family:var(--mono);font-size:9px;color:var(--muted)">${time}</span>
+                    </div>
+                    <div style="font-size:13px;color:var(--text);line-height:1.6">${(m.text||'').replace(/</g,'&lt;').replace(/\n/g,'<br>')}</div>
+                </div>`;
+            }).join('')}
+        </div>
+        <div class="modal-foot"><button class="btn btn-secondary" onclick="document.getElementById('modal-transcript-temp').remove()">Fechar</button></div>
     </div>`;
-            }).join('');
+    document.body.appendChild(modal);
+};
+// ══════════════════════════════════════
+// PERMISSÕES
+// ══════════════════════════════════════
+async function applyPermissions(){
+    const user=auth.currentUser;if(!user)return;
+    let role='ADMIN';let isOwner=false;
+    try{
+        const ud=await getDoc(doc(db,'team_members',user.uid));
+        if(ud.exists()){
+            role=ud.data().role||'ADMIN';
+            isOwner=ud.data().isOwner===true;
         }
+        // Fallback: se é o email do dono, força ADMIN+owner
+        if(user.email===OWNER_EMAIL){role='ADMIN';isOwner=true;}
+    }catch{}
+    localStorage.setItem('userRole',role);
+    localStorage.setItem('isOwner',isOwner?'true':'false');
 
-        window.toggleSection = async (id, val) => {
-            sectionsState[id] = val;
-            await setDoc(doc(db, 'config', 'sections'), sectionsState);
-            showToast(`Seção "${id}" ${val ? 'ativada' : 'desativada'}.`, 'success');
-        };
+    // DONO e ADMIN veem tudo
+    const isAdminLevel = role==='ADMIN' || isOwner;
+    document.querySelectorAll('.admin-only').forEach(el=>{
+        el.style.display = isAdminLevel ? '' : 'none';
+    });
 
-        /* ══════════════════════════════════════════
-           ANALYTICS
-        ══════════════════════════════════════════ */
-        function listenAnalytics() {
-            onSnapshot(doc(db, 'analytics', 'totals'), snap => {
-                const data = snap.exists() ? snap.data() : {};
-                const views = data.pageviews || 0;
-                const whatsapp = data.whatsapp || 0;
-                const pfClicks = data.portfolio || 0;
-                const chatCount = data.chats || 0;
-                document.getElementById('d-views').textContent = views;
-                document.getElementById('an-views').textContent = views;
-                document.getElementById('an-whatsapp').textContent = whatsapp;
-                document.getElementById('an-portfolio-clicks').textContent = pfClicks;
-                document.getElementById('an-chats').textContent = chatCount;
-                renderPageChart(data.pages || {});
-            });
-        }
-
-        function renderPageChart(pages) {
-            const el = document.getElementById('analytics-pages');
-            const entries = Object.entries(pages).sort((a, b) => b[1] - a[1]).slice(0, 8);
-            if (!entries.length) { el.innerHTML = '<div style="color:var(--muted);font-family:var(--mono);font-size:10px">Sem dados ainda.</div>'; return; }
-            const max = entries[0][1] || 1;
-            el.innerHTML = entries.map(([page, count]) => `
-    <div class="chart-bar-item">
-      <div class="chart-bar-label">${page}</div>
-      <div class="chart-bar-track"><div class="chart-bar-fill" style="width:${Math.round(count / max * 100)}%"></div></div>
-      <div class="chart-bar-val">${count}</div>
-    </div>
-  `).join('');
-        }
-
-        /* ══════════════════════════════════════════
-           DASHBOARD CHATS RECENTES
-        ══════════════════════════════════════════ */
-        function listenDashChats() {
-            const q = query(collection(db, 'chats'), orderBy('lastMessageAt', 'desc'));
-            onSnapshot(q, snap => {
-                const el = document.getElementById('dash-chats-recent');
-                if (!el) return;
-                const chats = snap.docs.slice(0, 5).map(d => ({ id: d.id, ...d.data() }));
-                if (!chats.length) { el.innerHTML = '<div class="text-muted text-mono" style="font-size:11px">Nenhuma conversa ainda.</div>'; return; }
-                el.innerHTML = `<table><thead><tr><th>Visitante</th><th>Última mensagem</th><th>Status</th><th></th></tr></thead><tbody>
-    ${chats.map(c => `<tr>
-      <td>${c.visitorName || 'Visitante'}</td>
-      <td style="color:var(--muted);font-size:12px">${c.lastMessage || '—'}</td>
-      <td><span class="badge ${c.status === 'closed' ? 'badge-red' : 'badge-green'}">${c.status === 'closed' ? 'ENCERRADO' : 'ATIVO'}</span></td>
-      <td><button class="btn btn-sm btn-secondary" onclick="showPage('chat')">Ver</button></td>
-    </tr>`).join('')}
-    </tbody></table>`;
-            });
-        }
-
-        /* ── Trigger dashboard chat listener after auth ── */
-        setTimeout(listenDashChats, 500);
-
-        /* ══════════════════════════════════════════
-           UTILS
-        ══════════════════════════════════════════ */
-        window.openModal = (id) => document.getElementById(id).classList.add('open');
-        window.closeModal = (id) => document.getElementById(id).classList.remove('open');
-
-        document.querySelectorAll('.modal-bg').forEach(m => {
-            m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+    if(!isAdminLevel){
+        // SUPORTE: esconde páginas que não pode acessar
+        ['dashboard','portfolio','depoimentos','status','secoes','analytics'].forEach(p=>{
+            const nav=document.querySelector(`[data-page="${p}"]`);
+            if(nav)nav.style.display='none';
         });
-
-        window.showToast = (msg, type = 'success') => {
-            const c = document.getElementById('toast-container');
-            const t = document.createElement('div');
-            t.className = `toast ${type}`;
-            t.innerHTML = `<span class="toast-icon">${type === 'success' ? '✓' : '✕'}</span>${msg}`;
-            c.appendChild(t);
-            requestAnimationFrame(() => t.classList.add('show'));
-            setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 3000);
-        };
-
-        /* Notify sound on new visitor message */
-        let prevTotalUnread = 0;
-        setInterval(() => {
-            const badge = document.getElementById('chat-badge');
-            if (!badge) return;
-            const cur = parseInt(badge.textContent) || 0;
-            if (cur > prevTotalUnread && prevTotalUnread >= 0) {
-                const audio = document.getElementById('notify-sound');
-                audio?.play().catch(() => { });
-            }
-            prevTotalUnread = cur;
-        }, 2000);
+        document.querySelectorAll('.nav-section').forEach(ns=>{
+            const t=ns.textContent.trim().toUpperCase();
+            if(['VISÃO GERAL','CONTEÚDO'].includes(t))ns.style.display='none';
+        });
+        showPage('chat');
+    }
+}
+        
 
     </script>
+
 </body>
 
 </html>
